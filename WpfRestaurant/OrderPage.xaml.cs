@@ -24,5 +24,10 @@ namespace WpfRestaurant
         {
             InitializeComponent();
         }
+
+        public void SetTableNo(string table_no)
+        {
+            tableNoTextblock.Text = table_no;
+        }
     }
 }

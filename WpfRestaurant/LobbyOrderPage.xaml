@@ -6,95 +6,46 @@
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d"
       Title="LobbyOrderPage">
-
     <Grid>
         <StackPanel>
-            <WrapPanel>
-                <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp">
-                    <StackPanel.Background>
-                        <ImageBrush ImageSource="pic/blue_button.png"/>
-                    </StackPanel.Background>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White">A001</TextBlock>
-                        </StackPanel>
-                        <StackPanel Width="110">
-                            <StackPanel Margin="0,15,0,0">
-                                <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20">已下单</TextBlock>
-                            </StackPanel>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="pic/paid.png" Width="30"></Image>
-                                    <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
+            <ItemsControl x:Name="BusyTableList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding No}">
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="pic/blue_button.png"/>
+                            </StackPanel.Background>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="80" Height="90" Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
+                                </StackPanel>
+                                <StackPanel Width="110">
+                                    <StackPanel Margin="0,15,0,0">
+                                        <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="{Binding Status}"/>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image x:Name="paid_pic" Source="pic/paid_0.png" Width="30">
+                                            </Image>
+                                            <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Width="190" Height="90" Margin="10">
-                    <StackPanel.Background>
-                        <ImageBrush ImageSource="pic/blue_button.png"/>
-                    </StackPanel.Background>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White">A002</TextBlock>
-                        </StackPanel>
-                        <StackPanel Width="110">
-                            <StackPanel Margin="0,15,0,0">
-                                <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20">已下单</TextBlock>
-                            </StackPanel>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="pic/not_paid.png" Width="30"></Image>
-                                    <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Width="190" Height="90" Margin="10">
-                    <StackPanel.Background>
-                        <ImageBrush ImageSource="pic/blue_button.png"/>
-                    </StackPanel.Background>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Width="80"  Height="90" Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White">A003</TextBlock>
-                        </StackPanel>
-                        <StackPanel Width="110" >
-                            <StackPanel Margin="0,15,0,0">
-                                <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20">已下单</TextBlock>
-                            </StackPanel>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="pic/not_paid.png" Width="30"></Image>
-                                    <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Width="190" Height="90" Margin="10">
-                    <StackPanel.Background>
-                        <ImageBrush ImageSource="pic/blue_button.png"/>
-                    </StackPanel.Background>
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="A004"/>
-                        </StackPanel>
-                        <StackPanel Width="110" >
-                            <StackPanel Margin="0,15,0,0">
-                                <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20">已下单</TextBlock>
-                            </StackPanel>
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="pic/not_paid.png" Width="30"></Image>
-                                    <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
-                                </StackPanel>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </StackPanel>
-            </WrapPanel>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Path=Paid}" Value="1">
+                                <Setter TargetName="paid_pic" Property="Source" Value="pic/paid_1.png"></Setter>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <WrapPanel>
                 <StackPanel Width="190" Height="90" Margin="10">
                     <StackPanel.Background>

@@ -24,6 +24,15 @@ namespace WpfRestaurant
         public LobbyOrderPage()
         {
             InitializeComponent();
+
+            List<MyTable> lmt = new List<MyTable>()
+            {
+                new MyTable() {No="A001",Status="已下单" ,Paid=1},
+                new MyTable() {No="A002",Status="已下单" ,Paid=0},
+                new MyTable() {No="A003",Status="已下单" ,Paid=0},
+                new MyTable() {No="A004",Status="已下单" ,Paid=0}
+            };
+            BusyTableList.ItemsSource = lmt;
         }
 
         public MainWindow ParentWin
@@ -41,7 +50,10 @@ namespace WpfRestaurant
 
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            StackPanel sp = sender as StackPanel;
+            OrderPage op = new OrderPage();
+            op.SetTableNo(sp.Tag.ToString());
+            ParentWin.SidebarFrame.Content = op;
         }
     }
 }

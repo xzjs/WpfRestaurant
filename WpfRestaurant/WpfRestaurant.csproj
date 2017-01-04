@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MyTable.cs" />
     <Page Include="LobbyOrderPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,8 +120,8 @@
     <Resource Include="pic\refresh.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pic\not_paid.png" />
-    <Resource Include="pic\paid.png" />
+    <Resource Include="pic\paid_0.png" />
+    <Resource Include="pic\paid_1.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\blue_button.png" />

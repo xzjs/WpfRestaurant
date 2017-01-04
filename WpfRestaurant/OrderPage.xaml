@@ -21,7 +21,7 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontSize="18" Margin="25,0">大厅</TextBlock>
-                    <TextBlock FontSize="18" Margin="25,0">A002</TextBlock>
+                    <TextBlock x:Name="tableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
                 </StackPanel>
                 <StackPanel>
                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True">
