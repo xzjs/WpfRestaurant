@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 namespace WpfRestaurant
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// OrderPage.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OrderPage : Page
     {
-        public MainWindow()
+        public OrderPage()
         {
             InitializeComponent();
-            LobbyOrderPage lop = new LobbyOrderPage();
-            lop.ParentWin = this;
-            PageFrame.Content = lop;
         }
     }
 }

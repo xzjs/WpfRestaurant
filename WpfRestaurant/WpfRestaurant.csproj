@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LobbyOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,12 +67,22 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="LobbyOrderPage.xaml.cs">
+      <DependentUpon>LobbyOrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +108,29 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\s_head.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\ring.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\not_paid.png" />
+    <Resource Include="pic\paid.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\blue_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\withe_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pic\green_button.png" />
+    <Resource Include="pic\yellow_button.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

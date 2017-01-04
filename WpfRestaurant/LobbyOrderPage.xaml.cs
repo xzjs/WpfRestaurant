@@ -16,16 +16,32 @@ using System.Windows.Shapes;
 namespace WpfRestaurant
 {
     /// <summary>
-    /// MainWindow.xaml 的交互逻辑
+    /// LobbyOrderPage.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LobbyOrderPage : Page
     {
-        public MainWindow()
+        private MainWindow _parentWin;
+        public LobbyOrderPage()
         {
             InitializeComponent();
-            LobbyOrderPage lop = new LobbyOrderPage();
-            lop.ParentWin = this;
-            PageFrame.Content = lop;
+        }
+
+        public MainWindow ParentWin
+        {
+            get
+            {
+                return _parentWin;
+            }
+
+            set
+            {
+                _parentWin = value;
+            }
+        }
+
+        private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
