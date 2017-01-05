@@ -1,0 +1,22 @@
+﻿<Page x:Class="WpfRestaurant.FreeTablePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfRestaurant"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="FreeTablePage">
+
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="大厅" Margin="10,0" FontSize="20"/>
+                <TextBlock x:Name="tableNoTextblock" Text="A008" Margin="10,0" FontSize="20"/>
+            </StackPanel>
+            <StackPanel>
+                <Button Margin="20" Height="40" Background="White" Click="Button_Click">点菜</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -33,6 +33,14 @@ namespace WpfRestaurant
                 new MyTable() {No="A004",Status="已下单" ,Paid=0}
             };
             BusyTableList.ItemsSource = lmt;
+            List<MyTable> flmt = new List<MyTable>()
+            {
+                new MyTable() {No="A005",Status="空闲" },
+                new MyTable() {No="A006",Status="空闲" },
+                new MyTable() {No="A007",Status="空闲" },
+                new MyTable() {No="A008",Status="空闲" }
+            };
+            FreeTableList.ItemsSource = flmt;
         }
 
         public MainWindow ParentWin
@@ -54,6 +62,14 @@ namespace WpfRestaurant
             OrderPage op = new OrderPage();
             op.SetTableNo(sp.Tag.ToString());
             ParentWin.SidebarFrame.Content = op;
+        }
+
+        private void StackPanel_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
+        {
+            StackPanel sp = sender as StackPanel;
+            FreeTablePage ftb = new FreeTablePage();
+            ftb.SetTableNo(sp.Tag.ToString());
+            ParentWin.SidebarFrame.Content = ftb;
         }
     }
 }

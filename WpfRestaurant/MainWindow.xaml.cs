@@ -27,5 +27,18 @@ namespace WpfRestaurant
             lop.ParentWin = this;
             PageFrame.Content = lop;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LobbyOrderPage lop = new LobbyOrderPage();
+            lop.ParentWin = this;
+            PageFrame.Content = lop;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AppointPage ap = new AppointPage();
+            PageFrame.Content = ap;
+        }
     }
 }

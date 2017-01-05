@@ -10,30 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace WpfRestaurant
 {
     /// <summary>
-    /// OrderPage.xaml 的交互逻辑
+    /// MenuWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class OrderPage : Page
+    public partial class MenuWindow : Window
     {
-        public OrderPage()
+        public MenuWindow()
         {
             InitializeComponent();
-        }
-
-        public void SetTableNo(string table_no)
-        {
-            tableNoTextblock.Text = table_no;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MenuWindow mw = new MenuWindow();
-            mw.ShowDialog();
         }
     }
 }

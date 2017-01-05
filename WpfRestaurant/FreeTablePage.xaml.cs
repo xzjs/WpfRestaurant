@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace WpfRestaurant
 {
     /// <summary>
-    /// OrderPage.xaml 的交互逻辑
+    /// FreeTablePage.xaml 的交互逻辑
     /// </summary>
-    public partial class OrderPage : Page
+    public partial class FreeTablePage : Page
     {
-        public OrderPage()
+        public FreeTablePage()
         {
             InitializeComponent();
         }

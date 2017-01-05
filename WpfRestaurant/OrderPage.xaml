@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="335.088"
       Title="OrderPage">
 
     <Grid>
@@ -22,6 +22,11 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontSize="18" Margin="25,0">大厅</TextBlock>
                     <TextBlock x:Name="tableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Width="100" Height="30" Margin="5" Click="Button_Click">加菜</Button>
+                    <Button Width="100" Margin="5">退菜</Button>
+                    <Button Width="100" Margin="5">小票补打</Button>
                 </StackPanel>
                 <StackPanel>
                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True">

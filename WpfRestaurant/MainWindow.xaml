@@ -43,11 +43,11 @@
             <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" Background="#FFD7D7D7" NavigationUIVisibility="Hidden"></Frame>
             <DockPanel>
                 <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
-                    <Button Width="120" Height="60">堂点</Button>
-                    <Button Width="120">预订</Button>
+                    <Button Width="120" Height="60" Click="Button_Click">堂点</Button>
+                    <Button Width="120" Click="Button_Click_1">预订</Button>
                     <Button Width="120">外卖</Button>
                 </StackPanel>
-                <Frame x:Name="PageFrame"></Frame>
+                <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden"></Frame>
             </DockPanel>
         </DockPanel>
     </Grid>
