@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfRestaurant"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="登录" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
         <ImageBrush ImageSource="pic/bg.png"/>
     </Window.Background>
