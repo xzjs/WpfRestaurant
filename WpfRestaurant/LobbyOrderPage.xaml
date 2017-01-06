@@ -6,6 +6,19 @@
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d"
       Title="LobbyOrderPage">
+    <Page.Resources>
+        <Style x:Key="border_style" TargetType="{x:Type Border}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"  Value="True">
+                    <Setter Property="Background" Value="LightBlue"></Setter>
+                    <Setter Property="BorderBrush" Value="Black"></Setter>
+                    <Setter Property="BorderThickness" Value="1"></Setter>
+                    <Setter Property="CornerRadius" Value="45"></Setter>
+                    <Setter Property="Padding" Value="1"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
     <Grid>
         <StackPanel>
             <ItemsControl x:Name="BusyTableList">
@@ -16,28 +29,31 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding No}">
-                            <StackPanel.Background>
-                                <ImageBrush ImageSource="pic/blue_button.png"/>
-                            </StackPanel.Background>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
-                                </StackPanel>
-                                <StackPanel Width="110">
-                                    <StackPanel Margin="0,15,0,0">
-                                        <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="{Binding Status}"/>
+                        <Border Name="templeBorder" Style="{StaticResource border_style}">
+                            <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding No}">
+                                <StackPanel.Background>
+                                    <ImageBrush ImageSource="pic/blue_button.png"/>
+                                </StackPanel.Background>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Width="80" Height="90" Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
                                     </StackPanel>
-                                    <StackPanel>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image x:Name="paid_pic" Source="pic/paid_0.png" Width="30">
-                                            </Image>
-                                            <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
+                                    <StackPanel Width="110">
+                                        <StackPanel Margin="0,15,0,0">
+                                            <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="{Binding Status}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image x:Name="paid_pic" Source="pic/paid_0.png" Width="30">
+                                                </Image>
+                                                <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
+                                            </StackPanel>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                        </Border>
+
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=Paid}" Value="1">
                                 <Setter TargetName="paid_pic" Property="Source" Value="pic/paid_1.png"></Setter>

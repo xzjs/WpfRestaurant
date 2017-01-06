@@ -9,45 +9,45 @@
     <Grid>
         <DockPanel>
             <DockPanel DockPanel.Dock="Top">
-                <StackPanel DockPanel.Dock="Left"  Height="45" Orientation="Horizontal">
-                    <TextBlock FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Width="200">哇哈哈餐厅</TextBlock>
+                <StackPanel DockPanel.Dock="Left"  Height="45" Orientation="Horizontal" Background="#FFF97974">
+                    <TextBlock FontSize="24" VerticalAlignment="Center" TextAlignment="Center" Width="200" Foreground="White">哇哈哈餐厅</TextBlock>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Background="#FFE6E0E2" Width="330">
                     <TextBlock Margin="0,0,50,0" VerticalAlignment="Center">2017-1-4 09:50:29</TextBlock>
                     <Image Source="pic/s_head.png" Height="30" Margin="0,0,50,0"></Image>
                     <TextBlock Margin="0,0,50,0" VerticalAlignment="Center">小王</TextBlock>
                     <Image Source="pic/ring.png" Height="30"></Image>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Background="LightGray">
                     <Image Source="pic/refresh.png" Height="30"/>
                 </StackPanel>
             </DockPanel>
-            <DockPanel DockPanel.Dock="Left" Width="200">
+            <DockPanel DockPanel.Dock="Left" Width="200" Background="#FF4C5D65">
                 <StackPanel DockPanel.Dock="Bottom" Height="80" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Height="40">
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">占用中</TextBlock>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">0</TextBlock>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">占用中</TextBlock>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">0</TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="40">
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">空闲中</TextBlock>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center">20</TextBlock>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">空闲中</TextBlock>
+                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">20</TextBlock>
                     </StackPanel>
                 </StackPanel>
-                <TreeView FontSize="20" Margin="0" Width="200">
-                    <TreeViewItem Header="大厅"/>
-                    <TreeViewItem Header="小包间"/>
-                    <TreeViewItem Header="大包间"></TreeViewItem>
-                    <TreeViewItem Header="全部桌台"></TreeViewItem>
+                <TreeView FontSize="20" Margin="0" Width="200" Background="#FF4C5D65">
+                    <TreeViewItem Header="大厅" Foreground="White" Margin="0,20" HorizontalAlignment="Center"/>
+                    <TreeViewItem Header="小包间" Foreground="White" Margin="0,20" HorizontalAlignment="Center"/>
+                    <TreeViewItem Header="大包间" Foreground="White" Margin="0,20" HorizontalAlignment="Center"></TreeViewItem>
+                    <TreeViewItem Header="全部桌台" Foreground="White" Margin="0,20" HorizontalAlignment="Center"></TreeViewItem>
                 </TreeView>
             </DockPanel>
             <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" Background="#FFD7D7D7" NavigationUIVisibility="Hidden"></Frame>
             <DockPanel>
-                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal">
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="#FFE0DADA">
                     <Button Width="120" Height="60" Click="Button_Click">堂点</Button>
                     <Button Width="120" Click="Button_Click_1">预订</Button>
                     <Button Width="120">外卖</Button>
                 </StackPanel>
-                <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden"></Frame>
+                <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" Background="#FFE0DADA"></Frame>
             </DockPanel>
         </DockPanel>
     </Grid>
