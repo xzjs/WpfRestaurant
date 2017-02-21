@@ -79,7 +79,15 @@
                                     <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
                                 </StackPanel>
                                 <StackPanel Width="110" Orientation="Horizontal" VerticalAlignment="Center" Height="90">
-                                    <TextBlock TextAlignment="Center" Width="110" FontSize="20" Foreground="Lime" VerticalAlignment="Center" Text="{Binding Status}"/>
+                                    <TextBlock TextAlignment="Center" Width="110" FontSize="20" Foreground="Lime" VerticalAlignment="Center">
+                                        <TextBlock.Text>
+                                            <Binding Path="Status">
+                                                <Binding.Converter>
+                                                    <local:StatusConvert></local:StatusConvert>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

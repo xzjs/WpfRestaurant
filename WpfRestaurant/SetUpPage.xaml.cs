@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,15 @@ namespace WpfRestaurant
     public partial class SetUpPage : Page
     {
         private LoginWindow parentWindow;
+        private Config config; 
         public SetUpPage()
         {
             InitializeComponent();
+            using (var db=new restaurantEntities())
+            {
+                config = db.Config.FirstOrDefault();
+                ConfigStackPanel.DataContext = config;
+            }
         }
 
         public LoginWindow ParentWindow
@@ -41,6 +48,11 @@ namespace WpfRestaurant
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            using(var db=new restaurantEntities())
+            {
+                db.Entry(config).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             LoginPage lp = new LoginPage();
             lp.ParentWindow = parentWindow;
             parentWindow.PageFrame.Content = lp;

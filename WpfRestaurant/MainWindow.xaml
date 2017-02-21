@@ -19,7 +19,9 @@
                     <Image Source="pic/ring.png" Height="30"></Image>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Background="LightGray">
-                    <Image Source="pic/refresh.png" Height="30"/>
+                    <Button Click="Button_Click_2">
+                        <Image Source="pic/refresh.png" Height="30"/>
+                    </Button>
                 </StackPanel>
             </DockPanel>
             <DockPanel DockPanel.Dock="Left" Width="200" Background="#FF4C5D65">

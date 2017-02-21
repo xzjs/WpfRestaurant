@@ -21,6 +21,7 @@ namespace WpfRestaurant
     public partial class LobbyOrderPage : Page
     {
         private MainWindow _parentWin;
+        private List<Table> flt;
         public LobbyOrderPage()
         {
             InitializeComponent();
@@ -33,14 +34,13 @@ namespace WpfRestaurant
                 new MyTable() {No="A004",Status="已下单" ,Paid=0}
             };
             BusyTableList.ItemsSource = lmt;
-            List<MyTable> flmt = new List<MyTable>()
+            using (var db = new restaurantEntities())
             {
-                new MyTable() {No="A005",Status="空闲" },
-                new MyTable() {No="A006",Status="空闲" },
-                new MyTable() {No="A007",Status="空闲" },
-                new MyTable() {No="A008",Status="空闲" }
-            };
-            FreeTableList.ItemsSource = flmt;
+                flt = (from v in db.Table
+                       where v.Status == 0
+                       select v).ToList();
+            }
+            FreeTableList.ItemsSource = flt;
         }
 
         public MainWindow ParentWin

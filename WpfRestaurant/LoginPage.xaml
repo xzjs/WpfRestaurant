@@ -19,13 +19,13 @@
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Width="360" Height="55">
                                 <Image Source="pic/login_head.png" Margin="10"></Image>
-                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"/>
+                                <TextBox x:Name="NameTextbox" Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3" Text="test3"/>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Height="55" Width="360">
                                 <Image Source="pic/pwd.png" Margin="10"></Image>
-                                <PasswordBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"></PasswordBox>
+                                <PasswordBox x:Name="PwdBox" Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3" Password="123"></PasswordBox>
                                 <!--<TextBox Text="密码" Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"></TextBox>-->
                             </StackPanel>
                         </Border>

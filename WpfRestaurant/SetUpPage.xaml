@@ -4,8 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfRestaurant"
-      mc:Ignorable="d" d:DesignWidth="400
-      "
+      mc:Ignorable="d" d:DesignWidth="400"
       Title="SetUpPage">
 
     <Grid>
@@ -15,23 +14,23 @@
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel>
-                    <StackPanel>
+                    <StackPanel x:Name="ConfigStackPanel">
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Width="360" Height="55">
                                 <TextBlock Width="80" Text="HTTP接口地址" VerticalAlignment="Center" TextAlignment="Right" Margin="5,0" Foreground="White"></TextBlock>
-                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0"/>
+                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0" Text="{Binding Path=Http}"/>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Height="55" Width="360">
                                 <TextBlock Width="80" Text="TCP IP地址" VerticalAlignment="Center" TextAlignment="Right" Margin="5,0" Foreground="White"></TextBlock>
-                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0"/>
+                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0" Text="{Binding Path=Tcp}"/>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Height="55" Width="360">
                                 <TextBlock Width="80" Text="TCP 端口" VerticalAlignment="Center" TextAlignment="Right" Margin="5,0" Foreground="White"></TextBlock>
-                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0"/>
+                                <TextBox Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="260" BorderBrush="#00ABADB3" Margin="5,0" Text="{Binding Path=Port}"/>
                             </StackPanel>
                         </Border>
                     </StackPanel>

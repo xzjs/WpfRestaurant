@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Users\childe\Documents\Visual Studio 2015\Projects\WpfRestaurant\WpfRestaurant\restaurant.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Food_id" Type="integer" />
+          <Property Name="Num" Type="int" />
+          <Property Name="Order_id" Type="integer" />
+        </EntityType>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Http" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Tcp" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Port" Type="int" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="No" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Img" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="OnsalePrice" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="SaleType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Infomation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestaurantID" Type="int" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Phone" Type="integer" Nullable="false" />
+          <Property Name="Counts" Type="int" Nullable="false" />
+          <Property Name="No" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Table_id" Type="integer" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Cost" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="No" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Counts" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="DeskID" Type="integer" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bill_0_0">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_1_0">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_0_0">
+          <End Role="Table" Type="Self.Table" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="restaurantModelStoreContainer">
+          <EntitySet Name="Bill" EntityType="Self.Bill" store:Type="Tables" />
+          <EntitySet Name="Config" EntityType="Self.Config" store:Type="Tables" />
+          <EntitySet Name="Food" EntityType="Self.Food" store:Type="Tables" />
+          <EntitySet Name="Infomation" EntityType="Self.Infomation" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" store:Type="Tables" />
+          <AssociationSet Name="FK_Bill_0_0" Association="Self.FK_Bill_0_0">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_1_0" Association="Self.FK_Bill_1_0">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_0_0" Association="Self.FK_Order_0_0">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Food_id" Type="Int64" />
+          <Property Name="Num" Type="Int32" />
+          <Property Name="Order_id" Type="Int64" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Bill_0_0" FromRole="Bill" ToRole="Order" />
+          <NavigationProperty Name="Food" Relationship="Self.FK_Bill_1_0" FromRole="Bill" ToRole="Food" />
+        </EntityType>
+        <EntityType Name="Config">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Http" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Tcp" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Port" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="No" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Detail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="OnsalePrice" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="SaleType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_1_0" FromRole="Food" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Infomation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestaurantID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="Int64" Nullable="false" />
+          <Property Name="Counts" Type="Int32" Nullable="false" />
+          <Property Name="No" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Table_id" Type="Int64" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Cost" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_0_0" FromRole="Order" ToRole="Bill" />
+          <NavigationProperty Name="Table" Relationship="Self.FK_Order_0_0" FromRole="Order" ToRole="Table" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="No" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Counts" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_0_0" FromRole="Table" ToRole="Order" />
+          <Property Name="DeskID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bill_0_0">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_1_0">
+          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_0_0">
+          <End Role="Table" Type="Self.Table" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Table">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Table_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="restaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bill" EntityType="Self.Bill" />
+          <EntitySet Name="Config" EntityType="Self.Config" />
+          <EntitySet Name="Food" EntityType="Self.Food" />
+          <EntitySet Name="Infomation" EntityType="Self.Infomation" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Table" EntityType="Self.Table" />
+          <AssociationSet Name="FK_Bill_0_0" Association="Self.FK_Bill_0_0">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_1_0" Association="Self.FK_Bill_1_0">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_0_0" Association="Self.FK_Order_0_0">
+            <End Role="Table" EntitySet="Table" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer" CdmEntityContainer="restaurantEntities">
+          <EntitySetMapping Name="Bill">
+            <EntityTypeMapping TypeName="restaurantModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Food_id" ColumnName="Food_id" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Config">
+            <EntityTypeMapping TypeName="restaurantModel.Config">
+              <MappingFragment StoreEntitySet="Config">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Http" ColumnName="Http" />
+                <ScalarProperty Name="Tcp" ColumnName="Tcp" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Food">
+            <EntityTypeMapping TypeName="restaurantModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OnsalePrice" ColumnName="OnsalePrice" />
+                <ScalarProperty Name="SaleType" ColumnName="SaleType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Infomation">
+            <EntityTypeMapping TypeName="restaurantModel.Infomation">
+              <MappingFragment StoreEntitySet="Infomation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="restaurantModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Counts" ColumnName="Counts" />
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Table_id" ColumnName="Table_id" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table">
+            <EntityTypeMapping TypeName="restaurantModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="DeskID" ColumnName="DeskID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="No" ColumnName="No" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Counts" ColumnName="Counts" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

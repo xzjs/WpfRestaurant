@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Newtonsoft.Json.Linq;
+using System.Collections.Specialized;
+using System.Net;
 
 namespace WpfRestaurant
 {
@@ -21,9 +16,14 @@ namespace WpfRestaurant
     public partial class LoginPage : Page
     {
         private LoginWindow parentWindow;
+        private Config config;
         public LoginPage()
         {
             InitializeComponent();
+            using (var db = new restaurantEntities())
+            {
+                config = db.Config.First();
+            }
         }
 
         public LoginWindow ParentWindow
@@ -48,8 +48,36 @@ namespace WpfRestaurant
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mw = new MainWindow();
-            mw.ShowDialog();
+
+            string name = NameTextbox.Text.Trim();
+            IntPtr p = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(PwdBox.SecurePassword);
+            string password = System.Runtime.InteropServices.Marshal.PtrToStringBSTR(p);
+
+            using (var client = new WebClient())
+            {
+                var values = new NameValueCollection();
+                values["account"] = name;
+                values["password"] = password;
+
+                var response = client.UploadValues("http://" + config.Http + "/restLogin/login.nd", values);
+
+                var responseString = Encoding.Default.GetString(response);
+                JObject jo = JObject.Parse(responseString);
+                if (jo["id"] != null)
+                {
+                    using (var db = new restaurantEntities())
+                    {
+                        Infomation i = db.Infomation.First();
+                        i.RestaurantID = (int)jo["id"];
+                        MainWindow mw = new MainWindow();
+                        mw.ShowDialog();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("登录失败");
+                }
+            }
         }
     }
 }
