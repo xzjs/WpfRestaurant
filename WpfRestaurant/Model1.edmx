@@ -13,6 +13,7 @@
           <Property Name="Food_id" Type="integer" />
           <Property Name="Num" Type="int" />
           <Property Name="Order_id" Type="integer" />
+          <Property Name="Price" Type="decimal" Precision="53" Scale="0" />
         </EntityType>
         <EntityType Name="Config">
           <Key>
@@ -49,10 +50,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-          <Property Name="Phone" Type="integer" Nullable="false" />
-          <Property Name="Counts" Type="int" Nullable="false" />
-          <Property Name="No" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Phone" Type="integer" />
+          <Property Name="Counts" Type="int" />
+          <Property Name="No" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Remark" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Table_id" Type="integer" Nullable="false" />
           <Property Name="Time" Type="datetime" Nullable="false" />
@@ -138,6 +139,7 @@
           <Property Name="Food_id" Type="Int64" />
           <Property Name="Num" Type="Int32" />
           <Property Name="Order_id" Type="Int64" />
+          <Property Name="Price" Type="Decimal" Precision="53" Scale="0" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Bill_0_0" FromRole="Bill" ToRole="Order" />
           <NavigationProperty Name="Food" Relationship="Self.FK_Bill_1_0" FromRole="Bill" ToRole="Food" />
         </EntityType>
@@ -177,10 +179,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Phone" Type="Int64" Nullable="false" />
-          <Property Name="Counts" Type="Int32" Nullable="false" />
-          <Property Name="No" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Int64" />
+          <Property Name="Counts" Type="Int32" />
+          <Property Name="No" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Table_id" Type="Int64" Nullable="false" />
           <Property Name="Time" Type="DateTime" Nullable="false" />
@@ -198,8 +200,8 @@
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Counts" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_0_0" FromRole="Table" ToRole="Order" />
           <Property Name="DeskID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_0_0" FromRole="Table" ToRole="Order" />
         </EntityType>
         <Association Name="FK_Bill_0_0">
           <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
@@ -270,6 +272,7 @@
                 <ScalarProperty Name="Food_id" ColumnName="Food_id" />
                 <ScalarProperty Name="Num" ColumnName="Num" />
                 <ScalarProperty Name="Order_id" ColumnName="Order_id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -325,12 +328,12 @@
           <EntitySetMapping Name="Table">
             <EntityTypeMapping TypeName="restaurantModel.Table">
               <MappingFragment StoreEntitySet="Table">
-                <ScalarProperty Name="DeskID" ColumnName="DeskID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="No" ColumnName="No" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Counts" ColumnName="Counts" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DeskID" ColumnName="DeskID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

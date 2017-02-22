@@ -20,19 +20,26 @@ namespace WpfRestaurant
     /// </summary>
     public partial class OrderPage : Page
     {
-        public OrderPage()
+        private MainWindow mainWindow;
+        private Table table;
+        private List<Bill> listBill;
+        public OrderPage(MainWindow _pw)
         {
             InitializeComponent();
-        }
-
-        public void SetTableNo(string table_no)
-        {
-            tableNoTextblock.Text = table_no;
+            mainWindow = _pw;
+            using(var db=new restaurantEntities())
+            {
+                table = db.Table.Find(MyApp.tableId);
+                Order o = db.Order.Where(x => x.Table_id == MyApp.tableId).OrderByDescending(x => x.Id).First();
+                listBill = o.Bill.ToList();
+            }
+            BillDataGrid.ItemsSource = listBill;
+            tableNoTextblock.Text = table.No;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MenuWindow mw = new MenuWindow();
+            MenuWindow mw = new MenuWindow(mainWindow);
             mw.ShowDialog();
         }
     }

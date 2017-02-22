@@ -11,13 +11,16 @@ namespace WpfRestaurant
 {
     using System;
     using System.Collections.Generic;
+    using PropertyChanged;
     
+    [ImplementPropertyChanged]
     public partial class Bill
     {
         public long Id { get; set; }
         public Nullable<long> Food_id { get; set; }
         public Nullable<int> Num { get; set; }
         public Nullable<long> Order_id { get; set; }
+        public Nullable<decimal> Price { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Food Food { get; set; }

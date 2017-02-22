@@ -22,8 +22,8 @@ namespace WpfRestaurant
     
         public long Id { get; set; }
         public string Name { get; set; }
-        public long Phone { get; set; }
-        public int Counts { get; set; }
+        public Nullable<long> Phone { get; set; }
+        public Nullable<int> Counts { get; set; }
         public string No { get; set; }
         public string Remark { get; set; }
         public long Table_id { get; set; }

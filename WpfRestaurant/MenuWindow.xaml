@@ -5,21 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfRestaurant"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="550" Width="400" WindowStartupLocation="CenterScreen">
+        Title="热菜" Height="550" Width="400" WindowStartupLocation="CenterScreen">
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Height="40" Background="#FF199ED8">确 定</Button>
+                <Button Height="40" Background="#FF199ED8" FontSize="20" Foreground="White" Click="Button_Click_3">确 定</Button>
             </StackPanel>
             <DockPanel>
                 <StackPanel DockPanel.Dock="Left">
-                    <Button Width="130" Height="40" Background="White">热菜</Button>
-                    <Button Height="40" Background="White">凉菜</Button>
-                    <Button Height="40" Background="White">饮品</Button>
+                    <Button Width="130" Height="40" Background="White" Click="Button_Click" Tag="1">热菜</Button>
+                    <Button Height="40" Background="White" Click="Button_Click" Tag="2">凉菜</Button>
+                    <Button Height="40" Background="White" Click="Button_Click" Tag="3">主食</Button>
+                    <Button Height="40" Background="White" Click="Button_Click" Tag="4">饮品</Button>
+                    <Button Height="40" Background="White" Click="Button_Click" Tag="5">香烟</Button>
                 </StackPanel>
                 <StackPanel>
-                    <ListBox>
-                        <ListBoxItem>
+                    <ListBox x:Name="FoodListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Width="240">
+                                    <StackPanel DockPanel.Dock="Left" Width="100">
+                                        <Image Source="pic/menu.png"></Image>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" DockPanel.Dock="Right">
+                                        <Button VerticalAlignment="Center" Width="20" Height="20" Click="Button_Click_2" Tag="{Binding Food.Id}">-</Button>
+                                        <TextBlock VerticalAlignment="Center" Width="20" Height="20" TextAlignment="Center" FontSize="16" Text="{Binding Num}">
+                                            <TextBlock.Background>
+                                                <ImageBrush ImageSource="pic/circle.png"/>
+                                            </TextBlock.Background>
+                                        </TextBlock>
+                                        <Button VerticalAlignment="Center" Width="20" Height="20" Click="Button_Click_1" Tag="{Binding Food.Id}">+</Button>
+                                    </StackPanel>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Path=Food.Name}" FontSize="20" TextAlignment="Center" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <!--<ListBoxItem>
                             <DockPanel Width="240">
                                 <StackPanel DockPanel.Dock="Left" Width="100">
                                     <Image Source="pic/menu.png"></Image>
@@ -50,7 +73,7 @@
                                 </StackPanel>
                                 <StackPanel></StackPanel>
                             </DockPanel>
-                        </ListBoxItem>
+                        </ListBoxItem>-->
                     </ListBox>
                 </StackPanel>
             </DockPanel>

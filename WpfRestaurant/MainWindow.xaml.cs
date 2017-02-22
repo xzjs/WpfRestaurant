@@ -74,7 +74,7 @@ namespace WpfRestaurant
                                 f.Img = (string)item["picUrl"];
                                 if (f.Img == null)
                                 {
-                                    f.Img = "default.jpg";
+                                    f.Img = "menu.png";
                                 }
                                 f.Price = (decimal)item["price"];
                                 f.OnsalePrice = (decimal)item["onsalePrice"];

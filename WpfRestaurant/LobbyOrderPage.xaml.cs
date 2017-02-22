@@ -59,16 +59,15 @@ namespace WpfRestaurant
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             StackPanel sp = sender as StackPanel;
-            OrderPage op = new OrderPage();
-            op.SetTableNo(sp.Tag.ToString());
-            ParentWin.SidebarFrame.Content = op;
+            //OrderPage op = new OrderPage();
+            //ParentWin.SidebarFrame.Content = op;
         }
 
         private void StackPanel_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
         {
             StackPanel sp = sender as StackPanel;
-            FreeTablePage ftb = new FreeTablePage();
-            ftb.SetTableNo(sp.Tag.ToString());
+            MyApp.tableId = Convert.ToInt64(sp.Tag);
+            FreeTablePage ftb = new FreeTablePage(_parentWin);
             ParentWin.SidebarFrame.Content = ftb;
         }
     }

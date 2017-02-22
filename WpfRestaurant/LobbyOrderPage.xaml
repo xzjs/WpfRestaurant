@@ -30,7 +30,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Name="templeBorder" Style="{StaticResource border_style}">
-                            <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding No}">
+                            <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
                                 <StackPanel.Background>
                                     <ImageBrush ImageSource="pic/blue_button.png"/>
                                 </StackPanel.Background>
@@ -70,7 +70,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_1" Tag="{Binding No}">
+                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_1" Tag="{Binding Id}">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="pic/green_button.png"/>
                             </StackPanel.Background>
