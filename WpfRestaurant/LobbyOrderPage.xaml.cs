@@ -21,26 +21,12 @@ namespace WpfRestaurant
     public partial class LobbyOrderPage : Page
     {
         private MainWindow _parentWin;
-        private List<Table> flt;
+        private List<Table> _flt, _blt;
         public LobbyOrderPage()
         {
             InitializeComponent();
 
-            List<MyTable> lmt = new List<MyTable>()
-            {
-                new MyTable() {No="A001",Status="已下单" ,Paid=1},
-                new MyTable() {No="A002",Status="已下单" ,Paid=0},
-                new MyTable() {No="A003",Status="已下单" ,Paid=0},
-                new MyTable() {No="A004",Status="已下单" ,Paid=0}
-            };
-            BusyTableList.ItemsSource = lmt;
-            using (var db = new restaurantEntities())
-            {
-                flt = (from v in db.Table
-                       where v.Status == 0
-                       select v).ToList();
-            }
-            FreeTableList.ItemsSource = flt;
+            GetList();
         }
 
         public MainWindow ParentWin
@@ -56,19 +42,51 @@ namespace WpfRestaurant
             }
         }
 
+        /// <summary>
+        /// 忙碌餐桌点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StackPanel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             StackPanel sp = sender as StackPanel;
-            //OrderPage op = new OrderPage();
-            //ParentWin.SidebarFrame.Content = op;
+            MyApp.TableId = Convert.ToInt64(sp.Tag);
+            OrderPage op = new OrderPage(_parentWin);
+            _parentWin.Op = op;
+            ParentWin.SidebarFrame.Content = op;
         }
 
+        /// <summary>
+        /// 空闲餐桌点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StackPanel_MouseLeftButtonUp_1(object sender, MouseButtonEventArgs e)
         {
             StackPanel sp = sender as StackPanel;
-            MyApp.tableId = Convert.ToInt64(sp.Tag);
+            MyApp.TableId = Convert.ToInt64(sp.Tag);
             FreeTablePage ftb = new FreeTablePage(_parentWin);
             ParentWin.SidebarFrame.Content = ftb;
+        }
+
+        public void GetList()
+        {
+            BusyTableList.ItemsSource = GetTableList(2);
+            FreeTableList.ItemsSource = GetTableList(0);
+        }
+
+        private List<Table> GetTableList(int status)
+        {
+            using (var db = new restaurantEntities())
+            {
+                var tables = db.Table.Where(m => m.Status == status);
+                int type = MyApp.TableType;
+                if (type > 0)
+                {
+                    tables = tables.Where(m => m.Type == type);
+                }
+                return tables.ToList();
+            }
         }
     }
 }

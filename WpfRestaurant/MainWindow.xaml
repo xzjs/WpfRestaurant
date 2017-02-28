@@ -19,8 +19,8 @@
                     <Image Source="pic/ring.png" Height="30"></Image>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Background="LightGray">
-                    <Button Click="Button_Click_2">
-                        <Image Source="pic/refresh.png" Height="30"/>
+                    <Button Click="Button_Click_2" BorderBrush="{x:Null}">
+                        <Image Source="pic/refresh.png" Height="30" OpacityMask="Black"/>
                     </Button>
                 </StackPanel>
             </DockPanel>
@@ -28,19 +28,19 @@
                 <StackPanel DockPanel.Dock="Bottom" Height="80" HorizontalAlignment="Center">
                     <StackPanel Orientation="Horizontal" Height="40">
                         <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">占用中</TextBlock>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">0</TextBlock>
+                        <TextBlock x:Name="BusyTextBlock" Margin="5,0" VerticalAlignment="Center" Foreground="White" Text="0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Height="40">
                         <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">空闲中</TextBlock>
-                        <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">20</TextBlock>
+                        <TextBlock x:Name="FreeTextBlock" Margin="5,0" VerticalAlignment="Center" Foreground="White" Text="20"/>
                     </StackPanel>
                 </StackPanel>
-                <TreeView FontSize="20" Margin="0" Width="200" Background="#FF4C5D65">
-                    <TreeViewItem Header="大厅" Foreground="White" Margin="0,20" HorizontalAlignment="Center"/>
-                    <TreeViewItem Header="小包间" Foreground="White" Margin="0,20" HorizontalAlignment="Center"/>
-                    <TreeViewItem Header="大包间" Foreground="White" Margin="0,20" HorizontalAlignment="Center"></TreeViewItem>
-                    <TreeViewItem Header="全部桌台" Foreground="White" Margin="0,20" HorizontalAlignment="Center"></TreeViewItem>
-                </TreeView>
+                <StackPanel>
+                    <Button FontSize="20" Foreground="White" Height="50" Background="#FF4C5D65" Click="Button_Click_3">大厅</Button>
+                    <Button FontSize="20" Foreground="White" Height="50" Background="#FF4C5D65" Click="Button_Click_3">小包间</Button>
+                    <Button FontSize="20" Foreground="White" Height="50" Background="#FF4C5D65" Click="Button_Click_3">大包间</Button>
+                    <Button FontSize="20" Foreground="White" Height="50" Background="#FF4C5D65" Click="Button_Click_3">全部桌台</Button>
+                </StackPanel>
             </DockPanel>
             <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" Background="#FFD7D7D7" NavigationUIVisibility="Hidden"></Frame>
             <DockPanel>

@@ -21,15 +21,15 @@ namespace WpfRestaurant
     /// </summary>
     public partial class SetUpPage : Page
     {
-        private LoginWindow parentWindow;
-        private Config config; 
+        private LoginWindow _parentWindow;
+        private Config _config; 
         public SetUpPage()
         {
             InitializeComponent();
             using (var db=new restaurantEntities())
             {
-                config = db.Config.FirstOrDefault();
-                ConfigStackPanel.DataContext = config;
+                _config = db.Config.FirstOrDefault();
+                ConfigStackPanel.DataContext = _config;
             }
         }
 
@@ -37,12 +37,12 @@ namespace WpfRestaurant
         {
             get
             {
-                return parentWindow;
+                return _parentWindow;
             }
 
             set
             {
-                parentWindow = value;
+                _parentWindow = value;
             }
         }
 
@@ -50,12 +50,12 @@ namespace WpfRestaurant
         {
             using(var db=new restaurantEntities())
             {
-                db.Entry(config).State = EntityState.Modified;
+                db.Entry(_config).State = EntityState.Modified;
                 db.SaveChanges();
             }
             LoginPage lp = new LoginPage();
-            lp.ParentWindow = parentWindow;
-            parentWindow.PageFrame.Content = lp;
+            lp.ParentWindow = _parentWindow;
+            _parentWindow.PageFrame.Content = lp;
         }
     }
 }

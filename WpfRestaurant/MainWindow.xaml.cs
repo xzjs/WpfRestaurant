@@ -1,19 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Apache.NMS;
+using Apache.NMS.ActiveMQ;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfRestaurant
 {
@@ -22,25 +15,28 @@ namespace WpfRestaurant
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Config config;
-        private Infomation infomation;
+        public Config Config;
+        public Infomation Infomation;
+        public LobbyOrderPage Lop;
+        public OrderPage Op;
+
         public MainWindow()
         {
             InitializeComponent();
-            LobbyOrderPage lop = new LobbyOrderPage();
-            lop.ParentWin = this;
-            PageFrame.Content = lop;
+            Lop = new LobbyOrderPage {ParentWin = this};
+            PageFrame.Content = Lop;
             using (var db = new restaurantEntities())
             {
-                config = db.Config.First();
-                infomation = db.Infomation.First();
+                Config = db.Config.First();
+                Infomation = db.Infomation.First();
             }
+            SetNum();
+            ListenTcp();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LobbyOrderPage lop = new LobbyOrderPage();
-            lop.ParentWin = this;
+            LobbyOrderPage lop = new LobbyOrderPage {ParentWin = this};
             PageFrame.Content = lop;
         }
 
@@ -59,19 +55,21 @@ namespace WpfRestaurant
                     using (var client = new WebClient())
                     {
                         client.Encoding = Encoding.UTF8;
-                        var responseString = client.DownloadString("http://" + config.Http + "/restClient/menuInfoById.nd?id=" + infomation.RestaurantID);
+                        var responseString = client.DownloadString("http://" + Config.Http + "/restClient/menuInfoById.nd?id=" + Infomation.RestaurantID);
                         JObject jo = JObject.Parse(responseString);
                         if (jo["menuList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM Food");
                             foreach (var item in jo["menuList"])
                             {
-                                Food f = new Food();
-                                f.No = (long)item["id"];
-                                f.Name = (string)item["menuName"];
-                                f.Detail = (string)item["details"];
-                                f.Type = (int)item["type"];
-                                f.Img = (string)item["picUrl"];
+                                Food f = new Food
+                                {
+                                    No = (long) item["id"],
+                                    Name = (string) item["menuName"],
+                                    Detail = (string) item["details"],
+                                    Type = (int) item["type"],
+                                    Img = (string) item["picUrl"]
+                                };
                                 if (f.Img == null)
                                 {
                                     f.Img = "menu.png";
@@ -83,18 +81,20 @@ namespace WpfRestaurant
                             }
                         }
 
-                        responseString = client.DownloadString("http://" + config.Http + "/restClient/deskInfoById.nd?id=" + infomation.RestaurantID);
+                        responseString = client.DownloadString("http://" + Config.Http + "/restClient/deskInfoById.nd?id=" + Infomation.RestaurantID);
                         jo = JObject.Parse(responseString);
                         if (jo["deskList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM [Table]");
                             foreach (var item in jo["deskList"])
                             {
-                                Table t = new Table();
-                                t.DeskID = (long)item["id"];
-                                t.No = (string)item["deskNumber"];
-                                t.Type = (int)item["type"];
-                                t.Counts = (int)item["counts"];
+                                Table t = new Table
+                                {
+                                    DeskID = (long) item["id"],
+                                    No = (string) item["deskNumber"],
+                                    Type = (int) item["type"],
+                                    Counts = (int) item["counts"]
+                                };
                                 if ((string)item["status"] == null)
                                 {
                                     t.Status = 0;
@@ -113,6 +113,55 @@ namespace WpfRestaurant
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void SetNum()
+        {
+            using (var db=new restaurantEntities())
+            {
+                int count = db.Table.Count();
+                int free = db.Table.Count(x => x.Status == 0);
+                FreeTextBlock.Text = free.ToString();
+                BusyTextBlock.Text = (count - free).ToString();
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Button b = sender as Button;
+            int type = 0;
+            switch (b?.Content.ToString())
+            {
+                case "大厅":
+                    type = 1;
+                    break;
+                case "小包间":
+                    type = 2;
+                    break;
+                case "大包间":
+                    type = 3;
+                    break;
+            }
+            MyApp.TableType = type;
+            Lop.GetList();
+        }
+
+        private void ListenTcp()
+        {
+            IConnectionFactory factory = new ConnectionFactory("tcp://"+Config.Tcp+":"+Config.Port);
+            IConnection connection = factory.CreateConnection();
+            connection.ClientId = Infomation.RestaurantID.ToString();
+            connection.Start();
+            ISession session = connection.CreateSession();
+            IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuAppoint"+Infomation.RestaurantID));
+            consumer.Listener += consumer_Listener;
+        }
+        void consumer_Listener(IMessage message)
+        {
+            ITextMessage msg = (ITextMessage)message;
+            //异步调用下，否则无法回归主线程
+            MessageBox.Show(msg.Text);
+            //lop.GetList();
         }
     }
 }

@@ -20,12 +20,12 @@ namespace WpfRestaurant
     /// </summary>
     public partial class FreeTablePage : Page
     {
-        private MainWindow mainWindow;
+        private MainWindow _mainWindow;
         public FreeTablePage(MainWindow mw)
         {
             InitializeComponent();
 
-            mainWindow = mw;
+            _mainWindow = mw;
             SetTableNo();
         }
 
@@ -33,7 +33,7 @@ namespace WpfRestaurant
         {
             using(var db=new restaurantEntities())
             {
-                Table t = db.Table.Find(MyApp.tableId);
+                Table t = db.Table.Find(MyApp.TableId);
                 tableNoTextblock.Text = t.No;
             }
         }
@@ -42,7 +42,8 @@ namespace WpfRestaurant
         {
             using(var db=new restaurantEntities())
             {
-                MenuWindow mw = new MenuWindow(mainWindow);
+                Order o = new Order();
+                MenuWindow mw = new MenuWindow(_mainWindow,o);
                 mw.ShowDialog();
             }
         }

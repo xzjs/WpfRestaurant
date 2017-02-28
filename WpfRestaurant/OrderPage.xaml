@@ -11,10 +11,10 @@
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Width="280" Height="40" Margin="0,10" Background="#FF169BD5">
+                <Button Width="280" Height="40" Margin="0,10" Background="#FF169BD5" Click="Button_Click_1">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock>总计：￥</TextBlock>
-                        <TextBlock>40</TextBlock>
+                        <TextBlock FontSize="20" Foreground="White">总计：￥</TextBlock>
+                        <TextBlock x:Name="CostTextBlock" FontSize="20" Foreground="White">40</TextBlock>
                     </StackPanel>
                 </Button>
             </StackPanel>
@@ -24,8 +24,7 @@
                     <TextBlock x:Name="tableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="100" Height="30" Margin="5" Click="Button_Click">加菜</Button>
-                    <Button Width="100" Margin="5">退菜</Button>
+                    <Button Width="100" Height="30" Margin="5" Click="Button_Click">加/退菜</Button>
                     <Button Width="100" Margin="5">小票补打</Button>
                 </StackPanel>
                 <StackPanel>

@@ -8,6 +8,7 @@ namespace WpfRestaurant
 {
     public static class MyApp
     {
-        public static long tableId;
+        public static long TableId;
+        public static int TableType = 0;
     }
 }

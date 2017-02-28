@@ -15,14 +15,14 @@ namespace WpfRestaurant
     /// </summary>
     public partial class LoginPage : Page
     {
-        private LoginWindow parentWindow;
-        private Config config;
+        private LoginWindow _parentWindow;
+        private Config _config;
         public LoginPage()
         {
             InitializeComponent();
             using (var db = new restaurantEntities())
             {
-                config = db.Config.First();
+                _config = db.Config.First();
             }
         }
 
@@ -30,12 +30,12 @@ namespace WpfRestaurant
         {
             get
             {
-                return parentWindow;
+                return _parentWindow;
             }
 
             set
             {
-                parentWindow = value;
+                _parentWindow = value;
             }
         }
 
@@ -43,7 +43,7 @@ namespace WpfRestaurant
         {
             SetUpPage sup = new SetUpPage();
             sup.ParentWindow = ParentWindow;
-            parentWindow.PageFrame.Content = sup;
+            _parentWindow.PageFrame.Content = sup;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -59,7 +59,7 @@ namespace WpfRestaurant
                 values["account"] = name;
                 values["password"] = password;
 
-                var response = client.UploadValues("http://" + config.Http + "/restLogin/login.nd", values);
+                var response = client.UploadValues("http://" + _config.Http + "/restLogin/login.nd", values);
 
                 var responseString = Encoding.Default.GetString(response);
                 JObject jo = JObject.Parse(responseString);

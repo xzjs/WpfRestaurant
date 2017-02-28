@@ -7,17 +7,6 @@
       mc:Ignorable="d"
       Title="LobbyOrderPage">
     <Page.Resources>
-        <Style x:Key="border_style" TargetType="{x:Type Border}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"  Value="True">
-                    <Setter Property="Background" Value="LightBlue"></Setter>
-                    <Setter Property="BorderBrush" Value="Black"></Setter>
-                    <Setter Property="BorderThickness" Value="1"></Setter>
-                    <Setter Property="CornerRadius" Value="45"></Setter>
-                    <Setter Property="Padding" Value="1"></Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </Page.Resources>
     <Grid>
         <StackPanel>
@@ -29,7 +18,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Name="templeBorder" Style="{StaticResource border_style}">
+                        
                             <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
                                 <StackPanel.Background>
                                     <ImageBrush ImageSource="pic/blue_button.png"/>
@@ -52,7 +41,7 @@
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        </Border>
+                        
 
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=Paid}" Value="1">
