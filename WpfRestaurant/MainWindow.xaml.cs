@@ -31,7 +31,7 @@ namespace WpfRestaurant
                 Infomation = db.Infomation.First();
             }
             SetNum();
-            ListenTcp();
+            ListenOrderTcp();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -46,6 +46,11 @@ namespace WpfRestaurant
             PageFrame.Content = ap;
         }
 
+        /// <summary>
+        /// 更新桌位和菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             try
@@ -146,7 +151,7 @@ namespace WpfRestaurant
             Lop.GetList();
         }
 
-        private void ListenTcp()
+        private void ListenOrderTcp()
         {
             IConnectionFactory factory = new ConnectionFactory("tcp://"+Config.Tcp+":"+Config.Port);
             IConnection connection = factory.CreateConnection();
@@ -161,7 +166,69 @@ namespace WpfRestaurant
             ITextMessage msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
             MessageBox.Show(msg.Text);
-            //lop.GetList();
+            Book(msg.Text);
+        }
+
+        /// <summary>
+        /// 预订桌位
+        /// </summary>
+        /// <param name="json"></param>
+        void Book(string json)
+        {
+            try
+            {
+                using (var db = new restaurantEntities())
+                {
+                    JArray jo = JArray.Parse(json);
+                    foreach (var item in jo)
+                    {
+                        long phone = (long) item["contactTel"];
+                        string name = (string) item["name"];
+                        int counts = (int) item["counts"];
+                        string no = (string) item["orderNumber"];
+                        string remark = (string) item["remark"];
+                        long deskid = (long) item["repastDeskId"];
+                        DateTime time = Convert.ToDateTime(item["repastTimeStr"]);
+                        int type = (int) item["type"];
+                        //先查找有没有已经创建订单
+                        Order order = db.Order.FirstOrDefault(x => x.No == no);
+                        Table table = db.Table.First(x => x.DeskID == deskid);
+                        table.Status = 1;
+                        if (order == null)
+                        {
+                            
+                            order = new Order
+                            {
+                                Phone = phone,
+                                Name = name,
+                                Counts = counts,
+                                No = no,
+                                Remark = remark,
+                                Table_id = table.Id,
+                                Time = time,
+                                Type = type
+                            };
+                            db.Order.Add(order);
+                        }
+                        else
+                        {
+                            order.Phone = phone;
+                            order.Name = name;
+                            order.Counts = counts;
+                            order.Remark = remark;
+                            order.Table_id = table.Id;
+                            order.Time = time;
+                            order.Type = type;
+                        }
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -66,10 +67,10 @@ namespace WpfRestaurant
                     {
                         UploadOrder uo = new UploadOrder
                         {
-                            RestaurantId = (int)_mainWindow.Infomation.RestaurantID,
-                            RepastDeskId = _table.DeskID,
-                            Price = o.Cost,
-                            SubOrderList = new List<Menu>()
+                            restaurantId = (int)_mainWindow.Infomation.RestaurantID,
+                            repastDeskId = _table.DeskID,
+                            price = o.Cost,
+                            subOrderList = new List<Menu>()
                         };
                         foreach(var item in o.Bill)
                         {
@@ -77,45 +78,62 @@ namespace WpfRestaurant
                             {
                                 Menu m = new Menu
                                 {
-                                    MenuId = item.Food.No,
-                                    Counter = (int)item.Num
+                                    menuId = item.Food.No,
+                                    counter = (int)item.Num
                                 };
-                                uo.SubOrderList.Add(m);
+                                uo.subOrderList.Add(m);
                             }
                         }
                         string json= JsonConvert.SerializeObject(uo, Formatting.Indented);
                         // 上传订单
-                        using (var client = new WebClient())
+                        //TODO 上传订单出错
+                        try
                         {
-                            var values = new NameValueCollection {["detail"] = json};
+                            using (var client = new WebClient())
+                            {
+                                var values = new NameValueCollection { ["detail"] = json };
 
-                            var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/uploadMenuOrder.nd", values);
+                                var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/uploadMenuOrder.nd", values);
 
-                            var responseString = Encoding.Default.GetString(response);
-                            JObject jo = JObject.Parse(responseString);
-                            MessageBox.Show((string) jo["errorFlag"] == "false" ? "上传成功" : "上传失败");
+                                var responseString = Encoding.Default.GetString(response);
+                                JObject jo = JObject.Parse(responseString);
+                                MessageBox.Show((string)jo["errorFlag"] == "false" ? "上传成功" : "上传失败");
+                            }
                         }
+                        catch (Exception exception)
+                        {
+                            MessageBox.Show(exception.Message);
+                        }            
                     }
                 }
                 // 设置桌子状态
-                _table.Status = 0;
+                Table table = db.Table.Find(_table.Id);
+                table.Status = 0;
                 //保存数据库更改
                 db.SaveChanges();
                 //上传桌子状态
-                using (var client = new WebClient())
+                try
                 {
-                    var values = new NameValueCollection
+                    using (var client = new WebClient())
                     {
-                        ["deskId"] = _table.DeskID.ToString(),
-                        ["status"] = "0"
-                    };
+                        var values = new NameValueCollection
+                        {
+                            ["deskId"] = _table.DeskID.ToString(),
+                            ["status"] = "0"
+                        };
 
-                    var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/setDeskStatus.nd", values);
+                        var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/setDeskStatus.nd", values);
 
-                    var responseString = Encoding.Default.GetString(response);
-                    JObject jo = JObject.Parse(responseString);
-                    MessageBox.Show((string)jo["errorFlag"] == "false" ? "设置成功" : "设置失败");
+                        var responseString = Encoding.Default.GetString(response);
+                        JObject jo = JObject.Parse(responseString);
+                        MessageBox.Show((string)jo["errorFlag"] == "false" ? "设置成功" : "设置失败");
+                    }
                 }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+                
                 //刷新桌子
                 _mainWindow.Lop.GetList();
                 //设置右边栏

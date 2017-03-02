@@ -8,14 +8,14 @@ namespace WpfRestaurant
 {
     public class Menu
     {
-        public long MenuId;
-        public int Counter;
+        public long menuId;
+        public int counter;
     }
     class UploadOrder
     {
-        public int RestaurantId;
-        public long RepastDeskId;
-        public decimal Price;
-        public List<Menu> SubOrderList;
+        public int restaurantId;
+        public long repastDeskId;
+        public decimal price;
+        public List<Menu> subOrderList;
     }
 }
