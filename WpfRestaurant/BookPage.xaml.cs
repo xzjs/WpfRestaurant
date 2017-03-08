@@ -27,5 +27,10 @@ namespace WpfRestaurant
             order = o;
             BookStackPanel.DataContext = order;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO 点击到店按钮之后的处理事件
+        }
     }
 }

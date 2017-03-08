@@ -56,10 +56,10 @@
           <Property Name="No" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Remark" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Table_id" Type="integer" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="Type" Type="int" Nullable="false" />
-          <Property Name="Cost" Type="decimal" Precision="53" Scale="0" Nullable="false" />
-          <Property Name="Finish" Type="int" Nullable="false" />
+          <Property Name="Time" Type="datetime" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Cost" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="Finish" Type="int" />
         </EntityType>
         <EntityType Name="Table">
           <Key>

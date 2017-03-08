@@ -11,7 +11,7 @@
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Background="#FF199ED8"  FontSize="20" Foreground="White" Height="40">到店</Button>
+                <Button Background="#FF199ED8"  FontSize="20" Foreground="White" Height="40" Click="Button_Click">到店</Button>
             </StackPanel>
             <StackPanel x:Name="BookStackPanel" >
                 <StackPanel Orientation="Horizontal" Margin="10,30,0,5">

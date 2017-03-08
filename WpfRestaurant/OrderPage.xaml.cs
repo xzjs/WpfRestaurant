@@ -86,7 +86,6 @@ namespace WpfRestaurant
                         }
                         string json= JsonConvert.SerializeObject(uo, Formatting.Indented);
                         // 上传订单
-                        //TODO 上传订单出错
                         try
                         {
                             using (var client = new WebClient())

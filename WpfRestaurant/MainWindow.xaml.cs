@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -157,16 +158,27 @@ namespace WpfRestaurant
             IConnection connection = factory.CreateConnection();
             connection.ClientId = Infomation.RestaurantID.ToString();
             connection.Start();
+            ISession session1 = connection.CreateSession();
+            IMessageConsumer consumer1 = session1.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuAppoint"+Infomation.RestaurantID));
+            consumer1.Listener += consumer_Listener;
             ISession session = connection.CreateSession();
-            IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuAppoint"+Infomation.RestaurantID));
-            consumer.Listener += consumer_Listener;
+            IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuOrder" + Infomation.RestaurantID));
+            consumer.Listener += Foodconsumer_Listener;
         }
         void consumer_Listener(IMessage message)
         {
             ITextMessage msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
-            MessageBox.Show(msg.Text);
+            Console.WriteLine(msg.Text);
             Book(msg.Text);
+        }
+
+        void Foodconsumer_Listener(IMessage message)
+        {
+            ITextMessage msg = (ITextMessage)message;
+            //异步调用下，否则无法回归主线程
+            Console.WriteLine(msg.Text);
+            OrderFood(msg.Text);
         }
 
         /// <summary>
@@ -223,12 +235,59 @@ namespace WpfRestaurant
                         db.SaveChanges();
                     }
                 }
+                Lop.GetList();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
             
+        }
+
+        void OrderFood(string json)
+        {
+            try
+            {
+                Thread.Sleep(1000);
+                using (var db = new restaurantEntities())
+                {
+                    JArray jo = JArray.Parse(json);
+                    foreach (var item in jo)
+                    {
+                        string no = (string)item["orderNumber"];
+                        double price = (double) item["price"];
+                        //先查找有没有已经创建订单
+                        Order order = db.Order.FirstOrDefault(x => x.No == no);
+                        if (order == null)
+                        {
+                            order = new Order
+                            {
+                                No = no,
+                                Table_id = 0
+                            };
+                            db.Order.Add(order);
+                            db.SaveChanges();
+                        }
+                        foreach (var j in item["subOrderList"])
+                        {
+                            long foodNo = (long) j["menuId"];
+                            Food f = db.Food.First(m => m.No == foodNo);
+                            Bill b = new Bill
+                            {
+                                Food_id = f.Id,
+                                Num = (int) j["counter"],
+                                Order_id = order.Id
+                            };
+                            db.Bill.Add(b);
+                        }
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
     }
 }
