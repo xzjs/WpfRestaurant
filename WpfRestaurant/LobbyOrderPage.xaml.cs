@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,9 +74,28 @@ namespace WpfRestaurant
         {
             BusyTableList.ItemsSource = GetTableList(2);
             FreeTableList.ItemsSource = GetTableList(0);
+            OrderTableList.ItemsSource = GetTableList(1);
         }
 
-        private List<Table> GetTableList(int status)
+        /// <summary>
+        /// 预定桌位点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void StackPanel_MouseLeftButtonUp_2(object sender, MouseButtonEventArgs e)
+        {
+            StackPanel sp = sender as StackPanel;
+            Order o=sp.Tag as Order;
+            BookPage bp = new BookPage(o);
+            ParentWin.SidebarFrame.Content = bp;
+        }
+
+        /// <summary>
+        /// 获取餐桌列表
+        /// </summary>
+        /// <param name="status">0：空闲；1：预约；2：繁忙</param>
+        /// <returns></returns>
+        private List<TableItem> GetTableList(int status)
         {
             using (var db = new restaurantEntities())
             {
@@ -85,7 +105,31 @@ namespace WpfRestaurant
                 {
                     tables = tables.Where(m => m.Type == type);
                 }
-                return tables.ToList();
+                List<Table> lt = tables.ToList();
+                List<TableItem> lti=new List<TableItem>();
+                foreach (var t in lt)
+                {
+                    TableItem tableItem = new TableItem
+                    {
+                        Table = t,
+                        No = t.No,
+                    };
+                    if (status > 0)
+                    {
+                        Order order = t.Order.First(o => o.Finish == 0);
+                        if (status == 1)
+                        {
+                            tableItem.Time = order.Time.ToShortTimeString();
+                        }
+                        if (status == 2)
+                        {
+                            tableItem.Cost = order.Cost;
+                        }
+                        tableItem.Order = order;
+                    }
+                    lti.Add(tableItem);
+                }
+                return lti;
             }
         }
     }

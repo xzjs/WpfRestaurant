@@ -25,11 +25,11 @@
                                 </StackPanel.Background>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
+                                        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}" FontSize="16"/>
                                     </StackPanel>
                                     <StackPanel Width="110">
                                         <StackPanel Margin="0,15,0,0">
-                                            <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="{Binding Status}"/>
+                                            <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="已下单"/>
                                         </StackPanel>
                                         <StackPanel>
                                             <StackPanel Orientation="Horizontal">
@@ -65,7 +65,7 @@
                             </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Width="80"  Height="90" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}" FontSize="16"/>
                                 </StackPanel>
                                 <StackPanel Width="110" Orientation="Horizontal" VerticalAlignment="Center" Height="90">
                                     <TextBlock TextAlignment="Center" Width="110" FontSize="20" Foreground="Lime" VerticalAlignment="Center">
@@ -91,17 +91,17 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10">
+                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_2" Tag="{Binding Order}">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="pic/yellow_button.png"/>
                             </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}"/>
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}" FontSize="16"/>
                                 </StackPanel>
                                 <StackPanel Width="110"  VerticalAlignment="Center" Height="90">
                                     <TextBlock TextAlignment="Center" Width="110" FontSize="20" Foreground="#FFFFCC00" VerticalAlignment="Center" Margin="0,20,0,0">预约</TextBlock>
-                                    <TextBlock Foreground="#FFFFCC00" FontSize="20" TextAlignment="Center">11:22</TextBlock>
+                                    <TextBlock Foreground="#FFFFCC00" FontSize="20" TextAlignment="Center" Text="{Binding Time}"/>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

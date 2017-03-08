@@ -186,6 +186,9 @@
     <Compile Include="Bill.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BookPage.xaml.cs">
+      <DependentUpon>BookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -234,8 +237,13 @@
     <Compile Include="Table.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="TableItem.cs" />
     <Compile Include="UploadOrder.cs" />
     <Page Include="AppointPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BookPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -59,6 +59,7 @@
           <Property Name="Time" Type="datetime" Nullable="false" />
           <Property Name="Type" Type="int" Nullable="false" />
           <Property Name="Cost" Type="decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="Finish" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -190,6 +191,7 @@
           <Property Name="Cost" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
           <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_0_0" FromRole="Order" ToRole="Bill" />
           <NavigationProperty Name="Table" Relationship="Self.FK_Order_0_0" FromRole="Order" ToRole="Table" />
+          <Property Name="Finish" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -312,6 +314,7 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="restaurantModel.Order">
               <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Finish" ColumnName="Finish" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />

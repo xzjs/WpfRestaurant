@@ -30,6 +30,7 @@ namespace WpfRestaurant
         public System.DateTime Time { get; set; }
         public int Type { get; set; }
         public decimal Cost { get; set; }
+        public int Finish { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bill { get; set; }
