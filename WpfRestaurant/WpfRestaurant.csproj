@@ -340,21 +340,11 @@
     <Resource Include="pic\ring.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pic\refresh.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="pic\paid_0.png" />
     <Resource Include="pic\paid_1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pic\blue_button.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="pic\withe_button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pic\green_button.png" />
-    <Resource Include="pic\yellow_button.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="pic\menu.png" />
@@ -406,6 +396,21 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="pic\blue_button.gif" />
+    <Resource Include="pic\green_button.gif" />
+    <Resource Include="pic\yellow_button.gif" />
+    <Resource Include="pic\tangdian.gif" />
+    <Resource Include="pic\main_bgc.gif" />
+    <Resource Include="pic\table_num.gif" />
+    <Resource Include="pic\quanbu.gif" />
+    <Resource Include="pic\dating.gif" />
+    <Resource Include="pic\baojian.gif" />
+    <Resource Include="pic\time.gif" />
+    <Resource Include="pic\close.gif" />
+    <Resource Include="pic\unlogin.gif" />
+    <Resource Include="pic\refresh.gif" />
+    <Resource Include="pic\head.gif" />
+    <Resource Include="pic\title.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

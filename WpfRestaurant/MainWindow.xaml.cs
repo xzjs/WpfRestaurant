@@ -289,5 +289,15 @@ namespace WpfRestaurant
                 MessageBox.Show(exception.Message);
             }
         }
+
+        /// <summary>
+        /// 关闭按钮点击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

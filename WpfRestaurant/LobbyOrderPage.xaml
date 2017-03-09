@@ -18,30 +18,29 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        
-                            <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
-                                <StackPanel.Background>
-                                    <ImageBrush ImageSource="pic/blue_button.png"/>
-                                </StackPanel.Background>
-                                <StackPanel Orientation="Horizontal">
-                                    <StackPanel Width="80" Height="90" Orientation="Horizontal">
-                                        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}" FontSize="16"/>
+                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="pic/blue_button.gif"/>
+                            </StackPanel.Background>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="80" Height="90" Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" TextAlignment="Center" Width="80" Foreground="White" Text="{Binding No}" FontSize="16"/>
+                                </StackPanel>
+                                <StackPanel Width="110">
+                                    <StackPanel Margin="0,15,0,0">
+                                        <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="已下单"/>
                                     </StackPanel>
-                                    <StackPanel Width="110">
-                                        <StackPanel Margin="0,15,0,0">
-                                            <TextBlock HorizontalAlignment="Center" Foreground="#FF8F92FF" FontSize="20" Text="已下单"/>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image x:Name="paid_pic" Source="pic/paid_0.png" Width="30">
-                                                </Image>
-                                                <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
-                                            </StackPanel>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image x:Name="paid_pic" Source="pic/paid_0.png" Width="30">
+                                            </Image>
+                                            <TextBlock VerticalAlignment="Center" FontSize="20">￥40.0</TextBlock>
                                         </StackPanel>
                                     </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        
+                        </StackPanel>
+
 
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Path=Paid}" Value="1">
@@ -61,7 +60,7 @@
                     <DataTemplate>
                         <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_1" Tag="{Binding Id}">
                             <StackPanel.Background>
-                                <ImageBrush ImageSource="pic/green_button.png"/>
+                                <ImageBrush ImageSource="pic/green_button.gif"/>
                             </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Width="80"  Height="90" Orientation="Horizontal">
@@ -85,7 +84,7 @@
                     <DataTemplate>
                         <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_2" Tag="{Binding Order}">
                             <StackPanel.Background>
-                                <ImageBrush ImageSource="pic/yellow_button.png"/>
+                                <ImageBrush ImageSource="pic/yellow_button.gif"/>
                             </StackPanel.Background>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Width="80" Height="90" Orientation="Horizontal">
