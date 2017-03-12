@@ -5,13 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="470" d:DesignWidth="330"
       Title="BookPage">
+    <Page.Background>
+        <ImageBrush ImageSource="pic/diancai.png"/>
+    </Page.Background>
 
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Background="#FF199ED8"  FontSize="20" Foreground="White" Height="40" Click="Button_Click">到店</Button>
+                <Button Height="50" Click="Button_Click" Width="180" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <DockPanel Width="180" Height="50">
+                        <DockPanel.Background>
+                            <ImageBrush ImageSource="pic/red_button.png"/>
+                        </DockPanel.Background>
+                        <TextBlock Text="到店" FontSize="20" Foreground="White" VerticalAlignment="Center" TextAlignment="Center"></TextBlock>
+                    </DockPanel>
+                </Button>
             </StackPanel>
             <StackPanel x:Name="BookStackPanel" >
                 <StackPanel Orientation="Horizontal" Margin="10,30,0,5">

@@ -69,8 +69,8 @@ namespace WpfRestaurant
                     {
                         Infomation i = db.Infomation.First();
                         i.RestaurantID = (int)jo["id"];
-                        MainWindow mw = new MainWindow();
-                        mw.ShowDialog();
+                        db.SaveChanges();
+                        _parentWindow.Close();
                     }
                 }
                 else

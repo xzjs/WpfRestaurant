@@ -5,18 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="470" d:DesignWidth="330"
       Title="FreeTablePage">
+    <Page.Background>
+        <ImageBrush ImageSource="pic/diancai.png"/>
+    </Page.Background>
 
     <Grid>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="大厅" Margin="10,0" FontSize="20"/>
                 <TextBlock x:Name="tableNoTextblock" Text="A008" Margin="10,0" FontSize="20"/>
             </StackPanel>
-            <StackPanel>
-                <Button Margin="20" Height="40" Background="White" Click="Button_Click">点菜</Button>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Button Height="50" Background="{x:Null}" Click="Button_Click" BorderBrush="{x:Null}" Width="180" Margin="0">
+                    <DockPanel Width="180" Height="50">
+                        <DockPanel.Background>
+                            <ImageBrush ImageSource="pic/red_button.png"/>
+                        </DockPanel.Background>
+                        <TextBlock Text="点菜" VerticalAlignment="Center" FontSize="20" Foreground="White" TextAlignment="Center"></TextBlock>
+                    </DockPanel>
+                </Button>
             </StackPanel>
-        </StackPanel>
+            <DockPanel></DockPanel>
+        </DockPanel>
     </Grid>
 </Page>

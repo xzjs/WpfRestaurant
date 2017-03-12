@@ -24,20 +24,23 @@ namespace WpfRestaurant
         public MainWindow()
         {
             InitializeComponent();
-            Lop = new LobbyOrderPage {ParentWin = this};
+            Lop = new LobbyOrderPage(this);
             PageFrame.Content = Lop;
             using (var db = new restaurantEntities())
             {
                 Config = db.Config.First();
+                if (Config != null)
+                {
+                    MyApp.Http = Config.Http;
+                }
                 Infomation = db.Infomation.First();
             }
-            SetNum();
             ListenOrderTcp();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            LobbyOrderPage lop = new LobbyOrderPage {ParentWin = this};
+            LobbyOrderPage lop = new LobbyOrderPage(this);
             PageFrame.Content = lop;
         }
 
@@ -70,11 +73,11 @@ namespace WpfRestaurant
                             {
                                 Food f = new Food
                                 {
-                                    No = (long) item["id"],
-                                    Name = (string) item["menuName"],
-                                    Detail = (string) item["details"],
-                                    Type = (int) item["type"],
-                                    Img = (string) item["picUrl"]
+                                    No = (long)item["id"],
+                                    Name = (string)item["menuName"],
+                                    Detail = (string)item["details"],
+                                    Type = (int)item["type"],
+                                    Img = (string)item["picUrl"]
                                 };
                                 if (f.Img == null)
                                 {
@@ -96,15 +99,16 @@ namespace WpfRestaurant
                             {
                                 Table t = new Table
                                 {
-                                    DeskID = (long) item["id"],
-                                    No = (string) item["deskNumber"],
-                                    Type = (int) item["type"],
-                                    Counts = (int) item["counts"]
+                                    DeskID = (long)item["id"],
+                                    No = (string)item["deskNumber"],
+                                    Type = (int)item["type"],
+                                    Counts = (int)item["counts"]
                                 };
                                 if ((string)item["status"] == null)
                                 {
                                     t.Status = 0;
-                                }else
+                                }
+                                else
                                 {
                                     t.Status = (int)item["status"];
                                 }
@@ -115,15 +119,18 @@ namespace WpfRestaurant
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        /// 设置对应的餐桌数目
+        /// </summary>
         public void SetNum()
         {
-            using (var db=new restaurantEntities())
+            using (var db = new restaurantEntities())
             {
                 int count = db.Table.Count();
                 int free = db.Table.Count(x => x.Status == 0);
@@ -132,6 +139,11 @@ namespace WpfRestaurant
             }
         }
 
+        /// <summary>
+        /// 餐桌类型切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
@@ -152,18 +164,28 @@ namespace WpfRestaurant
             Lop.GetList();
         }
 
+        /// <summary>
+        /// 通过tcp获取数据
+        /// </summary>
         private void ListenOrderTcp()
         {
-            IConnectionFactory factory = new ConnectionFactory("tcp://"+Config.Tcp+":"+Config.Port);
-            IConnection connection = factory.CreateConnection();
-            connection.ClientId = Infomation.RestaurantID.ToString();
-            connection.Start();
-            ISession session1 = connection.CreateSession();
-            IMessageConsumer consumer1 = session1.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuAppoint"+Infomation.RestaurantID));
-            consumer1.Listener += consumer_Listener;
-            ISession session = connection.CreateSession();
-            IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuOrder" + Infomation.RestaurantID));
-            consumer.Listener += Foodconsumer_Listener;
+            try
+            {
+                IConnectionFactory factory = new ConnectionFactory("tcp://" + Config.Tcp + ":" + Config.Port);
+                IConnection connection = factory.CreateConnection();
+                connection.ClientId = Infomation.RestaurantID.ToString();
+                connection.Start();
+                ISession session1 = connection.CreateSession();
+                IMessageConsumer consumer1 = session1.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuAppoint" + Infomation.RestaurantID));
+                consumer1.Listener += consumer_Listener;
+                ISession session = connection.CreateSession();
+                IMessageConsumer consumer = session.CreateConsumer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue("menuOrder" + Infomation.RestaurantID));
+                consumer.Listener += Foodconsumer_Listener;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
         void consumer_Listener(IMessage message)
         {
@@ -194,21 +216,20 @@ namespace WpfRestaurant
                     JArray jo = JArray.Parse(json);
                     foreach (var item in jo)
                     {
-                        long phone = (long) item["contactTel"];
-                        string name = (string) item["name"];
-                        int counts = (int) item["counts"];
-                        string no = (string) item["orderNumber"];
-                        string remark = (string) item["remark"];
-                        long deskid = (long) item["repastDeskId"];
+                        long phone = (long)item["contactTel"];
+                        string name = (string)item["name"];
+                        int counts = (int)item["counts"];
+                        string no = (string)item["orderNumber"];
+                        string remark = (string)item["remark"];
+                        long deskid = (long)item["repastDeskId"];
                         DateTime time = Convert.ToDateTime(item["repastTimeStr"]);
-                        int type = (int) item["type"];
+                        int type = (int)item["type"];
                         //先查找有没有已经创建订单
                         Order order = db.Order.FirstOrDefault(x => x.No == no);
                         Table table = db.Table.First(x => x.DeskID == deskid);
                         table.Status = 1;
                         if (order == null)
                         {
-                            
                             order = new Order
                             {
                                 Phone = phone,
@@ -218,7 +239,8 @@ namespace WpfRestaurant
                                 Remark = remark,
                                 Table_id = table.Id,
                                 Time = time,
-                                Type = type
+                                Type = type,
+                                Cost = 0
                             };
                             db.Order.Add(order);
                         }
@@ -241,7 +263,7 @@ namespace WpfRestaurant
             {
                 MessageBox.Show(exception.Message);
             }
-            
+
         }
 
         void OrderFood(string json)
@@ -255,7 +277,7 @@ namespace WpfRestaurant
                     foreach (var item in jo)
                     {
                         string no = (string)item["orderNumber"];
-                        double price = (double) item["price"];
+                        double price = (double)item["price"];
                         //先查找有没有已经创建订单
                         Order order = db.Order.FirstOrDefault(x => x.No == no);
                         if (order == null)
@@ -263,21 +285,27 @@ namespace WpfRestaurant
                             order = new Order
                             {
                                 No = no,
-                                Table_id = 0
+                                Table_id = 0,
+                                Cost = 0
                             };
                             db.Order.Add(order);
                             db.SaveChanges();
                         }
                         foreach (var j in item["subOrderList"])
                         {
-                            long foodNo = (long) j["menuId"];
+                            long foodNo = (long)j["menuId"];
                             Food f = db.Food.First(m => m.No == foodNo);
                             Bill b = new Bill
                             {
                                 Food_id = f.Id,
-                                Num = (int) j["counter"],
+                                Num = (int)j["counter"],
                                 Order_id = order.Id
                             };
+                            if (b.Num != null)
+                            {
+                                b.Price = f.Price * b.Num.Value;
+                                order.Cost += b.Price.Value;
+                            }
                             db.Bill.Add(b);
                         }
                     }
@@ -298,6 +326,24 @@ namespace WpfRestaurant
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
+
+        private void Login(object sender, RoutedEventArgs e)
+        {
+            LoginWindow lw=new LoginWindow();
+            lw.ShowDialog();
         }
     }
 }

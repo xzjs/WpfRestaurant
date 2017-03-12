@@ -18,7 +18,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
+                        <!--<StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp" Tag="{Binding Id}">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="pic/blue_button.gif"/>
                             </StackPanel.Background>
@@ -46,7 +46,25 @@
                             <DataTrigger Binding="{Binding Path=Paid}" Value="1">
                                 <Setter TargetName="paid_pic" Property="Source" Value="pic/paid_1.png"></Setter>
                             </DataTrigger>
-                        </DataTemplate.Triggers>
+                        </DataTemplate.Triggers>-->
+                        <Button Click="BusyTableClick" Tag="{Binding Path=Id}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Grid Width="160" Height="100">
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="pic/blue_button.gif"/>
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White" Text="{Binding No}" FontSize="20"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" FontSize="20" Foreground="Lime" VerticalAlignment="Center" Text="已下单"></TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20" Text="{Binding Cost}" Foreground="White"/>
+                            </Grid>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -58,7 +76,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_1" Tag="{Binding Id}">
+                        <!--<StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_1" Tag="{Binding Id}">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="pic/green_button.gif"/>
                             </StackPanel.Background>
@@ -70,7 +88,24 @@
                                     <TextBlock TextAlignment="Center" Width="110" FontSize="20" Foreground="Lime" VerticalAlignment="Center" Text="空闲"></TextBlock>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                        </StackPanel>-->
+                        <Button Click="FreeTableClick" Tag="{Binding Path=Id}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Grid Width="160" Height="100">
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="pic/green_button.gif"/>
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White" Text="{Binding No}" FontSize="20"/>
+                                <TextBlock Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontSize="20" Foreground="Lime" VerticalAlignment="Center" Text="空闲"></TextBlock>
+                            </Grid>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -82,7 +117,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_2" Tag="{Binding Order}">
+                        <!--<StackPanel Width="190" Height="90" Margin="10" MouseLeftButtonUp="StackPanel_MouseLeftButtonUp_2" Tag="{Binding Order}">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="pic/yellow_button.gif"/>
                             </StackPanel.Background>
@@ -95,7 +130,25 @@
                                     <TextBlock Foreground="#FFFFCC00" FontSize="20" TextAlignment="Center" Text="{Binding Time}"/>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                        </StackPanel>-->
+                        <Button Click="OrderTableClick" Tag="{Binding Path=Order}" Background="{x:Null}" BorderBrush="{x:Null}">
+                            <Grid Width="160" Height="100">
+                                <Grid.Background>
+                                    <ImageBrush ImageSource="pic/yellow_button.gif"/>
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White" Text="{Binding No}" FontSize="20"/>
+                                <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" FontSize="20" Foreground="Lime" VerticalAlignment="Center" Text="预约"></TextBlock>
+                                <TextBlock Grid.Column="1" Grid.Row="1" Foreground="White" FontSize="20" TextAlignment="Center" Text="{Binding Time}"/>
+                            </Grid>
+                        </Button>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

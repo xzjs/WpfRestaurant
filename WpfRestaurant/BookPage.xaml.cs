@@ -20,17 +20,22 @@ namespace WpfRestaurant
     /// </summary>
     public partial class BookPage : Page
     {
-        private Order order;
-        public BookPage(Order o)
+        private Order _order;
+        private MainWindow _mainWindow;
+        public BookPage(MainWindow mainWindow, Order order)
         {
             InitializeComponent();
-            order = o;
-            BookStackPanel.DataContext = order;
+            _mainWindow = mainWindow;
+            _order = order;
+            BookStackPanel.DataContext = _order;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO 点击到店按钮之后的处理事件
+            OrderPage op=new OrderPage(_mainWindow);
+            _mainWindow.SidebarFrame.Content = op;
+            TableItem.SetTableStatus(2,MyApp.TableId);
+            _mainWindow.Lop.GetList();
         }
     }
 }

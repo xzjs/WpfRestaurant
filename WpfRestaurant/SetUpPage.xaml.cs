@@ -53,8 +53,8 @@ namespace WpfRestaurant
                 db.Entry(_config).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            LoginPage lp = new LoginPage();
-            lp.ParentWindow = _parentWindow;
+            MyApp.Http = _config.Http;
+            LoginPage lp = new LoginPage {ParentWindow = _parentWindow};
             _parentWindow.PageFrame.Content = lp;
         }
     }

@@ -145,6 +145,7 @@ namespace WpfRestaurant
                                     Price = item.Food.Price * item.Num
                                 };
                                 db.Bill.Add(b);
+                                if (b.Price != null) _order.Cost += b.Price.Value;
                             }
                         }
                         db.SaveChanges();
@@ -158,20 +159,7 @@ namespace WpfRestaurant
                         _mainWindow.Lop.GetList();
 
                         //设置服务器上的桌子状态
-                        using (var client = new WebClient())
-                        {
-                            var values = new NameValueCollection
-                            {
-                                ["deskId"] = t.DeskID.ToString(),
-                                ["status"] = "2"
-                            };
-
-                            var response = client.UploadValues("http://" + _config.Http + "/restClient/setDeskStatus.nd", values);
-
-                            var responseString = Encoding.Default.GetString(response);
-                            JObject jo = JObject.Parse(responseString);
-                            MessageBox.Show((string) jo["errorFlag"] == "false" ? "设置成功" : "设置失败");
-                        }
+                        TableItem.SetTableStatus(2,MyApp.TableId);
                     }
                     else
                     {
@@ -201,6 +189,28 @@ namespace WpfRestaurant
                 MessageBox.Show(ex.Message);
             }
 
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
+            {
+                DragMove();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+        }
+        
+        /// <summary>
+        /// 关闭菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Closer_Menu(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

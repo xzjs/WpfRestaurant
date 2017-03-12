@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfRestaurant"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1000" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize">
+        Title="MainWindow" Height="550" Width="1000" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Grid>
         <DockPanel>
             <DockPanel DockPanel.Dock="Top" Height="40">
@@ -13,7 +13,9 @@
                     <ImageBrush ImageSource="pic/head.gif"/>
                 </DockPanel.Background>
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                    <Image Source="pic/unlogin.gif" Height="30" Margin="50,0"></Image>
+                    <Button  Background="{x:Null}" BorderBrush="{x:Null}" Click="Login" Height="30" Margin="50,0">
+                        <Image Source="pic/unlogin.gif"></Image>
+                    </Button>
                     <Button Height="30" Margin="50,0" Background="{x:Null}" BorderBrush="{x:Null}" Click="CloseClick">
                         <Image Source="pic/close.gif" ></Image>
                     </Button>
@@ -56,7 +58,7 @@
                         <Button Click="Button_Click_3" Background="{x:Null}" BorderBrush="{x:Null}" Tag="大厅">
                             <StackPanel Width="150" Height="55" Orientation="Horizontal" >
                                 <StackPanel.Background>
-                                    <ImageBrush ImageSource="pic/dating.gif"/>
+                                    <ImageBrush ImageSource="pic/dating.png"/>
                                 </StackPanel.Background>
                                 <TextBlock Text="大厅" Foreground="White" FontSize="20" TextAlignment="Center" Width="150" VerticalAlignment="Center"/>
                             </StackPanel>
@@ -94,8 +96,8 @@
                 </DockPanel.Background>
                 <DockPanel Dock="Left">
                     <StackPanel DockPanel.Dock="Top">
-                        <Button Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Margin="50,40,0,0">
-                            <Image Source="pic/refresh.gif"></Image>
+                        <Button Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Margin="50,40,0,0" Click="Button_Click_2">
+                            <Image Source="pic/refresh.png"></Image>
                         </Button>
                     </StackPanel>
                     <StackPanel>
@@ -125,7 +127,7 @@
                         </Button>
                     </StackPanel>
                 </DockPanel>
-                <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" NavigationUIVisibility="Hidden"></Frame>
+                <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" NavigationUIVisibility="Hidden" Margin="20"></Frame>
                 <DockPanel>
                     <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" Margin="0,40"></Frame>
                 </DockPanel>

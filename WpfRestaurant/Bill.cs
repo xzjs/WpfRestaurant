@@ -11,7 +11,9 @@ namespace WpfRestaurant
 {
     using System;
     using System.Collections.Generic;
+    using PropertyChanged;
     
+    [ImplementPropertyChanged]
     public partial class Bill
     {
         public long Id { get; set; }

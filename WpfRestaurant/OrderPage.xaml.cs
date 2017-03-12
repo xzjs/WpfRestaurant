@@ -43,14 +43,10 @@ namespace WpfRestaurant
             using (var db = new restaurantEntities())
             {
                 _order = db.Order.Include("Bill.Food").Where(x => x.Table_id == MyApp.TableId).OrderByDescending(x => x.Id).First();
-                foreach(var item in _order.Bill)
-                {
-                    if (item.Price != null) _order.Cost += (decimal)item.Price;
-                }
             }
             BillDataGrid.ItemsSource = _order.Bill.ToList();
             tableNoTextblock.Text = _table.No;
-            CostTextBlock.Text = _order.Cost.ToString(CultureInfo.InvariantCulture);
+            CostTextBlock.Text = "总计：￥" + _order.Cost.ToString(CultureInfo.InvariantCulture);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -90,13 +86,16 @@ namespace WpfRestaurant
                         {
                             using (var client = new WebClient())
                             {
-                                var values = new NameValueCollection { ["detail"] = json };
+                                var values = new NameValueCollection { ["details"] = json };
 
                                 var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/uploadMenuOrder.nd", values);
 
                                 var responseString = Encoding.Default.GetString(response);
                                 JObject jo = JObject.Parse(responseString);
-                                MessageBox.Show((string)jo["errorFlag"] == "false" ? "上传成功" : "上传失败");
+                                if ((string) jo["errorFlag"] != "false")
+                                {
+                                    throw new Exception("上传订单失败");
+                                }
                             }
                         }
                         catch (Exception exception)
@@ -106,33 +105,7 @@ namespace WpfRestaurant
                     }
                 }
                 // 设置桌子状态
-                Table table = db.Table.Find(_table.Id);
-                table.Status = 0;
-                //保存数据库更改
-                db.SaveChanges();
-                //上传桌子状态
-                try
-                {
-                    using (var client = new WebClient())
-                    {
-                        var values = new NameValueCollection
-                        {
-                            ["deskId"] = _table.DeskID.ToString(),
-                            ["status"] = "0"
-                        };
-
-                        var response = client.UploadValues("http://" + _mainWindow.Config.Http + "/restClient/setDeskStatus.nd", values);
-
-                        var responseString = Encoding.Default.GetString(response);
-                        JObject jo = JObject.Parse(responseString);
-                        MessageBox.Show((string)jo["errorFlag"] == "false" ? "设置成功" : "设置失败");
-                    }
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
-                
+                TableItem.SetTableStatus(0,MyApp.TableId);       
                 //刷新桌子
                 _mainWindow.Lop.GetList();
                 //设置右边栏

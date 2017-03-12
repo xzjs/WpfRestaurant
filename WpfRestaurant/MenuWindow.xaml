@@ -5,10 +5,121 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfRestaurant"
         mc:Ignorable="d"
-        Title="热菜" Height="550" Width="400" WindowStartupLocation="CenterScreen">
+        Title="热菜" Height="550" Width="400" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None" MouseLeftButtonUp="Window_MouseLeftButtonUp" Background="{x:Null}">
     <Grid>
         <DockPanel>
-            <StackPanel DockPanel.Dock="Bottom">
+            <DockPanel Dock="Top">
+                <DockPanel Dock="Left" Width="100" Height="30" Margin="40,0">
+                    <DockPanel.Background>
+                        <ImageBrush ImageSource="pic/caidan.png"/>
+                    </DockPanel.Background>
+                    <TextBlock Text="菜单" FontSize="20" Foreground="White" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </DockPanel>
+                <DockPanel Dock="Right" Width="50" Height="30" Margin="20,0">
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" Click="Closer_Menu">
+                        <Image Source="pic/caidan_close.png"></Image>
+                    </Button>
+                </DockPanel>
+                <DockPanel></DockPanel>
+            </DockPanel>
+            <DockPanel>
+                <DockPanel.Background>
+                    <ImageBrush ImageSource="pic/menu_bg.png"/>
+                </DockPanel.Background>
+                <DockPanel Dock="Left">
+                    <DockPanel Dock="Bottom">
+                        <Button Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_3">
+                            <DockPanel Width="110" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/blue_button.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="确定" FontSize="20" Foreground="White" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                    </DockPanel>
+                    <StackPanel>
+                        <Button Width="125" Height="40"  Click="Button_Click" Tag="1" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,0,0,0">
+                            <DockPanel Width="125" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/cai.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="热菜" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                        <Button Width="125" Height="40"  Click="Button_Click" Tag="2" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,0,0,0">
+                            <DockPanel Width="125" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/cai2.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="凉菜" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                        <Button Width="125" Height="40"  Click="Button_Click" Tag="3" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,0,0,0">
+                            <DockPanel Width="125" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/cai2.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="主食" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                        <Button Width="125" Height="40"  Click="Button_Click" Tag="4" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,0,0,0">
+                            <DockPanel Width="125" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/cai2.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="饮品" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                        <Button Width="125" Height="40"  Click="Button_Click" Tag="5" Background="{x:Null}" BorderBrush="{x:Null}" Margin="5,0,0,0">
+                            <DockPanel Width="125" Height="40">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="pic/cai2.png"/>
+                                </DockPanel.Background>
+                                <TextBlock Text="香烟" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Foreground="White"></TextBlock>
+                            </DockPanel>
+                        </Button>
+                        <!--<Button Height="40" Click="Button_Click" Tag="2">凉菜</Button>
+                        <Button Height="40" Click="Button_Click" Tag="3">主食</Button>
+                        <Button Height="40" Click="Button_Click" Tag="4">饮品</Button>
+                        <Button Height="40" Click="Button_Click" Tag="5">香烟</Button>-->
+                    </StackPanel>
+                </DockPanel>
+                <DockPanel>
+                    <ListBox x:Name="FoodListBox">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Width="270">
+                                    <DockPanel.Background>
+                                        <ImageBrush ImageSource="pic/cai2.png" Stretch="Fill"/>
+                                    </DockPanel.Background>
+                                    <StackPanel DockPanel.Dock="Left" Width="100">
+                                        <Image Source="pic/menu.png"></Image>
+                                    </StackPanel>
+                                    <StackPanel>
+                                        <StackPanel VerticalAlignment="Center" Margin="0,5">
+                                            <TextBlock Text="{Binding Path=Food.Name}" FontSize="20" TextAlignment="Center" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                                            <Button VerticalAlignment="Center" Width="20" Height="20" Click="Button_Click_2" Tag="{Binding Food.Id}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <Image Source="pic/jian.png"/>
+                                            </Button>
+                                            <TextBlock VerticalAlignment="Center" Width="20" Height="20" TextAlignment="Center" FontSize="16" Text="{Binding Num}">
+                                                <TextBlock.Background>
+                                                    <ImageBrush ImageSource="pic/circle.png"/>
+                                                </TextBlock.Background>
+                                            </TextBlock>
+                                            <Button VerticalAlignment="Center" Width="20" Height="20" Click="Button_Click_1" Tag="{Binding Food.Id}" Background="{x:Null}" BorderBrush="{x:Null}">
+                                                <Image Source="pic/jia.png"></Image>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </DockPanel>
+            <!--<StackPanel DockPanel.Dock="Bottom">
                 <Button Height="40" Background="#FF199ED8" FontSize="20" Foreground="White" Click="Button_Click_3">确 定</Button>
             </StackPanel>
             <DockPanel>
@@ -42,7 +153,8 @@
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <!--<ListBoxItem>
+                        -->
+            <!--<ListBoxItem>
                             <DockPanel Width="240">
                                 <StackPanel DockPanel.Dock="Left" Width="100">
                                     <Image Source="pic/menu.png"></Image>
@@ -74,9 +186,10 @@
                                 <StackPanel></StackPanel>
                             </DockPanel>
                         </ListBoxItem>-->
+            <!--
                     </ListBox>
                 </StackPanel>
-            </DockPanel>
+            </DockPanel>-->
         </DockPanel>
     </Grid>
 </Window>
