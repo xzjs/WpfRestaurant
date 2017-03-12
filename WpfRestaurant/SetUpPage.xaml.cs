@@ -18,6 +18,10 @@ namespace WpfRestaurant
             using (var db = new restaurantEntities())
             {
                 _config = db.Config.FirstOrDefault();
+                if (_config == null)
+                {
+                    _config=new Config();
+                }
                 ConfigStackPanel.DataContext = _config;
             }
         }
@@ -28,7 +32,14 @@ namespace WpfRestaurant
         {
             using (var db = new restaurantEntities())
             {
-                db.Entry(_config).State = EntityState.Modified;
+                if (_config.Id == 0)
+                {
+                    db.Config.Add(_config);
+                }
+                else
+                {
+                    db.Entry(_config).State = EntityState.Modified;
+                }
                 db.SaveChanges();
             }
             MyApp.Http = _config.Http;

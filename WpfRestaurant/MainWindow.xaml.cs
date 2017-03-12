@@ -29,7 +29,7 @@ namespace WpfRestaurant
             InitializeComponent();
             Lop = new LobbyOrderPage(this);
             PageFrame.Content = Lop;
-            
+
             ListenOrderTcp();
 
             var showTimer = new DispatcherTimer();
@@ -80,17 +80,17 @@ namespace WpfRestaurant
                             {
                                 var f = new Food
                                 {
-                                    No = (long) item["id"],
-                                    Name = (string) item["menuName"],
-                                    Detail = (string) item["details"],
-                                    Type = (int) item["type"],
-                                    Img = (string) item["picUrl"]
+                                    No = (long)item["id"],
+                                    Name = (string)item["menuName"],
+                                    Detail = (string)item["details"],
+                                    Type = (int)item["type"],
+                                    Img = (string)item["picUrl"]
                                 };
                                 if (f.Img == null)
                                     f.Img = "menu.png";
-                                f.Price = (decimal) item["price"];
-                                f.OnsalePrice = (decimal) item["onsalePrice"];
-                                f.SaleType = (int) item["saleType"];
+                                f.Price = (decimal)item["price"];
+                                f.OnsalePrice = (decimal)item["onsalePrice"];
+                                f.SaleType = (int)item["saleType"];
                                 db.Food.Add(f);
                             }
                         }
@@ -106,15 +106,15 @@ namespace WpfRestaurant
                             {
                                 var t = new Table
                                 {
-                                    DeskID = (long) item["id"],
-                                    No = (string) item["deskNumber"],
-                                    Type = (int) item["type"],
-                                    Counts = (int) item["counts"]
+                                    DeskID = (long)item["id"],
+                                    No = (string)item["deskNumber"],
+                                    Type = (int)item["type"],
+                                    Counts = (int)item["counts"]
                                 };
-                                if ((string) item["status"] == null)
+                                if ((string)item["status"] == null)
                                     t.Status = 0;
                                 else
-                                    t.Status = (int) item["status"];
+                                    t.Status = (int)item["status"];
                                 db.Table.Add(t);
                             }
                         }
@@ -193,7 +193,7 @@ namespace WpfRestaurant
 
         private void consumer_Listener(IMessage message)
         {
-            var msg = (ITextMessage) message;
+            var msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
             Console.WriteLine(msg.Text);
             Book(msg.Text);
@@ -201,7 +201,7 @@ namespace WpfRestaurant
 
         private void Foodconsumer_Listener(IMessage message)
         {
-            var msg = (ITextMessage) message;
+            var msg = (ITextMessage)message;
             //异步调用下，否则无法回归主线程
             Console.WriteLine(msg.Text);
             OrderFood(msg.Text);
@@ -220,14 +220,14 @@ namespace WpfRestaurant
                     var jo = JArray.Parse(json);
                     foreach (var item in jo)
                     {
-                        var phone = (long) item["contactTel"];
-                        var name = (string) item["name"];
-                        var counts = (int) item["counts"];
-                        var no = (string) item["orderNumber"];
-                        var remark = (string) item["remark"];
-                        var deskid = (long) item["repastDeskId"];
+                        var phone = (long)item["contactTel"];
+                        var name = (string)item["name"];
+                        var counts = (int)item["counts"];
+                        var no = (string)item["orderNumber"];
+                        var remark = (string)item["remark"];
+                        var deskid = (long)item["repastDeskId"];
                         var time = Convert.ToDateTime(item["repastTimeStr"]);
-                        var type = (int) item["type"];
+                        var type = (int)item["type"];
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         var table = db.Table.First(x => x.DeskID == deskid);
@@ -279,8 +279,8 @@ namespace WpfRestaurant
                     var jo = JArray.Parse(json);
                     foreach (var item in jo)
                     {
-                        var no = (string) item["orderNumber"];
-                        var price = (double) item["price"];
+                        var no = (string)item["orderNumber"];
+                        var price = (double)item["price"];
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         if (order == null)
@@ -296,12 +296,12 @@ namespace WpfRestaurant
                         }
                         foreach (var j in item["subOrderList"])
                         {
-                            var foodNo = (long) j["menuId"];
+                            var foodNo = (long)j["menuId"];
                             var f = db.Food.First(m => m.No == foodNo);
                             var b = new Bill
                             {
                                 Food_id = f.Id,
-                                Num = (int) j["counter"],
+                                Num = (int)j["counter"],
                                 Order_id = order.Id
                             };
                             if (b.Num != null)
@@ -353,8 +353,9 @@ namespace WpfRestaurant
         {
             using (var db = new restaurantEntities())
             {
-                Config = db.Config.First();
-                if (Config != null)
+                Config = db.Config.FirstOrDefault();
+                Infomation = db.Infomation.FirstOrDefault();
+                if (Config != null && Infomation != null)
                 {
                     MyApp.Http = Config.Http;
                 }
@@ -363,7 +364,7 @@ namespace WpfRestaurant
                     LoginWindow lw = new LoginWindow();
                     lw.ShowDialog();
                 }
-                Infomation = db.Infomation.First();
+
             }
         }
 
