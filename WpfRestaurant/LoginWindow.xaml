@@ -7,15 +7,15 @@
         mc:Ignorable="d"
         Title="登录" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="pic/bg.png"/>
+        <ImageBrush ImageSource="pic/bg.png" />
     </Window.Background>
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Top">
-                <TextBlock Text="720营地管理系统-餐厅前台" Foreground="White" FontSize="20" Margin="20"></TextBlock>
+                <TextBlock Text="720营地管理系统-餐厅前台" Foreground="White" FontSize="20" Margin="20" />
             </StackPanel>
             <DockPanel>
-                <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden"></Frame>
+                <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" />
             </DockPanel>
         </DockPanel>
     </Grid>

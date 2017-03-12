@@ -1,23 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WpfRestaurant
 {
     /// <summary>
-    /// MenuWindow.xaml 的交互逻辑
+    ///     MenuWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MenuWindow : Window
     {
+        private readonly Config _config;
         private readonly List<Bill> _listBill;
         private readonly MainWindow _mainWindow;
-        private readonly Config _config;
         private readonly Order _order;
 
         public MenuWindow(MainWindow mw, Order o)
@@ -32,22 +29,18 @@ namespace WpfRestaurant
             {
                 _config = db.Config.First();
 
-                List<Food> lf = db.Food.ToList();
+                var lf = db.Food.ToList();
                 foreach (var item in lf)
                 {
-                    Bill b = new Bill
+                    var b = new Bill
                     {
                         Food = item,
                         Order_id = 0,
                         Num = 0
                     };
                     foreach (var bill in _order.Bill)
-                    {
                         if (bill.Food.Id == item.Id)
-                        {
                             b.Num = bill.Num;
-                        }
-                    }
                     _listBill.Add(b);
                 }
             }
@@ -57,17 +50,17 @@ namespace WpfRestaurant
 
         public void FoodListBind(int type = 1)
         {
-            List<Bill> lb = _listBill.Where(x => x.Food.Type == type).ToList();
+            var lb = _listBill.Where(x => x.Food.Type == type).ToList();
             FoodListBox.ItemsSource = lb;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button b = sender as Button;
+            var b = sender as Button;
             if (b != null)
             {
-                int type = Convert.ToInt32(b.Tag);
-                string title = "";
+                var type = Convert.ToInt32(b.Tag);
+                var title = "";
                 switch (type)
                 {
                     case 1:
@@ -88,34 +81,32 @@ namespace WpfRestaurant
                     default:
                         break;
                 }
-                this.Title = title;
+                Title = title;
                 FoodListBind(type);
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            long id = Convert.ToInt64((sender as Button)?.Tag);
-            Bill b = _listBill.First(x => x.Food.Id == id);
+            var id = Convert.ToInt64((sender as Button)?.Tag);
+            var b = _listBill.First(x => x.Food.Id == id);
             b.Num++;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
             if (button != null)
             {
-                long id = Convert.ToInt64(button.Tag);
-                Bill b = _listBill.First(x => x.Food.Id == id);
+                var id = Convert.ToInt64(button.Tag);
+                var b = _listBill.First(x => x.Food.Id == id);
                 if (b.Num > 0)
-                {
                     b.Num--;
-                }
             }
         }
 
         /// <summary>
-        /// 点菜
+        ///     点菜
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -134,10 +125,9 @@ namespace WpfRestaurant
                         db.Order.Add(_order);
                         db.SaveChanges();
                         foreach (var item in _listBill)
-                        {
                             if (item.Num > 0)
                             {
-                                Bill b = new Bill
+                                var b = new Bill
                                 {
                                     Food_id = item.Food.Id,
                                     Order_id = _order.Id,
@@ -147,19 +137,18 @@ namespace WpfRestaurant
                                 db.Bill.Add(b);
                                 if (b.Price != null) _order.Cost += b.Price.Value;
                             }
-                        }
                         db.SaveChanges();
 
-                        OrderPage op = new OrderPage(_mainWindow);
+                        var op = new OrderPage(_mainWindow);
                         _mainWindow.Op = op;
                         _mainWindow.SidebarFrame.Content = op;
-                        Table t = db.Table.Find(MyApp.TableId);
+                        var t = db.Table.Find(MyApp.TableId);
                         t.Status = 2;
                         db.SaveChanges();
                         _mainWindow.Lop.GetList();
 
                         //设置服务器上的桌子状态
-                        TableItem.SetTableStatus(2,MyApp.TableId);
+                        TableItem.SetTableStatus(2, MyApp.TableId);
                     }
                     else
                     {
@@ -168,7 +157,7 @@ namespace WpfRestaurant
                         foreach (var item in _listBill)
                         {
                             if (!(item.Num > 0)) continue;
-                            Bill b = new Bill
+                            var b = new Bill
                             {
                                 Food_id = item.Food.Id,
                                 Order_id = _order.Id,
@@ -178,7 +167,6 @@ namespace WpfRestaurant
                             db.Bill.Add(b);
                         }
                         db.SaveChanges();
-
                     }
                     _mainWindow.Op.LoadData();
                     Close();
@@ -188,10 +176,9 @@ namespace WpfRestaurant
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
-        private void Window_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -202,9 +189,9 @@ namespace WpfRestaurant
                 Console.WriteLine(exception);
             }
         }
-        
+
         /// <summary>
-        /// 关闭菜单
+        ///     关闭菜单
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

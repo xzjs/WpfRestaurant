@@ -1,14 +1,14 @@
 ﻿<Page x:Class="WpfRestaurant.OrderPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:WpfRestaurant"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="300" d:DesignWidth="335.088"
       Title="OrderPage">
     <Page.Background>
-        <ImageBrush ImageSource="pic/diancai.png"/>
+        <ImageBrush ImageSource="pic/diancai.png" />
     </Page.Background>
 
     <Grid>
@@ -17,47 +17,52 @@
                 <Button Width="280" Height="40" Click="Button_Click_1" Background="{x:Null}" BorderBrush="{x:Null}">
                     <DockPanel Width="280" Height="40">
                         <DockPanel.Background>
-                            <ImageBrush ImageSource="pic/red_button.png"/>
+                            <ImageBrush ImageSource="pic/red_button.png" />
                         </DockPanel.Background>
-                        <TextBlock x:Name="CostTextBlock" FontSize="20" Foreground="White" TextAlignment="Center" VerticalAlignment="Center">总计：￥40</TextBlock>
+                        <TextBlock x:Name="CostTextBlock" FontSize="20" Foreground="White" TextAlignment="Center"
+                                   VerticalAlignment="Center">
+                            总计：￥40
+                        </TextBlock>
                     </DockPanel>
                 </Button>
             </StackPanel>
             <StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock FontSize="18" Margin="25,0">大厅</TextBlock>
-                    <TextBlock x:Name="tableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
+                    <TextBlock x:Name="TypeTextBlock" FontSize="18" Margin="25,0">大厅</TextBlock>
+                    <TextBlock x:Name="TableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="100" Height="30" Margin="5" Click="Button_Click" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Button Width="100" Height="30" Margin="5" Click="Button_Click" Background="{x:Null}"
+                            BorderBrush="{x:Null}">
                         <DockPanel Width="100" Height="30">
                             <DockPanel.Background>
-                                <ImageBrush ImageSource="pic/red_button.png"/>
+                                <ImageBrush ImageSource="pic/red_button.png" />
                             </DockPanel.Background>
-                            <TextBlock Text="加/退菜" FontSize="20" Foreground="White" TextAlignment="Center"></TextBlock>
+                            <TextBlock Text="加/退菜" FontSize="20" Foreground="White" TextAlignment="Center" />
                         </DockPanel>
                     </Button>
                     <Button Width="100" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}">
                         <DockPanel Width="100" Height="30">
                             <DockPanel.Background>
-                                <ImageBrush ImageSource="pic/red_button.png"/>
+                                <ImageBrush ImageSource="pic/red_button.png" />
                             </DockPanel.Background>
-                            <TextBlock Text="小票补打" FontSize="20" Foreground="White" TextAlignment="Center"></TextBlock>
+                            <TextBlock Text="小票补打" FontSize="20" Foreground="White" TextAlignment="Center" />
                         </DockPanel>
                     </Button>
                 </StackPanel>
                 <StackPanel>
-                    <DataGrid x:Name="BillDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <DataGrid x:Name="BillDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Background="{x:Null}"
+                              BorderBrush="{x:Null}">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="序号" Width="*" Binding="{Binding Path=Food.Id}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="菜品" Width="*" Binding="{Binding Path=Food.Name}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="数量" Width="*" Binding="{Binding Num}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="价格(元)" Width="*" Binding="{Binding Price}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="序号" Width="*" Binding="{Binding Path=Food.Id}" />
+                            <DataGridTextColumn Header="菜品" Width="*" Binding="{Binding Path=Food.Name}" />
+                            <DataGridTextColumn Header="数量" Width="*" Binding="{Binding Num}" />
+                            <DataGridTextColumn Header="价格(元)" Width="*" Binding="{Binding Price}" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
             </StackPanel>
-            
+
         </DockPanel>
     </Grid>
 </Page>

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WpfRestaurant
 {
     public class Menu
     {
-        public long menuId;
         public int counter;
+        public long menuId;
     }
-    class UploadOrder
+
+    internal class UploadOrder
     {
-        public int restaurantId;
-        public long repastDeskId;
         public decimal price;
+        public long repastDeskId;
+        public int restaurantId;
         public List<Menu> subOrderList;
     }
 }

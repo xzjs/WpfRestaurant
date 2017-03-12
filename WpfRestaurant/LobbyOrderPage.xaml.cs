@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace WpfRestaurant
 {
     /// <summary>
-    /// LobbyOrderPage.xaml 的交互逻辑
+    ///     LobbyOrderPage.xaml 的交互逻辑
     /// </summary>
     public partial class LobbyOrderPage : Page
     {
-        private MainWindow _parentWin;
+        private readonly MainWindow _parentWin;
+
         public LobbyOrderPage(MainWindow parentWin)
         {
             _parentWin = parentWin;
@@ -30,16 +21,23 @@ namespace WpfRestaurant
             GetList();
         }
 
-        public void GetList()
+        /// <summary>
+        /// 更新餐桌列表
+        /// </summary>
+        /// <param name="status">要显示的餐桌类型</param>
+        public void GetList(int status = 0)
         {
-            BusyTableList.ItemsSource = GetTableList(2);
-            FreeTableList.ItemsSource = GetTableList(0);
+            if (status != 1)
+            {
+                BusyTableList.ItemsSource = GetTableList(2);
+                FreeTableList.ItemsSource = GetTableList(0);
+            }
             OrderTableList.ItemsSource = GetTableList(1);
             _parentWin.SetNum();
         }
 
         /// <summary>
-        /// 获取餐桌列表
+        ///     获取餐桌列表
         /// </summary>
         /// <param name="status">0：空闲；1：预约；2：繁忙</param>
         /// <returns></returns>
@@ -48,32 +46,26 @@ namespace WpfRestaurant
             using (var db = new restaurantEntities())
             {
                 var tables = db.Table.Where(m => m.Status == status);
-                int type = MyApp.TableType;
+                var type = MyApp.TableType;
                 if (type > 0)
-                {
                     tables = tables.Where(m => m.Type == type);
-                }
-                List<Table> lt = tables.ToList();
-                List<TableItem> lti=new List<TableItem>();
+                var lt = tables.ToList();
+                var lti = new List<TableItem>();
                 foreach (var t in lt)
                 {
-                    TableItem tableItem = new TableItem
+                    var tableItem = new TableItem
                     {
                         Id = t.Id,
                         Table = t,
-                        No = t.No,
+                        No = t.No
                     };
                     if (status > 0)
                     {
-                        Order order = t.Order.First(o => o.Finish == 0);
+                        var order = t.Order.First(o => o.Finish == 0);
                         if (status == 1)
-                        {
                             tableItem.Time = order.Time.ToShortTimeString();
-                        }
                         if (status == 2)
-                        {
                             tableItem.Cost = order.Cost;
-                        }
                         tableItem.Order = order;
                     }
                     lti.Add(tableItem);
@@ -83,43 +75,43 @@ namespace WpfRestaurant
         }
 
         /// <summary>
-        /// 繁忙桌子点击事件
+        ///     繁忙桌子点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BusyTableClick(object sender, RoutedEventArgs e)
         {
-            Button sp = sender as Button;
+            var sp = sender as Button;
             MyApp.TableId = Convert.ToInt64(sp.Tag);
-            OrderPage op = new OrderPage(_parentWin);
+            var op = new OrderPage(_parentWin);
             _parentWin.Op = op;
             _parentWin.SidebarFrame.Content = op;
         }
 
         /// <summary>
-        /// 预订桌位点击事件
+        ///     预订桌位点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OrderTableClick(object sender, RoutedEventArgs e)
         {
-            Button sp = sender as Button;
-            Order o = sp.Tag as Order;
+            var sp = sender as Button;
+            var o = sp.Tag as Order;
             MyApp.TableId = o.Table_id;
-            BookPage bp = new BookPage(_parentWin,o);
+            var bp = new BookPage(_parentWin, o);
             _parentWin.SidebarFrame.Content = bp;
         }
 
         /// <summary>
-        /// 空闲桌子点击事件
+        ///     空闲桌子点击事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void FreeTableClick(object sender, RoutedEventArgs e)
         {
-            Button b=sender as Button;
+            var b = sender as Button;
             MyApp.TableId = Convert.ToInt64(b.Tag);
-            FreeTablePage ftb=new FreeTablePage(_parentWin);
+            var ftb = new FreeTablePage(_parentWin);
             _parentWin.SidebarFrame.Content = ftb;
         }
     }
