@@ -10,10 +10,12 @@
 namespace WpfRestaurant
 {
     using System;
-
+    using System.Collections.Generic;
+    
     public partial class Infomation
     {
         public long Id { get; set; }
         public Nullable<int> RestaurantID { get; set; }
+        public string Name { get; set; }
     }
 }

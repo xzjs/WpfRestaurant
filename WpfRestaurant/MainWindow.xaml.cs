@@ -36,6 +36,15 @@ namespace WpfRestaurant
             showTimer.Tick += ShowCurTimer;
             showTimer.Interval = new TimeSpan(0, 0, 0, 1);
             showTimer.Start();
+
+            using (var db=new restaurantEntities())
+            {
+                Infomation infomation = db.Infomation.FirstOrDefault();
+                if (infomation != null)
+                {
+                    NameTextBlock.Text = infomation.Name;
+                }
+            }
         }
 
         private void ShowCurTimer(object sender, EventArgs e)

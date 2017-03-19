@@ -28,7 +28,7 @@
                     <DockPanel.Background>
                         <ImageBrush ImageSource="pic/title.gif" />
                     </DockPanel.Background>
-                    <TextBlock FontSize="24px" Foreground="White" HorizontalAlignment="Center"
+                    <TextBlock x:Name="NameTextBlock" FontSize="24px" Foreground="White" HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                         露营餐厅
                     </TextBlock>

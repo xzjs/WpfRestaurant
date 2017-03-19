@@ -5,11 +5,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6"
-              ProviderManifestToken="data source=&quot;C:\Users\childe\Documents\Visual Studio 2015\Projects\WpfRestaurant\WpfRestaurant\restaurant.db&quot;"
-              Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator"
-              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
-              xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Users\childe\Documents\Visual Studio 2015\Projects\WpfRestaurant\WpfRestaurant\restaurant.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Id" />
@@ -49,6 +45,7 @@
           </Key>
           <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RestaurantID" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -133,8 +130,7 @@
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false"
@@ -185,6 +181,7 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RestaurantID" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -318,6 +315,7 @@
           <EntitySetMapping Name="Infomation">
             <EntityTypeMapping TypeName="restaurantModel.Infomation">
               <MappingFragment StoreEntitySet="Infomation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
               </MappingFragment>

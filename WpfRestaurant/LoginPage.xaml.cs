@@ -60,6 +60,7 @@ namespace WpfRestaurant
                         {
                             var i = db.Infomation.FirstOrDefault() ?? new Infomation();
                             i.RestaurantID = (int)jo["id"];
+                            i.Name = (string) jo["name"];
                             if (i.Id == 0)
                             {
                                 db.Infomation.Add(i);
