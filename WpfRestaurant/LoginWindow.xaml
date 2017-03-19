@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="登录" Height="600" Width="900" WindowStartupLocation="CenterScreen">
     <Window.Background>
-        <ImageBrush ImageSource="pic/bg.png" />
+        <ImageBrush ImageSource="pic/login_bj.jpg" />
     </Window.Background>
     <Grid>
         <DockPanel>

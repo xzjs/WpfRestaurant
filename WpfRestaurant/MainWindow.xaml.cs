@@ -66,6 +66,15 @@ namespace WpfRestaurant
             {
                 using (var db = new restaurantEntities())
                 {
+                    int count = db.Order.Count(o => o.Finish == 1);
+                    if (count > 0)
+                    {
+                        throw new Exception("有未完成的订单，更新本地数据");
+                    }
+                    var messageBoxResult = MessageBox.Show("更新数据将会清空订单和历史数据，是否更新", "是否更新数据",
+                        MessageBoxButton.OKCancel);
+                    if(messageBoxResult!= MessageBoxResult.OK)
+                        return;
                     using (var client = new WebClient())
                     {
                         client.Encoding = Encoding.UTF8;
@@ -73,6 +82,7 @@ namespace WpfRestaurant
                             client.DownloadString("http://" + Config.Http + "/restClient/menuInfoById.nd?id=" +
                                                   Infomation.RestaurantID);
                         var jo = JObject.Parse(responseString);
+                        string path = (string) jo["picUrl"];
                         if (jo["menuList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM Food");
@@ -86,8 +96,14 @@ namespace WpfRestaurant
                                     Type = (int)item["type"],
                                     Img = (string)item["picUrl"]
                                 };
-                                if (f.Img == null)
+                                if (f.Img != null)
+                                {
+                                    client.DownloadFile(path + f.Img, f.Img);
+                                }
+                                else
+                                {
                                     f.Img = "menu.png";
+                                }
                                 f.Price = (decimal)item["price"];
                                 f.OnsalePrice = (decimal)item["onsalePrice"];
                                 f.SaleType = (int)item["saleType"];
@@ -156,11 +172,8 @@ namespace WpfRestaurant
                 case "大厅":
                     type = 1;
                     break;
-                case "小包间":
+                case "包间":
                     type = 2;
-                    break;
-                case "大包间":
-                    type = 3;
                     break;
             }
             MyApp.TableType = type;
