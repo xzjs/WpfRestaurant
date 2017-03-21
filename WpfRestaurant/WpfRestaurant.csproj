@@ -399,6 +399,10 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="pic\order_table.png" />
+    <Resource Include="pic\free_table.png" />
+    <Resource Include="pic\busy_table.png" />
+    <Resource Include="pic\dating.png" />
     <Resource Include="pic\login_bj.jpg" />
     <Resource Include="pic\red_button.png" />
     <Resource Include="pic\diancai.png" />
@@ -411,10 +415,6 @@
     <Resource Include="pic\caidan_close.png" />
     <Resource Include="pic\caidan.png" />
     <Resource Include="pic\refresh.png" />
-    <Resource Include="pic\dating.png" />
-    <Resource Include="pic\blue_button.gif" />
-    <Resource Include="pic\green_button.gif" />
-    <Resource Include="pic\yellow_button.gif" />
     <Resource Include="pic\tangdian.gif" />
     <Resource Include="pic\main_bgc.gif" />
     <Resource Include="pic\table_num.gif" />
@@ -429,12 +429,12 @@
   <ItemGroup>
     <PublishFile Include="WpfRestaurant.pdb">
       <Visible>False</Visible>
-      <PublishState>DataFile</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

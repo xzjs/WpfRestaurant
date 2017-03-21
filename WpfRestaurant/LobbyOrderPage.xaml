@@ -51,7 +51,7 @@
                                 BorderBrush="{x:Null}">
                             <Grid Width="160" Height="100">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="pic/blue_button.gif" />
+                                    <ImageBrush ImageSource="pic/busy_table.png" />
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -97,7 +97,7 @@
                                 BorderBrush="{x:Null}">
                             <Grid Width="160" Height="100">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="pic/green_button.gif" />
+                                    <ImageBrush ImageSource="pic/free_table.png" />
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -142,7 +142,7 @@
                                 BorderBrush="{x:Null}">
                             <Grid Width="160" Height="100">
                                 <Grid.Background>
-                                    <ImageBrush ImageSource="pic/yellow_button.gif" />
+                                    <ImageBrush ImageSource="pic/order_table" />
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
