@@ -80,6 +80,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro, Version=1.4.3.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.4.3\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Data.Sqlite, Version=1.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Sqlite.1.1.0\lib\net451\Microsoft.Data.Sqlite.dll</HintPath>
     </Reference>
@@ -159,6 +163,10 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.4.3\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml">
       <Private>True</Private>
     </Reference>
@@ -202,6 +210,7 @@
     <Compile Include="FreeTablePage.xaml.cs">
       <DependentUpon>FreeTablePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImageConverter.cs" />
     <Compile Include="Infomation.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -399,8 +408,21 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Resource Include="pic\order_table.png" />
+    <Resource Include="pic\餐厅图标_116.png" />
+    <Resource Include="pic\餐厅图标_68.png" />
+    <Resource Include="pic\餐厅图标_77.png" />
+    <Resource Include="pic\餐厅图标_104.png" />
+    <Resource Include="pic\餐厅图标_171.png" />
+    <Resource Include="pic\餐厅图标_109.png" />
+    <Resource Include="pic\caidan_close.png" />
+    <Resource Include="pic\餐厅图标1_22.png" />
+    <Resource Include="pic\餐厅图标1_23.png" />
+    <Resource Include="pic\餐厅图标1_24.png" />
+    <Resource Include="pic\餐厅图标1_25.png" />
     <Resource Include="pic\free_table.png" />
+    <Resource Include="pic\餐厅图标1_12.png" />
+    <Resource Include="pic\test.png" />
+    <Resource Include="pic\order_table.png" />
     <Resource Include="pic\busy_table.png" />
     <Resource Include="pic\dating.png" />
     <Resource Include="pic\login_bj.jpg" />
@@ -412,7 +434,6 @@
     <Resource Include="pic\cai.png" />
     <Resource Include="pic\blue_button.png" />
     <Resource Include="pic\menu_bg.png" />
-    <Resource Include="pic\caidan_close.png" />
     <Resource Include="pic\caidan.png" />
     <Resource Include="pic\refresh.png" />
     <Resource Include="pic\tangdian.gif" />

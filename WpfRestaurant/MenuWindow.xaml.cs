@@ -178,7 +178,17 @@ namespace WpfRestaurant
             }
         }
 
-        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        ///     关闭菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Closer_Menu(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -188,16 +198,6 @@ namespace WpfRestaurant
             {
                 Console.WriteLine(exception);
             }
-        }
-
-        /// <summary>
-        ///     关闭菜单
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Closer_Menu(object sender, RoutedEventArgs e)
-        {
-            Close();
         }
     }
 }

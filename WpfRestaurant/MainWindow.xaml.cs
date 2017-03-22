@@ -30,38 +30,30 @@ namespace WpfRestaurant
             Lop = new LobbyOrderPage(this);
             PageFrame.Content = Lop;
 
-            ListenOrderTcp();
+            
 
             var showTimer = new DispatcherTimer();
             showTimer.Tick += ShowCurTimer;
             showTimer.Interval = new TimeSpan(0, 0, 0, 1);
             showTimer.Start();
 
-            using (var db=new restaurantEntities())
+            using (var db = new restaurantEntities())
             {
-                Infomation infomation = db.Infomation.FirstOrDefault();
-                if (infomation != null)
+                Config = db.Config.FirstOrDefault();
+                Infomation = db.Infomation.FirstOrDefault();
+                if (Infomation != null)
                 {
-                    NameTextBlock.Text = infomation.Name;
+                    NameTextBlock.Text = Infomation.Name;
                 }
             }
+
+            ListenOrderTcp();
         }
 
         private void ShowCurTimer(object sender, EventArgs e)
         {
             DateTextBlock.Text = DateTime.Now.ToShortDateString();
             TimeTextblock.Text = DateTime.Now.ToShortTimeString();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var lop = new LobbyOrderPage(this);
-            PageFrame.Content = lop;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            Lop.GetList(1);
         }
 
         /// <summary>
@@ -82,7 +74,7 @@ namespace WpfRestaurant
                     }
                     var messageBoxResult = MessageBox.Show("更新数据将会清空订单和历史数据，是否更新", "是否更新数据",
                         MessageBoxButton.OKCancel);
-                    if(messageBoxResult!= MessageBoxResult.OK)
+                    if (messageBoxResult != MessageBoxResult.OK)
                         return;
                     using (var client = new WebClient())
                     {
@@ -91,7 +83,7 @@ namespace WpfRestaurant
                             client.DownloadString("http://" + Config.Http + "/restClient/menuInfoById.nd?id=" +
                                                   Infomation.RestaurantID);
                         var jo = JObject.Parse(responseString);
-                        string path = (string) jo["picUrl"];
+                        string path = (string)jo["picUrl"];
                         if (jo["menuList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM Food");
@@ -105,14 +97,17 @@ namespace WpfRestaurant
                                     Type = (int)item["type"],
                                     Img = (string)item["picUrl"]
                                 };
-                                if (f.Img != null)
+
+                                try
                                 {
                                     client.DownloadFile(path + f.Img, f.Img);
                                 }
-                                else
+                                catch (Exception)
                                 {
+                                    MessageBox.Show("下载" + f.Img + "出错");
                                     f.Img = "menu.png";
                                 }
+
                                 f.Price = (decimal)item["price"];
                                 f.OnsalePrice = (decimal)item["onsalePrice"];
                                 f.SaleType = (int)item["saleType"];
@@ -145,6 +140,7 @@ namespace WpfRestaurant
                         }
                         db.SaveChanges();
                     }
+                    Lop.GetList();
                 }
             }
             catch (Exception ex)
@@ -209,7 +205,7 @@ namespace WpfRestaurant
             }
             catch (Exception exception)
             {
-                Console.WriteLine(exception);
+                MessageBox.Show(exception.Message);
             }
         }
 
@@ -302,7 +298,6 @@ namespace WpfRestaurant
                     foreach (var item in jo)
                     {
                         var no = (string)item["orderNumber"];
-                        var price = (double)item["price"];
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         if (order == null)

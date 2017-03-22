@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:WpfRestaurant"
       mc:Ignorable="d"
-      d:DesignHeight="300" d:DesignWidth="335.088"
+      d:DesignHeight="470" d:DesignWidth="330"
       Title="OrderPage">
     <Page.Background>
         <ImageBrush ImageSource="pic/diancai.png" />
@@ -14,16 +14,15 @@
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
-                <Button Width="280" Height="40" Click="Button_Click_1" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <DockPanel Width="280" Height="40">
-                        <DockPanel.Background>
-                            <ImageBrush ImageSource="pic/red_button.png" />
-                        </DockPanel.Background>
-                        <TextBlock x:Name="CostTextBlock" FontSize="20" Foreground="White" TextAlignment="Center"
-                                   VerticalAlignment="Center">
+                <Button Width="280" Height="40" Click="Button_Click_1" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pic/餐厅图标_116.png"/>
+                    </Button.Background>
+
+                    <TextBlock x:Name="CostTextBlock"  Foreground="White" TextAlignment="Center"
+                                   VerticalAlignment="Center" FontSize="18">
                             总计：￥40
-                        </TextBlock>
-                    </DockPanel>
+                    </TextBlock>
                 </Button>
             </StackPanel>
             <StackPanel>
@@ -32,22 +31,20 @@
                     <TextBlock x:Name="TableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="100" Height="30" Margin="5" Click="Button_Click" Background="{x:Null}"
+                    <Button Width="100" Height="30" Margin="5" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}"
                             BorderBrush="{x:Null}">
-                        <DockPanel Width="100" Height="30">
-                            <DockPanel.Background>
-                                <ImageBrush ImageSource="pic/red_button.png" />
-                            </DockPanel.Background>
-                            <TextBlock Text="加/退菜" FontSize="20" Foreground="White" TextAlignment="Center" />
-                        </DockPanel>
+                        <Button.Background>
+                            <ImageBrush ImageSource="pic/餐厅图标_77.png"/>
+                        </Button.Background>
+
+                        <TextBlock Text="加/退菜" Foreground="White" TextAlignment="Center" />
                     </Button>
-                    <Button Width="100" Margin="5" Background="{x:Null}" BorderBrush="{x:Null}">
-                        <DockPanel Width="100" Height="30">
-                            <DockPanel.Background>
-                                <ImageBrush ImageSource="pic/red_button.png" />
-                            </DockPanel.Background>
-                            <TextBlock Text="小票补打" FontSize="20" Foreground="White" TextAlignment="Center" />
-                        </DockPanel>
+                    <Button Width="100" Margin="5" BorderBrush="{x:Null}" Height="30" Style="{DynamicResource SquareButtonStyle}">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pic/餐厅图标_77.png"/>
+                        </Button.Background>
+
+                        <TextBlock Text="小票补打" Foreground="White" TextAlignment="Center" FontSize="12" />
                     </Button>
                 </StackPanel>
                 <StackPanel>

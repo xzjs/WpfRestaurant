@@ -46,6 +46,7 @@ namespace WpfRestaurant
 
                     using (var client = new WebClient())
                     {
+                        
                         var values = new NameValueCollection
                         {
                             ["account"] = name,
@@ -54,7 +55,7 @@ namespace WpfRestaurant
 
                         var response = client.UploadValues("http://" + config.Http + "/restLogin/login.nd", values);
 
-                        var responseString = Encoding.Default.GetString(response);
+                        var responseString = Encoding.UTF8.GetString(response);
                         var jo = JObject.Parse(responseString);
                         if (jo["id"] != null)
                         {
