@@ -106,7 +106,7 @@
                     <StackPanel DockPanel.Dock="Top">
                         <Button Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Margin="50,40,0,0"
                                 Click="Button_Click_2">
-                            <Image Source="pic/refresh.png" />
+                            <Image Source="pic/refresh.png" Visibility="Hidden" />
                         </Button>
                     </StackPanel>
                     <StackPanel Margin="0,0,10,0">

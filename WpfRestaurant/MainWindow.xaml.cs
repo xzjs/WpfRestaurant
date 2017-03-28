@@ -65,83 +65,7 @@ namespace WpfRestaurant
         /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                using (var db = new restaurantEntities())
-                {
-                    int count = db.Order.Count(o => o.Finish == 1);
-                    if (count > 0)
-                    {
-                        throw new Exception("有未完成的订单，更新本地数据");
-                    }
-                    var messageBoxResult = MessageBox.Show("更新数据将会清空订单和历史数据，是否更新", "是否更新数据",
-                        MessageBoxButton.OKCancel);
-                    if (messageBoxResult != MessageBoxResult.OK)
-                        return;
-                    using (var client = new WebClient())
-                    {
-                        client.Encoding = Encoding.UTF8;
-                        var responseString =
-                            client.DownloadString("http://" + Config.Http + "/restClient/menuInfoById.nd?id=" +
-                                                  Infomation.RestaurantID);
-                        var jo = JObject.Parse(responseString);
-                        Infomation.path= (string)jo["picUrl"];
-                        
-                        if (jo["menuList"] != null)
-                        {
-                            db.Database.ExecuteSqlCommand("DELETE FROM Food");
-                            foreach (var item in jo["menuList"])
-                            {
-                                var f = new Food
-                                {
-                                    No = (long)item["id"],
-                                    Name = (string)item["menuName"],
-                                    Detail = (string)item["details"],
-                                    Type = (int)item["type"],
-                                    Img = (string)item["picUrl"]
-                                };
-                                f.Img = Download_Img(f.Img);
-                                
-
-                                f.Price = (decimal)item["price"];
-                                f.OnsalePrice = (decimal)item["onsalePrice"];
-                                f.SaleType = (int)item["saleType"];
-                                db.Food.Add(f);
-                            }
-                        }
-
-                        responseString =
-                            client.DownloadString("http://" + Config.Http + "/restClient/deskInfoById.nd?id=" +
-                                                  Infomation.RestaurantID);
-                        jo = JObject.Parse(responseString);
-                        if (jo["deskList"] != null)
-                        {
-                            db.Database.ExecuteSqlCommand("DELETE FROM [Table]");
-                            foreach (var item in jo["deskList"])
-                            {
-                                var t = new Table
-                                {
-                                    DeskID = (long)item["id"],
-                                    No = (string)item["deskNumber"],
-                                    Type = (int)item["type"],
-                                    Counts = (int)item["counts"]
-                                };
-                                if ((string)item["status"] == null)
-                                    t.Status = 0;
-                                else
-                                    t.Status = (int)item["status"];
-                                db.Table.Add(t);
-                            }
-                        }
-                        db.SaveChanges();
-                    }
-                    Lop.GetList();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+           
         }
 
         /// <summary>
@@ -525,7 +449,7 @@ namespace WpfRestaurant
         /// </summary>
         /// <param name="path">图片名称</param>
         /// <returns></returns>
-        private string Download_Img(string path)
+        public string Download_Img(string path)
         {
             try
             {

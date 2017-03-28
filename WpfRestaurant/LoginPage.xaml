@@ -34,12 +34,22 @@
                         </Border>
                     </StackPanel>
                     <StackPanel>
-                        <Border Background="White" Padding="5" BorderThickness="2" CornerRadius="10" Margin="0 60">
-                            <Button Height="50" Background="White" BorderBrush="#00707070" FontSize="20"
-                                    Click="Button_Click">
-                                登 录
-                            </Button>
-                        </Border>
+
+                        <Button Height="50" BorderBrush="{x:Null}" FontSize="20"
+                                    Click="Button_Click" Style="{DynamicResource SquareButtonStyle}" FontFamily="Microsoft YaHei" Margin="0,50,0,0" Foreground="White">
+                            <Button.Background>
+                                <ImageBrush ImageSource="pic/保存并返回登录界面.png"/>
+                            </Button.Background>
+                            登录
+                        </Button>
+
+                        <Button Height="50" BorderBrush="{x:Null}" FontSize="20"
+                                    Click="Init" Style="{DynamicResource SquareButtonStyle}" Margin="0,5,0,0" Foreground="White">
+                            <Button.Background>
+                                <ImageBrush ImageSource="pic/保存并返回登录界面.png"/>
+                            </Button.Background>
+                            初始化数据
+                        </Button>
 
                     </StackPanel>
                 </StackPanel>
