@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Users\childe\Documents\Visual Studio 2015\Projects\WpfRestaurant\WpfRestaurant\restaurant.db&quot;" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=F:\code\WpfRestaurant\WpfRestaurant\restaurant.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Id" />
@@ -130,13 +129,11 @@
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false"
-              xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
-              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
-              xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Id" />
@@ -164,10 +161,8 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="No" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true"
-                    Nullable="false" />
-          <Property Name="Detail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true"
-                    Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Detail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Img" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
@@ -194,12 +189,12 @@
           <Property Name="No" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Remark" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Table_id" Type="Int64" Nullable="false" />
-          <Property Name="Time" Type="DateTime" Nullable="false" />
-          <Property Name="Type" Type="Int32" Nullable="false" />
-          <Property Name="Cost" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
+          <Property Name="Time" Type="DateTime" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Cost" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="Finish" Type="Int32" />
           <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_0_0" FromRole="Order" ToRole="Bill" />
           <NavigationProperty Name="Table" Relationship="Self.FK_Order_0_0" FromRole="Order" ToRole="Table" />
-          <Property Name="Finish" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -274,8 +269,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer"
-                                CdmEntityContainer="restaurantEntities">
+        <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer" CdmEntityContainer="restaurantEntities">
           <EntitySetMapping Name="Bill">
             <EntityTypeMapping TypeName="restaurantModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
@@ -315,16 +309,15 @@
           <EntitySetMapping Name="Infomation">
             <EntityTypeMapping TypeName="restaurantModel.Infomation">
               <MappingFragment StoreEntitySet="Infomation">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="restaurantModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="Finish" ColumnName="Finish" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -335,6 +328,7 @@
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="Finish" ColumnName="Finish" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

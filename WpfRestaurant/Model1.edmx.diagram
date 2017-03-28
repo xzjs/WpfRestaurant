@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="395424b989be40c0b30055d071dde4fe" Name="Diagram1" DisplayType="true">
-        <EntityTypeShape EntityType="restaurantModel.Bill" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+      <Diagram DiagramId="ad2b663b3703442cba2285a39b0dfeff" Name="Diagram1">
+        <EntityTypeShape EntityType="restaurantModel.Bill" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
         <EntityTypeShape EntityType="restaurantModel.Config" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="restaurantModel.Food" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurantModel.Food" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="restaurantModel.Infomation" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="restaurantModel.Order" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="restaurantModel.Table" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="restaurantModel.Table" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
         <AssociationConnector Association="restaurantModel.FK_Bill_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="restaurantModel.FK_Bill_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="restaurantModel.FK_Order_0_0" ManuallyRouted="false" />

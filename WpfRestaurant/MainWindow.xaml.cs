@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,7 +31,7 @@ namespace WpfRestaurant
             Lop = new LobbyOrderPage(this);
             PageFrame.Content = Lop;
 
-            
+
 
             var showTimer = new DispatcherTimer();
             showTimer.Tick += ShowCurTimer;
@@ -238,14 +239,38 @@ namespace WpfRestaurant
                     var jo = JArray.Parse(json);
                     foreach (var item in jo)
                     {
-                        var phone = (long)item["contactTel"];
-                        var name = (string)item["name"];
-                        var counts = (int)item["counts"];
-                        var no = (string)item["orderNumber"];
-                        var remark = (string)item["remark"];
-                        var deskid = (long)item["repastDeskId"];
-                        var time = Convert.ToDateTime(item["repastTimeStr"]);
-                        var type = (int)item["type"];
+                        long phone = 0;
+                        string name = null;
+                        int counts = 0;
+                        string no = null;
+                        string remark = null;
+                        long deskid = 0;
+                        DateTime time = DateTime.Now;
+                        int type = 0;
+                        if (!string.IsNullOrEmpty((string)item["contactTel"]))
+                        {
+                            phone = (long)item["contactTel"];
+                        }
+                        name = (string)item["name"];
+                        if (!string.IsNullOrEmpty((string)item["counts"]))
+                        {
+                            counts = (int)item["counts"];
+                        }
+                        no = (string)item["orderNumber"];
+                        remark = (string)item["remark"];
+                        if (!string.IsNullOrEmpty((string)item["repastDeskId"]))
+                        {
+                            deskid = (long)item["repastDeskId"];
+                        }
+                        if (!string.IsNullOrEmpty((string)item["repastTimeStr"]))
+                        {
+                            time = Convert.ToDateTime(item["repastTimeStr"]);
+                        }
+                        if (!string.IsNullOrEmpty((string)item["type"]))
+                        {
+                            type = (int)item["type"];
+                        }
+
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         var table = db.Table.First(x => x.DeskID == deskid);
@@ -262,7 +287,8 @@ namespace WpfRestaurant
                                 Table_id = table.Id,
                                 Time = time,
                                 Type = type,
-                                Cost = 0
+                                Cost = 0,
+                                Finish = 0
                             };
                             db.Order.Add(order);
                         }
@@ -275,11 +301,16 @@ namespace WpfRestaurant
                             order.Table_id = table.Id;
                             order.Time = time;
                             order.Type = type;
+                            order.Finish = 0;
                         }
                         db.SaveChanges();
                     }
                 }
-                Lop.GetList();
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { Lop.GetList(); }));
+                //Lop.GetList();
+
+
+
             }
             catch (Exception exception)
             {

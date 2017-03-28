@@ -63,9 +63,9 @@ namespace WpfRestaurant
                     {
                         var order = t.Order.First(o => o.Finish == 0);
                         if (status == 1)
-                            tableItem.Time = order.Time.ToShortTimeString();
+                            tableItem.Time = order.Time.Value.ToShortTimeString();
                         if (status == 2)
-                            tableItem.Cost = order.Cost;
+                            tableItem.Cost = order.Cost.Value;
                         tableItem.Order = order;
                     }
                     lti.Add(tableItem);

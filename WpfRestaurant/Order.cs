@@ -27,10 +27,10 @@ namespace WpfRestaurant
         public string No { get; set; }
         public string Remark { get; set; }
         public long Table_id { get; set; }
-        public System.DateTime Time { get; set; }
-        public int Type { get; set; }
-        public decimal Cost { get; set; }
-        public int Finish { get; set; }
+        public Nullable<System.DateTime> Time { get; set; }
+        public Nullable<int> Type { get; set; }
+        public Nullable<decimal> Cost { get; set; }
+        public Nullable<int> Finish { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bill { get; set; }
