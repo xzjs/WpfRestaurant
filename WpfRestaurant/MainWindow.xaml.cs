@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -84,7 +85,8 @@ namespace WpfRestaurant
                             client.DownloadString("http://" + Config.Http + "/restClient/menuInfoById.nd?id=" +
                                                   Infomation.RestaurantID);
                         var jo = JObject.Parse(responseString);
-                        string path = (string)jo["picUrl"];
+                        Infomation.path= (string)jo["picUrl"];
+                        
                         if (jo["menuList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM Food");
@@ -98,16 +100,8 @@ namespace WpfRestaurant
                                     Type = (int)item["type"],
                                     Img = (string)item["picUrl"]
                                 };
-
-                                try
-                                {
-                                    client.DownloadFile(path + f.Img, f.Img);
-                                }
-                                catch (Exception)
-                                {
-                                    MessageBox.Show("下载" + f.Img + "出错");
-                                    f.Img = "menu.png";
-                                }
+                                f.Img = Download_Img(f.Img);
+                                
 
                                 f.Price = (decimal)item["price"];
                                 f.OnsalePrice = (decimal)item["onsalePrice"];
@@ -197,17 +191,122 @@ namespace WpfRestaurant
                 var connection = factory.CreateConnection();
                 connection.ClientId = Infomation.RestaurantID.ToString();
                 connection.Start();
+
                 var session1 = connection.CreateSession();
                 var consumer1 = session1.CreateConsumer(new ActiveMQQueue("menuAppoint" + Infomation.RestaurantID));
                 consumer1.Listener += consumer_Listener;
+
                 var session = connection.CreateSession();
                 var consumer = session.CreateConsumer(new ActiveMQQueue("menuOrder" + Infomation.RestaurantID));
                 consumer.Listener += Foodconsumer_Listener;
+
+                var session2 = connection.CreateSession();
+                var modify = session2.CreateConsumer(new ActiveMQQueue("restaurantModify" + Infomation.RestaurantID));
+                modify.Listener += modify_Listener;
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
+        }
+
+        private void modify_Listener(IMessage message)
+        {
+            try
+            {
+                var msg = (ITextMessage)message;
+                Console.WriteLine(msg.Text);
+                using (var db = new restaurantEntities())
+                {
+                    var jo = JArray.Parse(msg.Text);
+                    foreach (var item in jo)
+                    {
+                        int type = (int)item["modifyType"];
+                        if ((int)item["modifyItem"] == 0)//修改餐桌
+                        {
+                            if (type == 0)//添加
+                            {
+                                var t = new Table
+                                {
+                                    DeskID = (long)item["deskInfo"]["id"],
+                                    No = (string)item["deskInfo"]["deskNumber"],
+                                    Type = (int)item["deskInfo"]["type"],
+                                    Counts = (int)item["deskInfo"]["counts"]
+                                };
+                                if ((string)item["deskInfo"]["status"] == null)
+                                    t.Status = 0;
+                                else
+                                    t.Status = (int)item["deskInfo"]["status"];
+                                db.Table.Add(t);
+                            }
+                            else if (type == 1)//删除
+                            {
+                                long deskID = (long)item["deskInfo"]["id"];
+                                Table table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
+                                if (table != null)
+                                {
+                                    db.Table.Remove(table);
+                                }
+                            }
+                            else//修改
+                            {
+                                long deskID = (long)item["deskInfo"]["id"];
+                                Table table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
+                                if (table != null)
+                                {
+                                    table.No = (string)item["deskInfo"]["deskNumber"];
+                                    table.Type = (int)item["deskInfo"]["type"];
+                                    table.Counts = (int)item["deskInfo"]["counts"];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (type == 0)//添加
+                            {
+                                var f = new Food
+                                {
+                                    No = (long)item["menuInfo"]["id"],
+                                    Name = (string)item["menuInfo"]["menuName"],
+                                    Detail = (string)item["menuInfo"]["details"],
+                                    Type = (int)item["menuInfo"]["type"],
+                                    Img = (string)item["menuInfo"]["picUrl"]
+                                };
+                                f.Img = Download_Img(f.Img);
+                                db.Food.Add(f);
+                            }
+                            else if (type == 1)//删除
+                            {
+                                long foodID = (long)item["menuInfo"]["id"];
+                                Food food = db.Food.FirstOrDefault(t => t.No == foodID);
+                                if (food != null)
+                                {
+                                    db.Food.Remove(food);
+                                }
+                            }
+                            else//修改
+                            {
+                                long foodID = (long)item["menuInfo"]["id"];
+                                Food food = db.Food.FirstOrDefault(t => t.No == foodID);
+                                if (food != null)
+                                {
+                                    food.Name = (string)item["menuInfo"]["menuName"];
+                                    food.Detail = (string)item["menuInfo"]["details"];
+                                    food.Type = (int)item["menuInfo"]["type"];
+                                    food.Img = Download_Img((string)item["menuInfo"]["picUrl"]);
+                                }
+                            }
+                        }
+                        db.SaveChanges();
+                        Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { Lop.GetList(); }));
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+            
         }
 
         private void consumer_Listener(IMessage message)
@@ -419,6 +518,28 @@ namespace WpfRestaurant
         private void OutFoodClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("外卖功能尚未开放");
+        }
+
+        /// <summary>
+        /// 下载图片
+        /// </summary>
+        /// <param name="path">图片名称</param>
+        /// <returns></returns>
+        private string Download_Img(string path)
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(Infomation.path + path, path);
+                    return path;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("下载" +path + "出错");
+                return "menu.png";
+            }
         }
     }
 }

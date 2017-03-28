@@ -17,5 +17,6 @@ namespace WpfRestaurant
         public long Id { get; set; }
         public Nullable<int> RestaurantID { get; set; }
         public string Name { get; set; }
+        public string path { get; set; }
     }
 }
