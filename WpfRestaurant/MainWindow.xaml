@@ -109,7 +109,7 @@
                             <Image Source="pic/refresh.png" />
                         </Button>
                     </StackPanel>
-                    <StackPanel>
+                    <StackPanel Margin="0,0,10,0">
                         <!--<Button Width="40" Height="80" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,50,0,10"
                                 Click="Button_Click">
                             <StackPanel Width="40" Height="80" Orientation="Horizontal">
@@ -134,16 +134,15 @@
                                 </TextBlock>
                             </StackPanel>
                         </Button>-->
-                        <Button Width="40" Height="80" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,50" Click="OutFoodClick">
-                            <StackPanel Width="40" Height="80" Orientation="Horizontal">
-                                <StackPanel.Background>
-                                    <ImageBrush ImageSource="pic/tangdian.gif" />
-                                </StackPanel.Background>
-                                <TextBlock Foreground="White" FontSize="20" TextAlignment="Center" Width="40"
+                        <Button Width="40" Height="80" BorderBrush="{x:Null}" Margin="0,50" Click="OutFoodClick" Style="{DynamicResource SquareButtonStyle}">
+                            <Button.Background>
+                                <ImageBrush ImageSource="pic/tangdian.gif"/>
+                            </Button.Background>
+
+                            <TextBlock Foreground="White" FontSize="20" TextAlignment="Center" Width="40"
                                            VerticalAlignment="Center">
                                     外<LineBreak />卖
-                                </TextBlock>
-                            </StackPanel>
+                            </TextBlock>
                         </Button>
                     </StackPanel>
                 </DockPanel>
