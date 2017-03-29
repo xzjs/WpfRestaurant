@@ -120,9 +120,8 @@ namespace WpfRestaurant
                                     Type = (int)item["type"],
                                     Img = (string)item["picUrl"]
                                 };
+                                
                                 f.Img = mainWindow.Download_Img(f.Img);
-
-
                                 f.Price = (decimal)item["price"];
                                 f.OnsalePrice = (decimal)item["onsalePrice"];
                                 f.SaleType = (int)item["saleType"];
@@ -156,6 +155,7 @@ namespace WpfRestaurant
                         db.SaveChanges();
                     }
                     mainWindow.Lop.GetList();
+                    MessageBox.Show("数据初始化成功");
                 }
             }
             catch (Exception ex)

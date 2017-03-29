@@ -41,5 +41,10 @@ namespace WpfRestaurant
                 mw.ShowDialog();
             }
         }
+
+        private void Close_Page(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.SidebarFrame.Content = null;
+        }
     }
 }

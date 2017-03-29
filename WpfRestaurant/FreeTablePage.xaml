@@ -13,10 +13,20 @@
 
     <Grid>
         <DockPanel>
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock x:Name="TypeTextBlock" Text="大厅" Margin="10,0" FontSize="20" />
-                <TextBlock x:Name="TableNoTextblock" Text="A008" Margin="10,0" FontSize="20" />
-            </StackPanel>
+            <DockPanel Dock="Top">
+                <StackPanel DockPanel.Dock="Right">
+                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}" Margin="0,0,5,0" Click="Close_Page">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pic/close.gif"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Left" Width="100"></StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="TypeTextBlock" Text="大厅" Margin="10,0" FontSize="20" />
+                    <TextBlock x:Name="TableNoTextblock" Text="A008" Margin="10,0" FontSize="20" />
+                </StackPanel>
+            </DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
                 <Button Height="40
                         " Click="Button_Click" BorderBrush="{x:Null}" Width="180" Style="{DynamicResource SquareButtonStyle}">

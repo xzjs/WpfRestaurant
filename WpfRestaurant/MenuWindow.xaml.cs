@@ -21,31 +21,38 @@ namespace WpfRestaurant
         {
             InitializeComponent();
 
-            _mainWindow = mw;
-            _order = o;
-            _listBill = new List<Bill>();
-
-            using (var db = new restaurantEntities())
+            try
             {
-                _config = db.Config.First();
+                _mainWindow = mw;
+                _order = o;
+                _listBill = new List<Bill>();
 
-                var lf = db.Food.ToList();
-                foreach (var item in lf)
+                using (var db = new restaurantEntities())
                 {
-                    var b = new Bill
-                    {
-                        Food = item,
-                        Order_id = 0,
-                        Num = 0
-                    };
-                    foreach (var bill in _order.Bill)
-                        if (bill.Food.Id == item.Id)
-                            b.Num = bill.Num;
-                    _listBill.Add(b);
-                }
-            }
+                    _config = db.Config.First();
 
-            FoodListBind();
+                    var lf = db.Food.ToList();
+                    foreach (var item in lf)
+                    {
+                        var b = new Bill
+                        {
+                            Food = item,
+                            Order_id = 0,
+                            Num = 0
+                        };
+                        foreach (var bill in _order.Bill)
+                            if (bill.Food.Id == item.Id)
+                                b.Num = bill.Num;
+                        _listBill.Add(b);
+                    }
+                }
+
+                FoodListBind();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         public void FoodListBind(int type = 1)
