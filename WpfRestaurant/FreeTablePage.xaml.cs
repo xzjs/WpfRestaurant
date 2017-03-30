@@ -27,7 +27,7 @@ namespace WpfRestaurant
             {
                 var t = db.Table.Find(MyApp.TableId);
                 TableNoTextblock.Text = t.No;
-                string[] typeStrings = new string[] { "大厅", "小包间", "大包间" };
+                string[] typeStrings = { "大厅", "小包间", "大包间" };
                 TypeTextBlock.Text = typeStrings[t.Type - 1];
             }
         }

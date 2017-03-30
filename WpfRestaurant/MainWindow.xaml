@@ -103,12 +103,7 @@
                     <ImageBrush ImageSource="pic/main_bgc.gif" />
                 </DockPanel.Background>
                 <DockPanel Dock="Left">
-                    <StackPanel DockPanel.Dock="Top">
-                        <Button Width="50" Height="50" Background="{x:Null}" BorderBrush="{x:Null}" Margin="50,40,0,0"
-                                Click="Button_Click_2">
-                            <Image Source="pic/refresh.png" Visibility="Hidden" />
-                        </Button>
-                    </StackPanel>
+                    
                     <StackPanel Margin="0,0,10,0">
                         <!--<Button Width="40" Height="80" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,50,0,10"
                                 Click="Button_Click">
@@ -134,7 +129,7 @@
                                 </TextBlock>
                             </StackPanel>
                         </Button>-->
-                        <Button Width="40" Height="80" BorderBrush="{x:Null}" Margin="0,50" Click="OutFoodClick" Style="{DynamicResource SquareButtonStyle}">
+                        <Button Width="40" Height="80" BorderBrush="{x:Null}" Margin="25,150,0,50" Click="OutFoodClick" Style="{DynamicResource SquareButtonStyle}">
                             <Button.Background>
                                 <ImageBrush ImageSource="pic/tangdian.gif"/>
                             </Button.Background>
@@ -149,7 +144,7 @@
                 <Frame x:Name="SidebarFrame" DockPanel.Dock="Right" Width="330" NavigationUIVisibility="Hidden"
                        Margin="20" />
                 <DockPanel>
-                    <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" Margin="0,40" />
+                    <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" Margin="10,40,0,40" />
                 </DockPanel>
             </DockPanel>
         </DockPanel>

@@ -129,6 +129,7 @@ namespace WpfRestaurant
                         _order.Time = DateTime.Now;
                         _order.Type = 0;
                         _order.Cost = 0;
+                        _order.Finish = 0;
                         db.Order.Add(_order);
                         db.SaveChanges();
                         foreach (var item in _listBill)
