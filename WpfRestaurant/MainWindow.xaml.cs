@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Threading;
 using Apache.NMS;
 using Apache.NMS.ActiveMQ;
 using Apache.NMS.ActiveMQ.Commands;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WpfRestaurant
@@ -39,6 +41,12 @@ namespace WpfRestaurant
             showTimer.Interval = new TimeSpan(0, 0, 0, 1);
             showTimer.Start();
 
+            //开启队列线程
+            var uploadQueue = new DispatcherTimer();
+            uploadQueue.Tick += UploadQueue;
+            uploadQueue.Interval = new TimeSpan(1, 0, 0);
+            uploadQueue.Start();
+
             using (var db = new restaurantEntities())
             {
                 Config = db.Config.FirstOrDefault();
@@ -50,6 +58,50 @@ namespace WpfRestaurant
             }
 
             ListenOrderTcp();
+        }
+
+        private void UploadQueue(object sender, EventArgs e)
+        {
+            using (var db = new restaurantEntities())
+            {
+                List<Queue> queues = db.Queue.OrderBy(q => q.Id).ToList();
+                if (queues.Count > 0)
+                {
+                    using (var client = new WebClient())
+                    {
+                        foreach (var queue in queues)
+                        {
+                            try
+                            {
+                                Dictionary<string, string> dictionary =
+                                    JsonConvert.DeserializeObject<Dictionary<string, string>>(queue.Parameter);
+                                NameValueCollection values = new NameValueCollection();
+                                foreach (var item in dictionary)
+                                {
+                                    values[item.Key] = item.Value;
+                                }
+                                var response = client.UploadValues(queue.Url, values);
+
+                                var responseString = Encoding.Default.GetString(response);
+                                var jo = JObject.Parse(responseString);
+                                if ((string) jo["errorFlag"] != "false") continue;
+                                db.Queue.Remove(queue);
+                                db.SaveChanges();
+                            }
+                            catch (WebException webException)
+                            {
+                                break;
+                            }
+                            catch (Exception exception)
+                            {
+                                MessageBox.Show(exception.Message);
+                            }
+
+                        }
+                    }
+                }
+
+            }
         }
 
         private void ShowCurTimer(object sender, EventArgs e)

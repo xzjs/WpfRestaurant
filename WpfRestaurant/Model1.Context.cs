@@ -31,5 +31,6 @@ namespace WpfRestaurant
         public virtual DbSet<Infomation> Infomation { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Table> Table { get; set; }
+        public virtual DbSet<Queue> Queue { get; set; }
     }
 }

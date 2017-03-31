@@ -14,6 +14,7 @@
         <AssociationConnector Association="restaurantModel.FK_Bill_0_0" ManuallyRouted="false" />
         <AssociationConnector Association="restaurantModel.FK_Bill_1_0" ManuallyRouted="false" />
         <AssociationConnector Association="restaurantModel.FK_Order_0_0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="restaurantModel.Queue" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

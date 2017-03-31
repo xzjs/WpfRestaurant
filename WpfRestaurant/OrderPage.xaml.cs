@@ -101,7 +101,7 @@ namespace WpfRestaurant
                         {
                             using (var client = new WebClient())
                             {
-                                var values = new NameValueCollection { ["details"] = json };
+                                var values = new NameValueCollection {["details"] = json};
 
                                 var response =
                                     client.UploadValues(
@@ -109,9 +109,25 @@ namespace WpfRestaurant
 
                                 var responseString = Encoding.Default.GetString(response);
                                 var jo = JObject.Parse(responseString);
-                                if ((string)jo["errorFlag"] != "false")
+                                if ((string) jo["errorFlag"] != "false")
                                     throw new Exception("上传订单失败");
                             }
+                        }
+                        catch (WebException webException)
+                        {
+                            string parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
+                            {
+                                ["details"] = json
+                            }, Formatting.Indented);
+                            Queue queue = new Queue
+                            {
+                                Url = "http://" + MyApp.Http + "/restClient/uploadMenuOrder.nd",
+                                Type = "POST",
+                                Time = DateTime.Now,
+                                Parameter = parameter
+                            };
+                            db.Queue.Add(queue);
+                            db.SaveChanges();
                         }
                         catch (Exception exception)
                         {

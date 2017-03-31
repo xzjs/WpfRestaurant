@@ -63,6 +63,16 @@
           <Property Name="Cost" Type="decimal" Precision="53" Scale="0" />
           <Property Name="Finish" Type="int" />
         </EntityType>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Type" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Parameter" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Time" Type="datetime" />
+        </EntityType>
         <EntityType Name="Table">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,6 +126,7 @@
           <EntitySet Name="Food" EntityType="Self.Food" store:Type="Tables" />
           <EntitySet Name="Infomation" EntityType="Self.Infomation" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" store:Type="Tables" />
+          <EntitySet Name="Queue" EntityType="Self.Queue" store:Type="Tables" />
           <EntitySet Name="Table" EntityType="Self.Table" store:Type="Tables" />
           <AssociationSet Name="FK_Bill_0_0" Association="Self.FK_Bill_0_0">
             <End Role="Order" EntitySet="Order" />
@@ -264,7 +275,18 @@
             <End Role="Table" EntitySet="Table" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
+          <EntitySet Name="Queue" EntityType="restaurantModel.Queue" />
         </EntityContainer>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Parameter" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="DateTime" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -343,6 +365,17 @@
                 <ScalarProperty Name="Counts" ColumnName="Counts" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="DeskID" ColumnName="DeskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queue">
+            <EntityTypeMapping TypeName="restaurantModel.Queue">
+              <MappingFragment StoreEntitySet="Queue">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

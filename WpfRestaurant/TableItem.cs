@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Net;
 using System.Text;
 using System.Windows;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WpfRestaurant
@@ -41,15 +43,36 @@ namespace WpfRestaurant
                             ["deskId"] = t.DeskID.ToString(),
                             ["status"] = status.ToString()
                         };
-                        if (MyApp.Http == null)
-                            throw new Exception("未设置HTTP");
-                        var response = client.UploadValues("http://" + MyApp.Http + "/restClient/setDeskStatus.nd",
-                            values);
+                        try
+                        {
+                            if (MyApp.Http == null)
+                                throw new Exception("未设置HTTP");
+                            var response = client.UploadValues("http://" + MyApp.Http + "/restClient/setDeskStatus.nd",
+                                values);
 
-                        var responseString = Encoding.Default.GetString(response);
-                        var jo = JObject.Parse(responseString);
-                        if ((string) jo["errorFlag"] != "false")
-                            throw new Exception("设置服务器桌位失败");
+                            var responseString = Encoding.Default.GetString(response);
+                            var jo = JObject.Parse(responseString);
+                            if ((string)jo["errorFlag"] != "false")
+                                throw new Exception("设置服务器桌位失败");
+                        }
+                        catch (WebException webException)
+                        {
+                            string parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
+                            {
+                                ["deskId"] = t.DeskID.ToString(),
+                                ["status"] = status.ToString()
+                            }, Formatting.Indented);
+                            Queue queue = new Queue
+                            {
+                                Url = "http://" + MyApp.Http + "/restClient/setDeskStatus.nd",
+                                Type = "POST",
+                                Time = DateTime.Now,
+                                Parameter = parameter
+                            };
+                            db.Queue.Add(queue);
+                            db.SaveChanges();
+                        }
+                        
                     }
                 }
             }
