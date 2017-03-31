@@ -26,10 +26,17 @@
                 </Button>
             </StackPanel>
             <StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock x:Name="TypeTextBlock" FontSize="18" Margin="25,0">大厅</TextBlock>
-                    <TextBlock x:Name="TableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
-                </StackPanel>
+                <DockPanel >
+                    <Button DockPanel.Dock="Right" Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}" Click="ClosePage">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pic/close.gif"/>
+                        </Button.Background>
+                    </Button>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock x:Name="TypeTextBlock" FontSize="18" Margin="25,0">大厅</TextBlock>
+                        <TextBlock x:Name="TableNoTextblock" FontSize="18" Margin="25,0">A002</TextBlock>
+                    </StackPanel>
+                </DockPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Width="100" Height="30" Margin="5" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}"
                             BorderBrush="{x:Null}">

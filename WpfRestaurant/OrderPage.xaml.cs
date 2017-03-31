@@ -127,5 +127,10 @@ namespace WpfRestaurant
                 _mainWindow.SidebarFrame.Content = new FreeTablePage(_mainWindow);
             }
         }
+
+        private void ClosePage(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.SidebarFrame.Content = null;
+        }
     }
 }
