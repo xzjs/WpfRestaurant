@@ -73,7 +73,8 @@ namespace WpfRestaurant
                 if (o != null)
                 {
                     o.Cost = _order.Cost;
-                    //db.SaveChanges();
+                    o.Finish = 1;
+                    db.SaveChanges();
 
                     if (_mainWindow.Infomation.RestaurantID != null)
                     {
