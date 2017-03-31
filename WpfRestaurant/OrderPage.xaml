@@ -21,7 +21,7 @@
 
                     <TextBlock x:Name="CostTextBlock"  Foreground="White" TextAlignment="Center"
                                    VerticalAlignment="Center" FontSize="18">
-                            总计：￥40
+                            结算：￥40
                     </TextBlock>
                 </Button>
             </StackPanel>

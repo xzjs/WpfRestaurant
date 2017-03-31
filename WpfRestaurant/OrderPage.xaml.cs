@@ -62,7 +62,7 @@ namespace WpfRestaurant
                         .First();
             }
             BillDataGrid.ItemsSource = _order.Bill.ToList();
-            CostTextBlock.Text = "总计：￥" + _order.Cost.Value.ToString(CultureInfo.InvariantCulture);
+            CostTextBlock.Text = "结算：￥" + _order.Cost.Value.ToString(CultureInfo.InvariantCulture);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
