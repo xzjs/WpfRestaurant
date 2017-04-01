@@ -82,6 +82,7 @@ namespace WpfRestaurant
                         {
                             restaurantId = (int)_mainWindow.Infomation.RestaurantID,
                             repastDeskId = _table.DeskID,
+                            repastTimeStr = o.Time.Value.ToString("yyyy-M-d H:m:s"),
                             price = o.Cost.Value,
                             subOrderList = new List<Menu>()
                         };

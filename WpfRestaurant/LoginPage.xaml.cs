@@ -67,7 +67,9 @@ namespace WpfRestaurant
                                 db.Infomation.Add(i);
                             }
                             db.SaveChanges();
-                            ParentWindow.Close();
+                            MessageBox.Show("登录成功");
+                            MainWindow mainWindow=Application.Current.MainWindow as MainWindow;
+                            mainWindow.NameTextBlock.Text = i.Name;
                         }
                         else
                             MessageBox.Show("登录失败");
@@ -91,7 +93,7 @@ namespace WpfRestaurant
                     int count = db.Order.Count(o => o.Finish == 1);
                     if (count > 0)
                     {
-                        throw new Exception("有未完成的订单，更新本地数据");
+                        throw new Exception("有未完成的订单，无法更新本地数据");
                     }
                     var messageBoxResult = MessageBox.Show("更新数据将会清空订单和历史数据，是否更新", "是否更新数据",
                         MessageBoxButton.OKCancel);
@@ -105,8 +107,10 @@ namespace WpfRestaurant
                             client.DownloadString("http://" + mainWindow.Config.Http + "/restClient/menuInfoById.nd?id=" +
                                                   mainWindow.Infomation.RestaurantID);
                         var jo = JObject.Parse(responseString);
+                        Infomation infomation = db.Infomation.First();
                         mainWindow.Infomation.path = (string)jo["picUrl"];
-
+                        infomation.path= (string)jo["picUrl"];
+                        db.SaveChanges();
                         if (jo["menuList"] != null)
                         {
                             db.Database.ExecuteSqlCommand("DELETE FROM Food");

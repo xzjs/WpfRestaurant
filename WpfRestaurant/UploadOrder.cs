@@ -14,5 +14,6 @@ namespace WpfRestaurant
         public long repastDeskId;
         public int restaurantId;
         public List<Menu> subOrderList;
+        public string repastTimeStr;
     }
 }
