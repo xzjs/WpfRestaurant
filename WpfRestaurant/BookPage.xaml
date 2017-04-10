@@ -13,6 +13,16 @@
 
     <Grid>
         <DockPanel>
+            <DockPanel Dock="Top">
+                <StackPanel DockPanel.Dock="Right">
+                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}" Margin="0,0,5,0" Click="Close_Page">
+                        <Button.Background>
+                            <ImageBrush ImageSource="pic/close.gif"/>
+                        </Button.Background>
+                    </Button>
+                </StackPanel>
+                <StackPanel ></StackPanel>
+            </DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Width="300">
                 <Button Height="40" Click="Button_Click" Width="150" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
                     <Button.Background>
@@ -30,7 +40,7 @@
             <StackPanel x:Name="BookStackPanel">
                 <StackPanel Orientation="Horizontal" Margin="10,30,0,5">
                     <TextBlock Text="桌号:" FontSize="20" />
-                    <TextBlock Text="{Binding Table_id}" FontSize="20" Margin="10,0" />
+                    <TextBlock Text="{Binding Table.No}" FontSize="20" Margin="10,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10,5,0,0">
                     <TextBlock Text="姓名:" FontSize="20" />

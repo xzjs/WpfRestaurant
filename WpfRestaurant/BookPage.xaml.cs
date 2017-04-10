@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace WpfRestaurant
@@ -34,11 +36,23 @@ namespace WpfRestaurant
         /// <param name="e"></param>
         private void Cancel_Order(object sender, RoutedEventArgs e)
         {
-            using (var db=new restaurantEntities())
+            using (var db = new restaurantEntities())
             {
                 long tableId = _order.Table_id;
-                TableItem.SetTableStatus(0,tableId);
+                TableItem.SetTableStatus(0, tableId);
+                List<Bill> bills = db.Bill.Where(b => b.Order_id == _order.Id).ToList();
+                db.Bill.RemoveRange(bills);
+                Order order = db.Order.Find(_order.Id);
+                db.Order.Remove(order);
+                db.SaveChanges();
+                _mainWindow.SidebarFrame.Content = null;
+                _mainWindow.Lop.GetList();
             }
+        }
+
+        private void Close_Page(object sender, RoutedEventArgs e)
+        {
+            _mainWindow.SidebarFrame.Content = null;
         }
     }
 }

@@ -212,6 +212,11 @@ namespace WpfRestaurant
                                     t.Status = 0;
                                 else
                                     t.Status = (int)item["deskInfo"]["status"];
+                                Table table = db.Table.FirstOrDefault(o => o.DeskID == t.DeskID);
+                                if (table != null)
+                                {
+                                    continue;
+                                }
                                 db.Table.Add(t);
                             }
                             else if (type == 1)//删除
@@ -248,6 +253,11 @@ namespace WpfRestaurant
                                     Img = (string)item["menuInfo"]["picUrl"]
                                 };
                                 f.Img = MyApp.Download_Img(Infomation.path,f.Img);
+                                Food food = db.Food.FirstOrDefault(o => o.No == f.No);
+                                if (food != null)
+                                {
+                                    continue;
+                                }
                                 db.Food.Add(f);
                             }
                             else if (type == 1)//删除

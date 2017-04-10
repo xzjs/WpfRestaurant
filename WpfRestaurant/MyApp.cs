@@ -26,9 +26,10 @@ namespace WpfRestaurant
                     return downloadPath;
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                MessageBox.Show("下载" + name + "出错");
+                //MessageBox.Show("下载" + name + "出错");
+                Console.WriteLine(exception.Message);
                 return "menu.png";
             }
         }

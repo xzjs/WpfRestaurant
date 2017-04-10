@@ -152,6 +152,7 @@ namespace WpfRestaurant
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                //Console.WriteLine(ex.Message);
             }
         }
     }

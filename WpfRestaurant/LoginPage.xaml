@@ -21,7 +21,7 @@
                             <StackPanel Orientation="Horizontal" Width="360" Height="55">
                                 <Image Source="pic/login_head.png" Margin="10" />
                                 <TextBox x:Name="NameTextbox" Background="{x:Null}" Foreground="White"
-                                         VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}" Text="test3" FontSize="20" />
+                                         VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}" FontSize="20" Text="weifang" />
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
@@ -29,7 +29,7 @@
                                 <Image Source="pic/pwd.png" Margin="10" />
                                 <PasswordBox x:Name="PwdBox" Background="{x:Null}" Foreground="White"
                                              VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}"
-                                             Password="123" FontSize="20" />
+                                             Password="weifang" FontSize="20" />
                                 <!--<TextBox Text="密码" Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"></TextBox>-->
                             </StackPanel>
                         </Border>
