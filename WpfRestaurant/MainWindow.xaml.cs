@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -248,7 +247,7 @@ namespace WpfRestaurant
                                     Type = (int)item["menuInfo"]["type"],
                                     Img = (string)item["menuInfo"]["picUrl"]
                                 };
-                                f.Img = Download_Img(f.Img);
+                                f.Img = MyApp.Download_Img(Infomation.path,f.Img);
                                 db.Food.Add(f);
                             }
                             else if (type == 1)//删除
@@ -269,7 +268,7 @@ namespace WpfRestaurant
                                     food.Name = (string)item["menuInfo"]["menuName"];
                                     food.Detail = (string)item["menuInfo"]["details"];
                                     food.Type = (int)item["menuInfo"]["type"];
-                                    food.Img = Download_Img((string)item["menuInfo"]["picUrl"]);
+                                    food.Img = MyApp.Download_Img(Infomation.path, (string)item["menuInfo"]["picUrl"]);
                                 }
                             }
                         }
@@ -496,26 +495,6 @@ namespace WpfRestaurant
             MessageBox.Show("外卖功能尚未开放");
         }
 
-        /// <summary>
-        /// 下载图片
-        /// </summary>
-        /// <param name="path">图片名称</param>
-        /// <returns></returns>
-        public string Download_Img(string path)
-        {
-            try
-            {
-                using (var client = new WebClient())
-                {
-                    client.DownloadFile(Infomation.path + path, path);
-                    return path;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("下载" +path + "出错");
-                return "menu.png";
-            }
-        }
+        
     }
 }

@@ -9,7 +9,7 @@
         Title="MainWindow" Height="550" Width="1000" AllowsTransparency="True" WindowStyle="None" ResizeMode="NoResize"
         MouseLeftButtonDown="Window_MouseLeftButtonDown" Activated="Window_Activated">
     <Grid>
-        <DockPanel>
+        <DockPanel Grid.ColumnSpan="2">
             <DockPanel DockPanel.Dock="Top" Height="40">
                 <DockPanel.Background>
                     <ImageBrush ImageSource="pic/head.gif" />
@@ -85,7 +85,7 @@
                                            Width="150" VerticalAlignment="Center" />
                             </StackPanel>
                         </Button>
-                        
+
                         <Button Click="Button_Click_3" Background="{x:Null}" BorderBrush="{x:Null}" Tag="全部桌台">
                             <StackPanel Width="150" Height="55" Orientation="Horizontal">
                                 <StackPanel.Background>
@@ -103,7 +103,7 @@
                     <ImageBrush ImageSource="pic/main_bgc.gif" />
                 </DockPanel.Background>
                 <DockPanel Dock="Left">
-                    
+
                     <StackPanel Margin="0,0,10,0">
                         <!--<Button Width="40" Height="80" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,50,0,10"
                                 Click="Button_Click">

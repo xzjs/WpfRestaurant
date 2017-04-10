@@ -13,15 +13,18 @@
 
     <Grid>
         <DockPanel>
-            <StackPanel DockPanel.Dock="Bottom">
-                <Button Height="50" Click="Button_Click" Width="180" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <DockPanel Width="180" Height="50">
-                        <DockPanel.Background>
-                            <ImageBrush ImageSource="pic/red_button.png" />
-                        </DockPanel.Background>
-                        <TextBlock Text="到店" FontSize="20" Foreground="White" VerticalAlignment="Center"
-                                   TextAlignment="Center" />
-                    </DockPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Width="300">
+                <Button Height="40" Click="Button_Click" Width="150" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pic/red_button.png"/>
+                    </Button.Background>
+                    <TextBlock Text="到店" FontSize="20" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Microsoft YaHei" />
+                </Button>
+                <Button Height="40" Click="Cancel_Order"  Width="150" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="pic/red_button.png"/>
+                    </Button.Background>
+                    <TextBlock Text="取消" FontSize="20" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Microsoft YaHei"/>
                 </Button>
             </StackPanel>
             <StackPanel x:Name="BookStackPanel">

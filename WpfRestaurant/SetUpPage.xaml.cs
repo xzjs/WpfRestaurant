@@ -11,40 +11,36 @@ namespace WpfRestaurant
     public partial class SetUpPage : Page
     {
         private readonly Config _config;
-
-        public SetUpPage()
+        private readonly LoginWindow _loginWindow;
+        public SetUpPage(LoginWindow loginWindow)
         {
+            _loginWindow = loginWindow;
             InitializeComponent();
             using (var db = new restaurantEntities())
             {
                 _config = db.Config.FirstOrDefault();
-                if (_config == null)
-                {
-                    _config=new Config();
-                }
                 ConfigStackPanel.DataContext = _config;
             }
         }
-
-        public LoginWindow ParentWindow { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             using (var db = new restaurantEntities())
             {
-                if (_config.Id == 0)
+            
+                db.Entry(_config).State = EntityState.Modified;
+                db.SaveChanges();
+                MyApp.Http = _config.Http;
+                Infomation infomation = db.Infomation.FirstOrDefault();
+                if (infomation == null)
                 {
-                    db.Config.Add(_config);
+                    _loginWindow.PageFrame.Content = new LoginPage(_loginWindow);
                 }
                 else
                 {
-                    db.Entry(_config).State = EntityState.Modified;
+                    _loginWindow.PageFrame.Content=new LogoutPage(_loginWindow);
                 }
-                db.SaveChanges();
             }
-            MyApp.Http = _config.Http;
-            var lp = new LoginPage {ParentWindow = ParentWindow};
-            ParentWindow.PageFrame.Content = lp;
         }
     }
 }

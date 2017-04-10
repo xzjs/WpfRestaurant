@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 
 namespace WpfRestaurant
 {
@@ -7,13 +8,23 @@ namespace WpfRestaurant
     /// </summary>
     public partial class LoginWindow : Window
     {
+        public Infomation Infomation;
         public LoginWindow()
         {
             InitializeComponent();
 
-            var lg = new LoginPage();
-            lg.ParentWindow = this;
-            PageFrame.Content = lg;
+            using (var db=new restaurantEntities())
+            {
+                Infomation = db.Infomation.FirstOrDefault();
+                if (Infomation != null)
+                {
+                    PageFrame.Content = new LogoutPage(this);
+                }
+                else
+                {
+                    PageFrame.Content=new LoginPage(this);
+                }
+            }
         }
     }
 }

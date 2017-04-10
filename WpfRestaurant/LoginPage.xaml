@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:WpfRestaurant"
+      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d"
       d:DesignHeight="367.421"
       Title="LoginPage">
@@ -19,37 +20,37 @@
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Width="360" Height="55">
                                 <Image Source="pic/login_head.png" Margin="10" />
-                                <TextBox x:Name="NameTextbox" Background="Transparent" Foreground="White"
-                                         VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3" Text="test3" />
+                                <TextBox x:Name="NameTextbox" Background="{x:Null}" Foreground="White"
+                                         VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}" Text="test3" FontSize="20" />
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Height="55" Width="360">
                                 <Image Source="pic/pwd.png" Margin="10" />
-                                <PasswordBox x:Name="PwdBox" Background="Transparent" Foreground="White"
-                                             VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"
-                                             Password="123" />
+                                <PasswordBox x:Name="PwdBox" Background="{x:Null}" Foreground="White"
+                                             VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}"
+                                             Password="123" FontSize="20" />
                                 <!--<TextBox Text="密码" Background="Transparent" Foreground="White" VerticalAlignment="Center" Width="285" BorderBrush="#00ABADB3"></TextBox>-->
                             </StackPanel>
                         </Border>
                     </StackPanel>
                     <StackPanel>
 
-                        <Button Height="50" BorderBrush="{x:Null}" FontSize="20"
+                        <Button x:Name="Button" Height="50" BorderBrush="{x:Null}" FontSize="20"
                                     Click="Button_Click" Style="{DynamicResource SquareButtonStyle}" FontFamily="Microsoft YaHei" Margin="0,50,0,0" Foreground="White">
                             <Button.Background>
                                 <ImageBrush ImageSource="pic/保存并返回登录界面.png"/>
                             </Button.Background>
                             登录
                         </Button>
-
-                        <Button Height="50" BorderBrush="{x:Null}" FontSize="20"
+                        <controls:ProgressRing x:Name="ProgressRing" IsActive="False" Margin="0,10" />
+                        <!--<Button Height="50" BorderBrush="{x:Null}" FontSize="20"
                                     Click="Init" Style="{DynamicResource SquareButtonStyle}" Margin="0,5,0,0" Foreground="White">
                             <Button.Background>
                                 <ImageBrush ImageSource="pic/保存并返回登录界面.png"/>
                             </Button.Background>
                             初始化数据
-                        </Button>
+                        </Button>-->
 
                     </StackPanel>
                 </StackPanel>

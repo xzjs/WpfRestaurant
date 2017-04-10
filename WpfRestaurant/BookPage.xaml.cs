@@ -26,5 +26,19 @@ namespace WpfRestaurant
             TableItem.SetTableStatus(2, MyApp.TableId);
             _mainWindow.Lop.GetList();
         }
+
+        /// <summary>
+        /// 取消订单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Cancel_Order(object sender, RoutedEventArgs e)
+        {
+            using (var db=new restaurantEntities())
+            {
+                long tableId = _order.Table_id;
+                TableItem.SetTableStatus(0,tableId);
+            }
+        }
     }
 }
