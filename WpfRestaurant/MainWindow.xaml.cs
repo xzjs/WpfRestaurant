@@ -181,7 +181,7 @@ namespace WpfRestaurant
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                //MessageBox.Show(exception.Message);
             }
         }
 
@@ -478,7 +478,8 @@ namespace WpfRestaurant
         private void Login(object sender, RoutedEventArgs e)
         {
             var lw = new LoginWindow();
-            lw.ShowDialog();
+            lw.Show();
+            Close();
         }
 
         private void Window_Activated(object sender, EventArgs e)
