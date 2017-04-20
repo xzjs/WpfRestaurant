@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
@@ -26,15 +27,15 @@ namespace WpfRestaurant
         public Infomation Infomation;
         public LobbyOrderPage Lop;
         public OrderPage Op;
+        public ObservableCollection<MessageWindow> MessageWindows;
+
+        private string str = "";
 
         public MainWindow()
         {
             InitializeComponent();
             Lop = new LobbyOrderPage(this);
             PageFrame.Content = Lop;
-
-
-
             var showTimer = new DispatcherTimer();
             showTimer.Tick += ShowCurTimer;
             showTimer.Interval = new TimeSpan(0, 0, 0, 1);
@@ -45,6 +46,9 @@ namespace WpfRestaurant
             uploadQueue.Tick += UploadQueue;
             uploadQueue.Interval = new TimeSpan(1, 0, 0);
             uploadQueue.Start();
+
+            MessageWindows = new ObservableCollection<MessageWindow>();
+            MessageWindows.CollectionChanged += ArrageWindow;
 
             using (var db = new restaurantEntities())
             {
@@ -57,6 +61,32 @@ namespace WpfRestaurant
             }
 
             ListenOrderTcp();
+        }
+
+        /// <summary>
+        /// 排列显示消息窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ArrageWindow(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            double height = SystemParameters.WorkArea.Height;
+            double width = SystemParameters.WorkArea.Width;
+            int max = Convert.ToInt32(Math.Floor(height / 200));
+
+            for (int i = 0; i < MessageWindows.Count; i++)
+            {
+                MessageWindows[i].Top = height - 200 * (i + 1);
+                int n = i / max;
+                MessageWindows[i].Left = width - 300 * (n + 1);
+            }
+        }
+
+        private void ShowMessageWindow()
+        {
+            MessageWindow messageWindow = new MessageWindow(str, this);
+            messageWindow.Show();
+            MessageWindows.Add(messageWindow);
         }
 
         private void UploadQueue(object sender, EventArgs e)
@@ -83,7 +113,7 @@ namespace WpfRestaurant
 
                                 var responseString = Encoding.Default.GetString(response);
                                 var jo = JObject.Parse(responseString);
-                                if ((string) jo["errorFlag"] != "false") continue;
+                                if ((string)jo["errorFlag"] != "false") continue;
                                 db.Queue.Remove(queue);
                                 db.SaveChanges();
                             }
@@ -116,7 +146,7 @@ namespace WpfRestaurant
         /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         /// <summary>
@@ -252,7 +282,7 @@ namespace WpfRestaurant
                                     Type = (int)item["menuInfo"]["type"],
                                     Img = (string)item["menuInfo"]["picUrl"]
                                 };
-                                f.Img = MyApp.Download_Img(Infomation.path,f.Img);
+                                f.Img = MyApp.Download_Img(Infomation.path, f.Img);
                                 Food food = db.Food.FirstOrDefault(o => o.No == f.No);
                                 if (food != null)
                                 {
@@ -284,14 +314,39 @@ namespace WpfRestaurant
                         }
                         db.SaveChanges();
                         Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { Lop.GetList(); }));
+                        str = "修改数据成功\n";
+                        switch (type)
+                        {
+                            case 0:
+                                str += "添加";
+                                break;
+                            case 1:
+                                str += "删除";
+                                break;
+                            default:
+                                str += "修改";
+                                break;
+                        }
+                        if ((int)item["modifyItem"] == 0)
+                        {
+                            str += "餐桌" + (string)item["deskInfo"]["deskNumber"];
+                        }
+                        else
+                        {
+                            str += "菜单" + (string)item["menuInfo"]["menuName"];
+                        }
                     }
                 }
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                //MessageBox.Show(exception.Message);
+                str = "修改失败" + exception.Message;
             }
-            
+            finally
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ShowMessageWindow));
+            }
         }
 
         private void consumer_Listener(IMessage message)
@@ -324,41 +379,39 @@ namespace WpfRestaurant
                     foreach (var item in jo)
                     {
                         long phone = 0;
-                        string name = null;
                         int counts = 0;
-                        string no = null;
-                        string remark = null;
                         long deskid = 0;
                         DateTime time = DateTime.Now;
                         int type = 0;
-                        if (!string.IsNullOrEmpty((string)item["contactTel"]))
+                        if (!string.IsNullOrEmpty((string) item["contactTel"]))
                         {
-                            phone = (long)item["contactTel"];
+                            phone = (long) item["contactTel"];
                         }
-                        name = (string)item["name"];
-                        if (!string.IsNullOrEmpty((string)item["counts"]))
+                        var name = (string) item["name"];
+                        if (!string.IsNullOrEmpty((string) item["counts"]))
                         {
-                            counts = (int)item["counts"];
+                            counts = (int) item["counts"];
                         }
-                        no = (string)item["orderNumber"];
-                        remark = (string)item["remark"];
-                        if (!string.IsNullOrEmpty((string)item["repastDeskId"]))
+                        var no = (string) item["orderNumber"];
+                        var remark = (string) item["remark"];
+                        if (!string.IsNullOrEmpty((string) item["repastDeskId"]))
                         {
-                            deskid = (long)item["repastDeskId"];
+                            deskid = (long) item["repastDeskId"];
                         }
-                        if (!string.IsNullOrEmpty((string)item["repastTimeStr"]))
+                        if (!string.IsNullOrEmpty((string) item["repastTimeStr"]))
                         {
                             time = Convert.ToDateTime(item["repastTimeStr"]);
                         }
-                        if (!string.IsNullOrEmpty((string)item["type"]))
+                        if (!string.IsNullOrEmpty((string) item["type"]))
                         {
-                            type = (int)item["type"];
+                            type = (int) item["type"];
                         }
 
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         var table = db.Table.First(x => x.DeskID == deskid);
-                        table.Status = 1;
+                        table.Status = type == 0 ? 2 : 1;
+           
                         if (order == null)
                         {
                             order = new Order
@@ -388,17 +441,26 @@ namespace WpfRestaurant
                             order.Finish = 0;
                         }
                         db.SaveChanges();
+                        if (type == 0)
+                        {
+                            str = table.No + "桌点餐";
+                        }
+                        else
+                        {
+                            str = table.No + "桌预定\n预定时间" + time + "\n联系方式" + order.Phone;
+                        }
                     }
                 }
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { Lop.GetList(); }));
-                //Lop.GetList();
-
-
-
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                //MessageBox.Show(exception.Message);
+                str = "订单错误" + exception.Message;
+            }
+            finally
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, new Action(ShowMessageWindow));
             }
         }
 
@@ -506,6 +568,6 @@ namespace WpfRestaurant
             MessageBox.Show("外卖功能尚未开放");
         }
 
-        
+
     }
 }
