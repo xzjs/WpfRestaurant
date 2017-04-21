@@ -20,6 +20,8 @@ namespace WpfRestaurant
 
         public decimal Cost { get; set; }
 
+        public int Counts { get; set; }
+
         public Order Order { get; set; }
 
         /// <summary>

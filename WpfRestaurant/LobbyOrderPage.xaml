@@ -18,28 +18,6 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <!--<Button Click="BusyTableClick" Tag="{Binding Path=Id}" Background="{x:Null}"
-                                BorderBrush="{x:Null}">
-                            <Grid Width="160" Height="100">
-                                <Grid.Background>
-                                    <ImageBrush ImageSource="pic/busy_table.png" />
-                                </Grid.Background>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White"
-                                           Text="{Binding No}" FontSize="20" />
-                                <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" FontSize="20"
-                                           Foreground="Lime" VerticalAlignment="Center" Text="已下单" />
-                                <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" FontSize="20"
-                                           Text="{Binding Cost}" Foreground="White" />
-                            </Grid>
-                        </Button>-->
                         <Button Click="BusyTableClick" Tag="{Binding Path=Id}" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
                             <Grid Width="85" Height="50">
                                 <Grid.Background>
@@ -55,7 +33,7 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White" Text="{Binding No}"  HorizontalAlignment="Stretch"/>
                                 <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" Foreground="Lime" Text="已下单" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  Text="{Binding Cost}" Foreground="White" HorizontalAlignment="Center" />
+                                <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center"  Text="{Binding Counts}" Foreground="White" HorizontalAlignment="Center" />
                             </Grid>
 
                         </Button>
@@ -99,28 +77,6 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <!--<Button Click="OrderTableClick" Tag="{Binding Path=Order}" Background="{x:Null}"
-                                BorderBrush="{x:Null}">
-                            <Grid Width="160" Height="100">
-                                <Grid.Background>
-                                    <ImageBrush ImageSource="pic/餐厅图标1_24.png" />
-                                </Grid.Background>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <TextBlock VerticalAlignment="Center" TextAlignment="Center" Foreground="White"
-                                           Text="{Binding No}" FontSize="20" />
-                                <TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="Center" FontSize="20"
-                                           Foreground="Lime" VerticalAlignment="Center" Text="预约" />
-                                <TextBlock Grid.Column="1" Grid.Row="1" Foreground="White" FontSize="20"
-                                           TextAlignment="Center" Text="{Binding Time}" />
-                            </Grid>
-                        </Button>-->
                         <Button Click="OrderTableClick" Tag="{Binding Path=Order}" Background="{x:Null}" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
                             <Grid Width="85" Height="50">
                                 <Grid.Background>

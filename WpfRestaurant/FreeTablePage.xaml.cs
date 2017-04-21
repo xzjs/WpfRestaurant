@@ -34,12 +34,11 @@ namespace WpfRestaurant
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (var db = new restaurantEntities())
-            {
-                var o = new Order();
-                var mw = new MenuWindow(_mainWindow, o);
-                mw.ShowDialog();
-            }
+
+            var o = new Order();
+            var mw = new MenuWindow(_mainWindow, o);
+            mw.ShowDialog();
+
         }
 
         private void Close_Page(object sender, RoutedEventArgs e)

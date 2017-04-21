@@ -57,7 +57,8 @@ namespace WpfRestaurant
                     {
                         Id = t.Id,
                         Table = t,
-                        No = t.No
+                        No = t.No,
+                        Counts = t.Counts
                     };
                     if (status > 0)
                     {

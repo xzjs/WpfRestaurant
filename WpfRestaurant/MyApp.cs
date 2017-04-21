@@ -23,7 +23,7 @@ namespace WpfRestaurant
                 using (var client = new WebClient())
                 {
                     client.DownloadFile(downloadPath + name, name);
-                    return downloadPath;
+                    return name;
                 }
             }
             catch (Exception exception)
