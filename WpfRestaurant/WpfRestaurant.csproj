@@ -469,14 +469,12 @@
     <Resource Include="pic\餐厅图标_109.png" />
     <Resource Include="pic\caidan_close.png" />
     <Resource Include="pic\餐厅图标1_22.png" />
-    <Resource Include="pic\餐厅图标1_23.png" />
     <Resource Include="pic\餐厅图标1_24.png" />
     <Resource Include="pic\餐厅图标1_25.png" />
     <Resource Include="pic\free_table.png" />
     <Resource Include="pic\餐厅图标1_12.png" />
     <Resource Include="pic\test.png" />
     <Resource Include="pic\order_table.png" />
-    <Resource Include="pic\busy_table.png" />
     <Resource Include="pic\dating.png" />
     <Resource Include="pic\login_bj.jpg" />
     <Resource Include="pic\red_button.png" />
@@ -526,6 +524,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="pic\busy_table.png" />
     <Resource Include="pic\星河露营地文字logo.png" />
     <Resource Include="pic\图片logo.png" />
     <Resource Include="pic\保存并返回登录界面.png" />

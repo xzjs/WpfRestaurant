@@ -4,11 +4,13 @@ using System.Windows;
 
 namespace WpfRestaurant
 {
-    public static class MyApp
+    public class MyApp
     {
         public static long TableId = 0;
         public static int TableType = 0;
         public static string Http = null;
+        public static Config Config;
+        public static Infomation Infomation;
 
         /// <summary>
         /// 下载图片

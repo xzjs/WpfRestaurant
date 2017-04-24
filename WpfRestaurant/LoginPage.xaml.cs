@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -18,6 +19,7 @@ namespace WpfRestaurant
     {
         private readonly LoginWindow _loginWindow;
         private Config _config;
+        private BackgroundWorker _backgroundWorker;
         public LoginPage(LoginWindow loginWindow)
         {
             InitializeComponent();
@@ -26,72 +28,19 @@ namespace WpfRestaurant
             {
                 _config = db.Config.First();
             }
+            _backgroundWorker=new BackgroundWorker();
+            _backgroundWorker.DoWork += Init;
+            _backgroundWorker.RunWorkerCompleted += Completed;
         }
 
-        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-            var sup = new SetUpPage(_loginWindow);
-            _loginWindow.PageFrame.Content = sup;
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            _loginWindow.Close();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                using (var db = new restaurantEntities())
-                {
-                    _config = db.Config.First();
-                    var name = NameTextbox.Text.Trim();
-                    var p = Marshal.SecureStringToBSTR(PwdBox.SecurePassword);
-                    var password = Marshal.PtrToStringBSTR(p);
-
-                    using (var client = new WebClient())
-                    {
-
-                        var values = new NameValueCollection
-                        {
-                            ["account"] = name,
-                            ["password"] = password
-                        };
-
-                        var response = client.UploadValues("http://" + _config.Http + "/restLogin/login.nd", values);
-
-                        var responseString = Encoding.UTF8.GetString(response);
-                        var jo = JObject.Parse(responseString);
-                        if (jo["id"] != null)
-                        {
-                            var i = new Infomation
-                            {
-                                RestaurantID = (int)jo["id"],
-                                Name = (string)jo["name"]
-                            };
-
-                            db.Infomation.Add(i);
-
-                            db.SaveChanges();
-                            Button.Content = "登录成功，正在初始化数据";
-                            ProgressRing.IsActive = true;
-                            Init();
-                            MainWindow mainWindow = new MainWindow();
-                            mainWindow.Show();
-                            _loginWindow.Close();
-                        }
-                        else
-                            MessageBox.Show("登录失败");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.Message);
-            }
-
-        }
-
-        /// <summary>
-        /// 初始化数据
-        /// </summary>
-        private void Init()
+        private void Init(object sender, DoWorkEventArgs e)
         {
             try
             {
@@ -152,6 +101,65 @@ namespace WpfRestaurant
                 MessageBox.Show(ex.Message);
                 //Console.WriteLine(ex.Message);
             }
+        }
+
+        private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var sup = new SetUpPage(_loginWindow);
+            _loginWindow.PageFrame.Content = sup;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var db = new restaurantEntities())
+                {
+                    _config = db.Config.First();
+                    MyApp.Config = _config;
+                    var name = NameTextbox.Text.Trim();
+                    var p = Marshal.SecureStringToBSTR(PwdBox.SecurePassword);
+                    var password = Marshal.PtrToStringBSTR(p);
+
+                    using (var client = new WebClient())
+                    {
+
+                        var values = new NameValueCollection
+                        {
+                            ["account"] = name,
+                            ["password"] = password
+                        };
+
+                        var response = client.UploadValues("http://" + _config.Http + "/restLogin/login.nd", values);
+                        var responseString = Encoding.UTF8.GetString(response);
+                        var jo = JObject.Parse(responseString);
+                        if (jo["id"] != null)
+                        {
+                            var i = new Infomation
+                            {
+                                RestaurantID = (int)jo["id"],
+                                Name = (string)jo["name"]
+                            };
+
+                            db.Infomation.Add(i);
+                            MyApp.Infomation = i;
+                            db.SaveChanges();
+                            Button.Content = "登录成功，正在初始化数据";
+                            ProgressRing.IsActive = true;
+                            _backgroundWorker.RunWorkerAsync();
+                      
+                            
+                        }
+                        else
+                            MessageBox.Show("登录失败");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
+
         }
     }
 }
