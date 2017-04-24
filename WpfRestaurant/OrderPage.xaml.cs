@@ -57,9 +57,9 @@ namespace WpfRestaurant
             {
                 _order =
                     db.Order.Include("Bill.Food")
-                        .Where(x => x.Table_id == MyApp.TableId)
+                        .Where(x => x.Table_id == MyApp.TableId).Where(o=>o.Finish==0)
                         .OrderByDescending(x => x.Id)
-                        .First();
+                        .FirstOrDefault();
             }
             BillDataGrid.ItemsSource = _order.Bill.ToList();
             CostTextBlock.Text = "结算：￥" + _order.Cost.Value.ToString(CultureInfo.InvariantCulture);

@@ -62,12 +62,15 @@ namespace WpfRestaurant
                     };
                     if (status > 0)
                     {
-                        var order = t.Order.First(o => o.Finish == 0);
-                        if (status == 1)
-                            tableItem.Time = order.Time.Value.ToShortTimeString();
-                        if (status == 2)
-                            tableItem.Cost = order.Cost.Value;
-                        tableItem.Order = order;
+                        var order = t.Order.FirstOrDefault(o => o.Finish == 0);
+                        if (order != null)
+                        {
+                            if (status == 1)
+                                tableItem.Time = order.Time.Value.ToShortTimeString();
+                            if (status == 2)
+                                tableItem.Cost = order.Cost.Value;
+                            tableItem.Order = order;
+                        }
                     }
                     lti.Add(tableItem);
                 }

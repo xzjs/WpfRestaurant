@@ -76,7 +76,8 @@ namespace WpfRestaurant
 
             for (int i = 0; i < MessageWindows.Count; i++)
             {
-                MessageWindows[i].Top = height - 200 * (i + 1);
+                int m = i % max;
+                MessageWindows[i].Top = height - 200 * (m + 1);
                 int n = i / max;
                 MessageWindows[i].Left = width - 300 * (n + 1);
             }

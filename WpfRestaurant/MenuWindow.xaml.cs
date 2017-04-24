@@ -103,13 +103,11 @@ namespace WpfRestaurant
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            if (button != null)
-            {
-                var id = Convert.ToInt64(button.Tag);
-                var b = _listBill.First(x => x.Food.Id == id);
-                if (b.Num > 0)
-                    b.Num--;
-            }
+            if (button == null) return;
+            var id = Convert.ToInt64(button.Tag);
+            var b = _listBill.First(x => x.Food.Id == id);
+            if (b.Num > 0)
+                b.Num--;
         }
 
         /// <summary>
@@ -162,9 +160,11 @@ namespace WpfRestaurant
                     {
                         //删除原来点的菜
                         db.Bill.RemoveRange(db.Bill.Where(m => m.Order_id == _order.Id));
+                        Order order = db.Order.Find(_order.Id);
+                        order.Cost = 0;
                         foreach (var item in _listBill)
                         {
-                            if (!(item.Num > 0)) continue;
+                            if (item.Num == 0) continue;
                             var b = new Bill
                             {
                                 Food_id = item.Food.Id,
@@ -173,6 +173,8 @@ namespace WpfRestaurant
                                 Price = item.Food.Price * item.Num
                             };
                             db.Bill.Add(b);
+                            if (b.Price == null) continue;
+                            if (order != null) order.Cost += b.Price.Value;
                         }
                         db.SaveChanges();
                     }

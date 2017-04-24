@@ -138,10 +138,8 @@ namespace WpfRestaurant
                                     Type = (int)item["type"],
                                     Counts = (int)item["counts"]
                                 };
-                                if ((string)item["status"] == null)
-                                    t.Status = 0;
-                                else
-                                    t.Status = (int)item["status"];
+
+                                t.Status = 0;
                                 db.Table.Add(t);
                             }
                         }
