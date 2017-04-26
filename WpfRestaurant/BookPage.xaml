@@ -15,26 +15,31 @@
         <DockPanel>
             <DockPanel Dock="Top">
                 <StackPanel DockPanel.Dock="Right">
-                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}" Margin="0,0,5,0" Click="Close_Page">
+                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}"
+                            Margin="0,0,5,0" Click="Close_Page">
                         <Button.Background>
-                            <ImageBrush ImageSource="pic/close.gif"/>
+                            <ImageBrush ImageSource="pic/close.gif" />
                         </Button.Background>
                     </Button>
                 </StackPanel>
-                <StackPanel ></StackPanel>
+                <StackPanel />
             </DockPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Width="300">
-                <Button Height="40" Click="Button_Click" Width="150" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
+                <Button Height="40" Click="Button_Click" Width="150" BorderBrush="{x:Null}"
+                        Style="{DynamicResource SquareButtonStyle}">
                     <Button.Background>
-                        <ImageBrush ImageSource="pic/red_button.png"/>
+                        <ImageBrush ImageSource="pic/red_button.png" />
                     </Button.Background>
-                    <TextBlock Text="到店" FontSize="20" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Microsoft YaHei" />
+                    <TextBlock Text="到店" FontSize="20" Foreground="White" VerticalAlignment="Center"
+                               TextAlignment="Center" FontFamily="Microsoft YaHei" />
                 </Button>
-                <Button Height="40" Click="Cancel_Order"  Width="150" BorderBrush="{x:Null}" Style="{DynamicResource SquareButtonStyle}">
+                <Button Height="40" Click="Cancel_Order" Width="150" BorderBrush="{x:Null}"
+                        Style="{DynamicResource SquareButtonStyle}">
                     <Button.Background>
-                        <ImageBrush ImageSource="pic/red_button.png"/>
+                        <ImageBrush ImageSource="pic/red_button.png" />
                     </Button.Background>
-                    <TextBlock Text="取消" FontSize="20" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" FontFamily="Microsoft YaHei"/>
+                    <TextBlock Text="取消" FontSize="20" Foreground="White" VerticalAlignment="Center"
+                               TextAlignment="Center" FontFamily="Microsoft YaHei" />
                 </Button>
             </StackPanel>
             <StackPanel x:Name="BookStackPanel">

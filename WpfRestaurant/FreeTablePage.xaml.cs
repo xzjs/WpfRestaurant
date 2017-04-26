@@ -19,7 +19,7 @@ namespace WpfRestaurant
         }
 
         /// <summary>
-        /// 设置桌号
+        ///     设置桌号
         /// </summary>
         public void SetTableNo()
         {
@@ -27,18 +27,16 @@ namespace WpfRestaurant
             {
                 var t = db.Table.Find(MyApp.TableId);
                 TableNoTextblock.Text = t.No;
-                string[] typeStrings = { "大厅", "小包间", "大包间" };
+                string[] typeStrings = {"大厅", "小包间", "大包间"};
                 TypeTextBlock.Text = typeStrings[t.Type - 1];
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             var o = new Order();
             var mw = new MenuWindow(_mainWindow, o);
             mw.ShowDialog();
-
         }
 
         private void Close_Page(object sender, RoutedEventArgs e)

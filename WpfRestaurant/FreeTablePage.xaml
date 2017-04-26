@@ -15,13 +15,14 @@
         <DockPanel>
             <DockPanel Dock="Top">
                 <StackPanel DockPanel.Dock="Right">
-                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}" Margin="0,0,5,0" Click="Close_Page">
+                    <Button Style="{DynamicResource SquareButtonStyle}" Width="25" BorderBrush="{x:Null}"
+                            Margin="0,0,5,0" Click="Close_Page">
                         <Button.Background>
-                            <ImageBrush ImageSource="pic/close.gif"/>
+                            <ImageBrush ImageSource="pic/close.gif" />
                         </Button.Background>
                     </Button>
                 </StackPanel>
-                <StackPanel DockPanel.Dock="Left" Width="100"></StackPanel>
+                <StackPanel DockPanel.Dock="Left" Width="100" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="TypeTextBlock" Text="大厅" Margin="10,0" FontSize="20" />
                     <TextBlock x:Name="TableNoTextblock" Text="A008" Margin="10,0" FontSize="20" />
@@ -29,12 +30,13 @@
             </DockPanel>
             <StackPanel DockPanel.Dock="Bottom">
                 <Button Height="40
-                        " Click="Button_Click" BorderBrush="{x:Null}" Width="180" Style="{DynamicResource SquareButtonStyle}">
+                        " Click="Button_Click" BorderBrush="{x:Null}" Width="180"
+                        Style="{DynamicResource SquareButtonStyle}">
                     <Button.Background>
-                        <ImageBrush ImageSource="pic/餐厅图标_77.png"/>
+                        <ImageBrush ImageSource="pic/餐厅图标_77.png" />
                     </Button.Background>
 
-                    <TextBlock Text="点菜" FontSize="20" Foreground="White"/>
+                    <TextBlock Text="点菜" FontSize="20" Foreground="White" />
                 </Button>
             </StackPanel>
             <DockPanel />

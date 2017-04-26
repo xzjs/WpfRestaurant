@@ -160,7 +160,7 @@ namespace WpfRestaurant
                     {
                         //删除原来点的菜
                         db.Bill.RemoveRange(db.Bill.Where(m => m.Order_id == _order.Id));
-                        Order order = db.Order.Find(_order.Id);
+                        var order = db.Order.Find(_order.Id);
                         order.Cost = 0;
                         foreach (var item in _listBill)
                         {

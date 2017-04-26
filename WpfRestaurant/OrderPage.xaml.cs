@@ -40,7 +40,7 @@ namespace WpfRestaurant
             {
                 var t = db.Table.Find(MyApp.TableId);
                 TableNoTextblock.Text = t.No;
-                string[] typeStrings = new string[] { "大厅", "小包间", "大包间" };
+                string[] typeStrings = {"大厅", "小包间", "大包间"};
                 TypeTextBlock.Text = typeStrings[t.Type - 1];
             }
         }
@@ -57,7 +57,7 @@ namespace WpfRestaurant
             {
                 _order =
                     db.Order.Include("Bill.Food")
-                        .Where(x => x.Table_id == MyApp.TableId).Where(o=>o.Finish==0)
+                        .Where(x => x.Table_id == MyApp.TableId).Where(o => o.Finish == 0)
                         .OrderByDescending(x => x.Id)
                         .FirstOrDefault();
             }
@@ -80,7 +80,7 @@ namespace WpfRestaurant
                     {
                         var uo = new UploadOrder
                         {
-                            restaurantId = (int)_mainWindow.Infomation.RestaurantID,
+                            restaurantId = (int) _mainWindow.Infomation.RestaurantID,
                             repastDeskId = _table.DeskID,
                             repastTimeStr = o.Time.Value.ToString("yyyy-M-d H:m:s"),
                             price = o.Cost.Value,
@@ -92,7 +92,7 @@ namespace WpfRestaurant
                                 var m = new Menu
                                 {
                                     menuId = item.Food.No,
-                                    counter = (int)item.Num
+                                    counter = (int) item.Num
                                 };
                                 uo.subOrderList.Add(m);
                             }
@@ -116,11 +116,11 @@ namespace WpfRestaurant
                         }
                         catch (WebException webException)
                         {
-                            string parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
+                            var parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
                             {
                                 ["details"] = json
                             }, Formatting.Indented);
-                            Queue queue = new Queue
+                            var queue = new Queue
                             {
                                 Url = "http://" + MyApp.Http + "/restClient/uploadMenuOrder.nd",
                                 Type = "POST",

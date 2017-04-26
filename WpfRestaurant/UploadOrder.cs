@@ -12,8 +12,8 @@ namespace WpfRestaurant
     {
         public decimal price;
         public long repastDeskId;
+        public string repastTimeStr;
         public int restaurantId;
         public List<Menu> subOrderList;
-        public string repastTimeStr;
     }
 }

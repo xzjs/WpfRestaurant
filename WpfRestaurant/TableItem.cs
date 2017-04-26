@@ -54,17 +54,17 @@ namespace WpfRestaurant
 
                             var responseString = Encoding.Default.GetString(response);
                             var jo = JObject.Parse(responseString);
-                            if ((string)jo["errorFlag"] != "false")
+                            if ((string) jo["errorFlag"] != "false")
                                 throw new Exception("设置服务器桌位失败");
                         }
                         catch (WebException webException)
                         {
-                            string parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
+                            var parameter = JsonConvert.SerializeObject(new Dictionary<string, string>
                             {
                                 ["deskId"] = t.DeskID.ToString(),
                                 ["status"] = status.ToString()
                             }, Formatting.Indented);
-                            Queue queue = new Queue
+                            var queue = new Queue
                             {
                                 Url = "http://" + MyApp.Http + "/restClient/setDeskStatus.nd",
                                 Type = "POST",
@@ -74,7 +74,6 @@ namespace WpfRestaurant
                             db.Queue.Add(queue);
                             db.SaveChanges();
                         }
-                        
                     }
                 }
             }

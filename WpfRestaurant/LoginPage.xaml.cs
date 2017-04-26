@@ -17,9 +17,10 @@ namespace WpfRestaurant
     /// </summary>
     public partial class LoginPage : Page
     {
+        private readonly BackgroundWorker _backgroundWorker;
         private readonly LoginWindow _loginWindow;
         private Config _config;
-        private BackgroundWorker _backgroundWorker;
+
         public LoginPage(LoginWindow loginWindow)
         {
             InitializeComponent();
@@ -28,14 +29,14 @@ namespace WpfRestaurant
             {
                 _config = db.Config.First();
             }
-            _backgroundWorker=new BackgroundWorker();
+            _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.DoWork += Init;
             _backgroundWorker.RunWorkerCompleted += Completed;
         }
 
         private void Completed(object sender, RunWorkerCompletedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            var mainWindow = new MainWindow();
             mainWindow.Show();
             _loginWindow.Close();
         }
@@ -49,49 +50,49 @@ namespace WpfRestaurant
                     using (var client = new WebClient())
                     {
                         client.Encoding = Encoding.UTF8;
-                        Infomation infomation = db.Infomation.First();
-                        var responseString = client.DownloadString("http://" + _config.Http + "/restClient/menuInfoById.nd?id=" + infomation.RestaurantID);
+                        var infomation = db.Infomation.First();
+                        var responseString =
+                            client.DownloadString("http://" + _config.Http + "/restClient/menuInfoById.nd?id=" +
+                                                  infomation.RestaurantID);
                         var jo = JObject.Parse(responseString);
-                        infomation.path = (string)jo["picUrl"];
+                        infomation.path = (string) jo["picUrl"];
                         db.SaveChanges();
 
                         if (jo["menuList"] != null)
-                        {
                             foreach (var item in jo["menuList"])
                             {
                                 var f = new Food
                                 {
-                                    No = (long)item["id"],
-                                    Name = (string)item["menuName"],
-                                    Detail = (string)item["details"],
-                                    Type = (int)item["type"],
-                                    Img = (string)item["picUrl"]
+                                    No = (long) item["id"],
+                                    Name = (string) item["menuName"],
+                                    Detail = (string) item["details"],
+                                    Type = (int) item["type"],
+                                    Img = (string) item["picUrl"]
                                 };
                                 f.Img = MyApp.Download_Img(infomation.path, f.Img);
-                                f.Price = (decimal)item["price"];
-                                f.OnsalePrice = (decimal)item["onsalePrice"];
-                                f.SaleType = (int)item["saleType"];
+                                f.Price = (decimal) item["price"];
+                                f.OnsalePrice = (decimal) item["onsalePrice"];
+                                f.SaleType = (int) item["saleType"];
                                 db.Food.Add(f);
                             }
-                        }
-                        responseString = client.DownloadString("http://" + _config.Http + "/restClient/deskInfoById.nd?id=" + infomation.RestaurantID);
+                        responseString =
+                            client.DownloadString("http://" + _config.Http + "/restClient/deskInfoById.nd?id=" +
+                                                  infomation.RestaurantID);
                         jo = JObject.Parse(responseString);
                         if (jo["deskList"] != null)
-                        {
                             foreach (var item in jo["deskList"])
                             {
                                 var t = new Table
                                 {
-                                    DeskID = (long)item["id"],
-                                    No = (string)item["deskNumber"],
-                                    Type = (int)item["type"],
-                                    Counts = (int)item["counts"]
+                                    DeskID = (long) item["id"],
+                                    No = (string) item["deskNumber"],
+                                    Type = (int) item["type"],
+                                    Counts = (int) item["counts"]
                                 };
 
                                 t.Status = 0;
                                 db.Table.Add(t);
                             }
-                        }
                         db.SaveChanges();
                     }
                 }
@@ -123,7 +124,6 @@ namespace WpfRestaurant
 
                     using (var client = new WebClient())
                     {
-
                         var values = new NameValueCollection
                         {
                             ["account"] = name,
@@ -137,8 +137,8 @@ namespace WpfRestaurant
                         {
                             var i = new Infomation
                             {
-                                RestaurantID = (int)jo["id"],
-                                Name = (string)jo["name"]
+                                RestaurantID = (int) jo["id"],
+                                Name = (string) jo["name"]
                             };
 
                             db.Infomation.Add(i);
@@ -147,11 +147,11 @@ namespace WpfRestaurant
                             Button.Content = "登录成功，正在初始化数据";
                             ProgressRing.IsActive = true;
                             _backgroundWorker.RunWorkerAsync();
-                      
-                            
                         }
                         else
+                        {
                             MessageBox.Show("登录失败");
+                        }
                     }
                 }
             }
@@ -159,7 +159,6 @@ namespace WpfRestaurant
             {
                 MessageBox.Show(exception.Message);
             }
-
         }
     }
 }

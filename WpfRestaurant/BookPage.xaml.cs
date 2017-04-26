@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,7 +30,7 @@ namespace WpfRestaurant
         }
 
         /// <summary>
-        /// 取消订单
+        ///     取消订单
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -41,16 +40,15 @@ namespace WpfRestaurant
             {
                 using (var db = new restaurantEntities())
                 {
-                    long tableId = _order.Table_id;
+                    var tableId = _order.Table_id;
                     TableItem.SetTableStatus(0, tableId);
-                    List<Bill> bills = db.Bill.Where(b => b.Order_id == _order.Id).ToList();
+                    var bills = db.Bill.Where(b => b.Order_id == _order.Id).ToList();
                     db.Bill.RemoveRange(bills);
-                    Order order = db.Order.Find(_order.Id);
+                    var order = db.Order.Find(_order.Id);
                     db.Order.Remove(order);
                     db.SaveChanges();
                     _mainWindow.SidebarFrame.Content = null;
                     _mainWindow.Lop.GetList();
-
                 }
             }
             catch (Exception exception)

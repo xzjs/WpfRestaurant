@@ -21,7 +21,8 @@
                             <StackPanel Orientation="Horizontal" Width="360" Height="55">
                                 <Image Source="pic/login_head.png" Margin="10" />
                                 <TextBox x:Name="NameTextbox" Background="{x:Null}" Foreground="White"
-                                         VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}" FontSize="20" Text="weifang" />
+                                         VerticalAlignment="Center" Width="285" BorderBrush="{x:Null}" FontSize="20"
+                                         Text="weifang" />
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="White" BorderThickness="2" CornerRadius="10" Margin="0,5">
@@ -37,9 +38,10 @@
                     <StackPanel>
 
                         <Button x:Name="Button" Height="50" BorderBrush="{x:Null}" FontSize="20"
-                                    Click="Button_Click" Style="{DynamicResource SquareButtonStyle}" FontFamily="Microsoft YaHei" Margin="0,50,0,0" Foreground="White">
+                                Click="Button_Click" Style="{DynamicResource SquareButtonStyle}"
+                                FontFamily="Microsoft YaHei" Margin="0,50,0,0" Foreground="White">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/保存并返回登录界面.png"/>
+                                <ImageBrush ImageSource="pic/保存并返回登录界面.png" />
                             </Button.Background>
                             登录
                         </Button>

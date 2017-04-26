@@ -22,7 +22,7 @@ namespace WpfRestaurant
         }
 
         /// <summary>
-        /// 更新餐桌列表
+        ///     更新餐桌列表
         /// </summary>
         /// <param name="status">要显示的餐桌类型</param>
         public void GetList(int status = 0)

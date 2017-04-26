@@ -16,10 +16,10 @@
             </StackPanel>
             <DockPanel>
                 <DockPanel Dock="Top">
-                    <Image Source="pic/图片logo.png" Width="200"></Image>
+                    <Image Source="pic/图片logo.png" Width="200" />
                 </DockPanel>
                 <DockPanel Dock="Bottom">
-                    <Image Source="pic/星河露营地文字logo.png" Width="200" Margin="0,0,0,10"></Image>
+                    <Image Source="pic/星河露营地文字logo.png" Width="200" Margin="0,0,0,10" />
                 </DockPanel>
                 <Frame x:Name="PageFrame" NavigationUIVisibility="Hidden" />
             </DockPanel>

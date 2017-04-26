@@ -8,7 +8,7 @@
         Title="热菜" Height="550" Width="400" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
         WindowStyle="None" Background="{x:Null}" MouseLeftButtonDown="Window_MouseLeftButtonDown">
     <Window.Resources>
-        <local:ImageConverter x:Key="ImageConverter"/>
+        <local:ImageConverter x:Key="ImageConverter" />
     </Window.Resources>
     <Grid>
         <DockPanel>
@@ -23,7 +23,7 @@
                 <DockPanel Dock="Right" Width="50" Height="30" Margin="20,0">
                     <Button BorderBrush="{x:Null}" Click="Closer_Menu" Style="{DynamicResource SquareButtonStyle}">
                         <Button.Background>
-                            <ImageBrush ImageSource="pic/caidan_close.png"/>
+                            <ImageBrush ImageSource="pic/caidan_close.png" />
                         </Button.Background>
 
                     </Button>
@@ -36,57 +36,63 @@
                 </DockPanel.Background>
                 <DockPanel Dock="Left" Width="126" Margin="0,7,0,0">
                     <DockPanel Dock="Bottom">
-                        <Button BorderBrush="{x:Null}" Click="Button_Click_3" Style="{DynamicResource SquareButtonStyle}" Width="110" Height="40" Margin="5,0,0,20">
+                        <Button BorderBrush="{x:Null}" Click="Button_Click_3"
+                                Style="{DynamicResource SquareButtonStyle}" Width="110" Height="40" Margin="5,0,0,20">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/餐厅图标_68.png"/>
+                                <ImageBrush ImageSource="pic/餐厅图标_68.png" />
                             </Button.Background>
 
                             <TextBlock Text="确定" FontSize="20" Foreground="White" TextAlignment="Center"
-                                           VerticalAlignment="Center" />
+                                       VerticalAlignment="Center" />
                         </Button>
                     </DockPanel>
                     <StackPanel>
-                        <Button Width="125" Height="50" Click="Button_Click" Tag="1" BorderBrush="{x:Null}" Margin="5,0,0,0" Style="{DynamicResource SquareButtonStyle}">
+                        <Button Width="125" Height="50" Click="Button_Click" Tag="1" BorderBrush="{x:Null}"
+                                Margin="5,0,0,0" Style="{DynamicResource SquareButtonStyle}">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/cai.png"/>
+                                <ImageBrush ImageSource="pic/cai.png" />
                             </Button.Background>
                             <TextBlock Text="热菜" FontSize="20" TextAlignment="Center" Foreground="White" />
                         </Button>
-                        <Button Width="125" Height="40" Click="Button_Click" Tag="2" Style="{DynamicResource SquareButtonStyle}"
+                        <Button Width="125" Height="40" Click="Button_Click" Tag="2"
+                                Style="{DynamicResource SquareButtonStyle}"
                                 BorderBrush="{x:Null}" Margin="5,5,0,0">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/cai2.png"/>
+                                <ImageBrush ImageSource="pic/cai2.png" />
                             </Button.Background>
 
                             <TextBlock Text="凉菜" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"
-                                           Foreground="White" />
+                                       Foreground="White" />
                         </Button>
-                        <Button Width="125" Height="40" Click="Button_Click" Tag="3" Style="{DynamicResource SquareButtonStyle}"
+                        <Button Width="125" Height="40" Click="Button_Click" Tag="3"
+                                Style="{DynamicResource SquareButtonStyle}"
                                 BorderBrush="{x:Null}" Margin="5,5,0,0">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/cai2.png"/>
+                                <ImageBrush ImageSource="pic/cai2.png" />
                             </Button.Background>
 
                             <TextBlock Text="主食" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"
-                                           Foreground="White" />
+                                       Foreground="White" />
                         </Button>
-                        <Button Width="125" Height="40" Click="Button_Click" Tag="4" Style="{DynamicResource SquareButtonStyle}"
+                        <Button Width="125" Height="40" Click="Button_Click" Tag="4"
+                                Style="{DynamicResource SquareButtonStyle}"
                                 BorderBrush="{x:Null}" Margin="5,5,0,0">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/cai2.png"/>
+                                <ImageBrush ImageSource="pic/cai2.png" />
                             </Button.Background>
 
                             <TextBlock Text="饮品" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"
-                                           Foreground="White" />
+                                       Foreground="White" />
                         </Button>
-                        <Button Width="125" Height="40" Click="Button_Click" Tag="5" Style="{DynamicResource SquareButtonStyle}"
+                        <Button Width="125" Height="40" Click="Button_Click" Tag="5"
+                                Style="{DynamicResource SquareButtonStyle}"
                                 BorderBrush="{x:Null}" Margin="5,5,0,0">
                             <Button.Background>
-                                <ImageBrush ImageSource="pic/cai2.png"/>
+                                <ImageBrush ImageSource="pic/cai2.png" />
                             </Button.Background>
 
                             <TextBlock Text="香烟" FontSize="20" TextAlignment="Center" VerticalAlignment="Center"
-                                           Foreground="White" />
+                                       Foreground="White" />
                         </Button>
 
                     </StackPanel>

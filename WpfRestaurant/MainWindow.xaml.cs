@@ -26,8 +26,8 @@ namespace WpfRestaurant
         public Config Config;
         public Infomation Infomation;
         public LobbyOrderPage Lop;
-        public OrderPage Op;
         public ObservableCollection<MessageWindow> MessageWindows;
+        public OrderPage Op;
 
         private string str = "";
 
@@ -55,37 +55,35 @@ namespace WpfRestaurant
                 Config = db.Config.FirstOrDefault();
                 Infomation = db.Infomation.FirstOrDefault();
                 if (Infomation != null)
-                {
                     NameTextBlock.Text = Infomation.Name;
-                }
             }
 
             ListenOrderTcp();
         }
 
         /// <summary>
-        /// 排列显示消息窗口
+        ///     排列显示消息窗口
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ArrageWindow(object sender, NotifyCollectionChangedEventArgs e)
         {
-            double height = SystemParameters.WorkArea.Height;
-            double width = SystemParameters.WorkArea.Width;
-            int max = Convert.ToInt32(Math.Floor(height / 200));
+            var height = SystemParameters.WorkArea.Height;
+            var width = SystemParameters.WorkArea.Width;
+            var max = Convert.ToInt32(Math.Floor(height / 200));
 
-            for (int i = 0; i < MessageWindows.Count; i++)
+            for (var i = 0; i < MessageWindows.Count; i++)
             {
-                int m = i % max;
+                var m = i % max;
                 MessageWindows[i].Top = height - 200 * (m + 1);
-                int n = i / max;
+                var n = i / max;
                 MessageWindows[i].Left = width - 300 * (n + 1);
             }
         }
 
         private void ShowMessageWindow()
         {
-            MessageWindow messageWindow = new MessageWindow(str, this);
+            var messageWindow = new MessageWindow(str, this);
             messageWindow.Show();
             MessageWindows.Add(messageWindow);
         }
@@ -94,27 +92,23 @@ namespace WpfRestaurant
         {
             using (var db = new restaurantEntities())
             {
-                List<Queue> queues = db.Queue.OrderBy(q => q.Id).ToList();
+                var queues = db.Queue.OrderBy(q => q.Id).ToList();
                 if (queues.Count > 0)
-                {
                     using (var client = new WebClient())
                     {
                         foreach (var queue in queues)
-                        {
                             try
                             {
-                                Dictionary<string, string> dictionary =
+                                var dictionary =
                                     JsonConvert.DeserializeObject<Dictionary<string, string>>(queue.Parameter);
-                                NameValueCollection values = new NameValueCollection();
+                                var values = new NameValueCollection();
                                 foreach (var item in dictionary)
-                                {
                                     values[item.Key] = item.Value;
-                                }
                                 var response = client.UploadValues(queue.Url, values);
 
                                 var responseString = Encoding.Default.GetString(response);
                                 var jo = JObject.Parse(responseString);
-                                if ((string)jo["errorFlag"] != "false") continue;
+                                if ((string) jo["errorFlag"] != "false") continue;
                                 db.Queue.Remove(queue);
                                 db.SaveChanges();
                             }
@@ -126,11 +120,7 @@ namespace WpfRestaurant
                             {
                                 MessageBox.Show(exception.Message);
                             }
-
-                        }
                     }
-                }
-
             }
         }
 
@@ -147,7 +137,6 @@ namespace WpfRestaurant
         /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-
         }
 
         /// <summary>
@@ -220,96 +209,88 @@ namespace WpfRestaurant
         {
             try
             {
-                var msg = (ITextMessage)message;
+                var msg = (ITextMessage) message;
                 Console.WriteLine(msg.Text);
                 using (var db = new restaurantEntities())
                 {
                     var jo = JArray.Parse(msg.Text);
                     foreach (var item in jo)
                     {
-                        int type = (int)item["modifyType"];
-                        if ((int)item["modifyItem"] == 0)//修改餐桌
+                        var type = (int) item["modifyType"];
+                        if ((int) item["modifyItem"] == 0) //修改餐桌
                         {
-                            if (type == 0)//添加
+                            if (type == 0) //添加
                             {
                                 var t = new Table
                                 {
-                                    DeskID = (long)item["deskInfo"]["id"],
-                                    No = (string)item["deskInfo"]["deskNumber"],
-                                    Type = (int)item["deskInfo"]["type"],
-                                    Counts = (int)item["deskInfo"]["counts"]
+                                    DeskID = (long) item["deskInfo"]["id"],
+                                    No = (string) item["deskInfo"]["deskNumber"],
+                                    Type = (int) item["deskInfo"]["type"],
+                                    Counts = (int) item["deskInfo"]["counts"]
                                 };
-                                if ((string)item["deskInfo"]["status"] == null)
+                                if ((string) item["deskInfo"]["status"] == null)
                                     t.Status = 0;
                                 else
-                                    t.Status = (int)item["deskInfo"]["status"];
-                                Table table = db.Table.FirstOrDefault(o => o.DeskID == t.DeskID);
+                                    t.Status = (int) item["deskInfo"]["status"];
+                                var table = db.Table.FirstOrDefault(o => o.DeskID == t.DeskID);
                                 if (table != null)
-                                {
                                     continue;
-                                }
                                 db.Table.Add(t);
                             }
-                            else if (type == 1)//删除
+                            else if (type == 1) //删除
                             {
-                                long deskID = (long)item["deskInfo"]["id"];
-                                Table table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
+                                var deskID = (long) item["deskInfo"]["id"];
+                                var table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
                                 if (table != null)
-                                {
                                     db.Table.Remove(table);
-                                }
                             }
-                            else//修改
+                            else //修改
                             {
-                                long deskID = (long)item["deskInfo"]["id"];
-                                Table table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
+                                var deskID = (long) item["deskInfo"]["id"];
+                                var table = db.Table.FirstOrDefault(t => t.DeskID == deskID);
                                 if (table != null)
                                 {
-                                    table.No = (string)item["deskInfo"]["deskNumber"];
-                                    table.Type = (int)item["deskInfo"]["type"];
-                                    table.Counts = (int)item["deskInfo"]["counts"];
+                                    table.No = (string) item["deskInfo"]["deskNumber"];
+                                    table.Type = (int) item["deskInfo"]["type"];
+                                    table.Counts = (int) item["deskInfo"]["counts"];
                                 }
                             }
                         }
                         else
                         {
-                            if (type == 0)//添加
+                            if (type == 0) //添加
                             {
                                 var f = new Food
                                 {
-                                    No = (long)item["menuInfo"]["id"],
-                                    Name = (string)item["menuInfo"]["menuName"],
-                                    Detail = (string)item["menuInfo"]["details"],
-                                    Type = (int)item["menuInfo"]["type"],
-                                    Img = (string)item["menuInfo"]["picUrl"]
+                                    No = (long) item["menuInfo"]["id"],
+                                    Name = (string) item["menuInfo"]["menuName"],
+                                    Detail = (string) item["menuInfo"]["details"],
+                                    Type = (int) item["menuInfo"]["type"],
+                                    Img = (string) item["menuInfo"]["picUrl"]
                                 };
                                 f.Img = MyApp.Download_Img(Infomation.path, f.Img);
-                                Food food = db.Food.FirstOrDefault(o => o.No == f.No);
+                                var food = db.Food.FirstOrDefault(o => o.No == f.No);
                                 if (food != null)
-                                {
                                     continue;
-                                }
                                 db.Food.Add(f);
                             }
-                            else if (type == 1)//删除
+                            else if (type == 1) //删除
                             {
-                                long foodID = (long)item["menuInfo"]["id"];
-                                Food food = db.Food.FirstOrDefault(t => t.No == foodID);
+                                var foodID = (long) item["menuInfo"]["id"];
+                                var food = db.Food.FirstOrDefault(t => t.No == foodID);
                                 if (food != null)
-                                {
                                     db.Food.Remove(food);
-                                }
                             }
-                            else//修改
+                            else //修改
                             {
-                                long foodID = (long)item["menuInfo"]["id"];
-                                Food food = db.Food.FirstOrDefault(t => t.No == foodID);
+                                var foodID = (long) item["menuInfo"]["id"];
+                                var food = db.Food.FirstOrDefault(t => t.No == foodID);
                                 if (food != null)
                                 {
-                                    food.Name = (string)item["menuInfo"]["menuName"];
-                                    food.Detail = (string)item["menuInfo"]["details"];
-                                    food.Type = (int)item["menuInfo"]["type"];
-                                    food.Img = MyApp.Download_Img(Infomation.path, (string)item["menuInfo"]["picUrl"]);
+                                    food.Name = (string) item["menuInfo"]["menuName"];
+                                    food.Detail = (string) item["menuInfo"]["details"];
+                                    food.Type = (int) item["menuInfo"]["type"];
+                                    food.Img = MyApp.Download_Img(Infomation.path, (string) item["menuInfo"]["picUrl"]);
                                 }
                             }
                         }
@@ -328,14 +309,10 @@ namespace WpfRestaurant
                                 str += "修改";
                                 break;
                         }
-                        if ((int)item["modifyItem"] == 0)
-                        {
-                            str += "餐桌" + (string)item["deskInfo"]["deskNumber"];
-                        }
+                        if ((int) item["modifyItem"] == 0)
+                            str += "餐桌" + (string) item["deskInfo"]["deskNumber"];
                         else
-                        {
-                            str += "菜单" + (string)item["menuInfo"]["menuName"];
-                        }
+                            str += "菜单" + (string) item["menuInfo"]["menuName"];
                     }
                 }
             }
@@ -352,7 +329,7 @@ namespace WpfRestaurant
 
         private void consumer_Listener(IMessage message)
         {
-            var msg = (ITextMessage)message;
+            var msg = (ITextMessage) message;
             //异步调用下，否则无法回归主线程
             Console.WriteLine(msg.Text);
             Book(msg.Text);
@@ -360,7 +337,7 @@ namespace WpfRestaurant
 
         private void Foodconsumer_Listener(IMessage message)
         {
-            var msg = (ITextMessage)message;
+            var msg = (ITextMessage) message;
             //异步调用下，否则无法回归主线程
             Console.WriteLine(msg.Text);
             OrderFood(msg.Text);
@@ -380,39 +357,29 @@ namespace WpfRestaurant
                     foreach (var item in jo)
                     {
                         long phone = 0;
-                        int counts = 0;
+                        var counts = 0;
                         long deskid = 0;
-                        DateTime time = DateTime.Now;
-                        int type = 0;
+                        var time = DateTime.Now;
+                        var type = 0;
                         if (!string.IsNullOrEmpty((string) item["contactTel"]))
-                        {
                             phone = (long) item["contactTel"];
-                        }
                         var name = (string) item["name"];
                         if (!string.IsNullOrEmpty((string) item["counts"]))
-                        {
                             counts = (int) item["counts"];
-                        }
                         var no = (string) item["orderNumber"];
                         var remark = (string) item["remark"];
                         if (!string.IsNullOrEmpty((string) item["repastDeskId"]))
-                        {
                             deskid = (long) item["repastDeskId"];
-                        }
                         if (!string.IsNullOrEmpty((string) item["repastTimeStr"]))
-                        {
                             time = Convert.ToDateTime(item["repastTimeStr"]);
-                        }
                         if (!string.IsNullOrEmpty((string) item["type"]))
-                        {
                             type = (int) item["type"];
-                        }
 
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         var table = db.Table.First(x => x.DeskID == deskid);
                         table.Status = type == 0 ? 2 : 1;
-           
+
                         if (order == null)
                         {
                             order = new Order
@@ -443,13 +410,9 @@ namespace WpfRestaurant
                         }
                         db.SaveChanges();
                         if (type == 0)
-                        {
                             str = table.No + "桌点餐";
-                        }
                         else
-                        {
                             str = table.No + "桌预定\n预定时间" + time + "\n联系方式" + order.Phone;
-                        }
                     }
                 }
                 Dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => { Lop.GetList(); }));
@@ -475,7 +438,7 @@ namespace WpfRestaurant
                     var jo = JArray.Parse(json);
                     foreach (var item in jo)
                     {
-                        var no = (string)item["orderNumber"];
+                        var no = (string) item["orderNumber"];
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
                         if (order == null)
@@ -491,12 +454,12 @@ namespace WpfRestaurant
                         }
                         foreach (var j in item["subOrderList"])
                         {
-                            var foodNo = (long)j["menuId"];
+                            var foodNo = (long) j["menuId"];
                             var f = db.Food.First(m => m.No == foodNo);
                             var b = new Bill
                             {
                                 Food_id = f.Id,
-                                Num = (int)j["counter"],
+                                Num = (int) j["counter"],
                                 Order_id = order.Id
                             };
                             if (b.Num != null)
@@ -557,10 +520,9 @@ namespace WpfRestaurant
                 }
                 else
                 {
-                    LoginWindow lw = new LoginWindow();
+                    var lw = new LoginWindow();
                     lw.ShowDialog();
                 }
-
             }
         }
 
@@ -568,7 +530,5 @@ namespace WpfRestaurant
         {
             MessageBox.Show("外卖功能尚未开放");
         }
-
-
     }
 }

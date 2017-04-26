@@ -9,21 +9,18 @@ namespace WpfRestaurant
     public partial class LoginWindow : Window
     {
         public Infomation Infomation;
+
         public LoginWindow()
         {
             InitializeComponent();
 
-            using (var db=new restaurantEntities())
+            using (var db = new restaurantEntities())
             {
                 Infomation = db.Infomation.FirstOrDefault();
                 if (Infomation != null)
-                {
                     PageFrame.Content = new LogoutPage(this);
-                }
                 else
-                {
-                    PageFrame.Content=new LoginPage(this);
-                }
+                    PageFrame.Content = new LoginPage(this);
             }
         }
     }

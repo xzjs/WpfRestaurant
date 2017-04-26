@@ -6,23 +6,23 @@ using System.Windows.Media.Imaging;
 
 namespace WpfRestaurant
 {
-    class ImageConverter : IValueConverter
+    internal class ImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             BitmapImage bitmap;
-            string img = value.ToString();
+            var img = value.ToString();
             if (img == "menu.png")
             {
-                string src = "pack://application:,,,/pic/" + img;
+                var src = "pack://application:,,,/pic/" + img;
                 bitmap = new BitmapImage(new Uri(src));
             }
             else
             {
-                string src = Path.Combine(Directory.GetCurrentDirectory(), img);
+                var src = Path.Combine(Directory.GetCurrentDirectory(), img);
                 bitmap = new BitmapImage(new Uri(src));
             }
-            
+
             return bitmap;
         }
 

@@ -6,11 +6,12 @@ using System.Windows.Input;
 namespace WpfRestaurant
 {
     /// <summary>
-    /// LogoutPage.xaml 的交互逻辑
+    ///     LogoutPage.xaml 的交互逻辑
     /// </summary>
     public partial class LogoutPage : Page
     {
         private readonly LoginWindow _loginWindow;
+
         public LogoutPage(LoginWindow loginWindow)
         {
             InitializeComponent();
@@ -20,15 +21,15 @@ namespace WpfRestaurant
 
         private void TextBlock_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _loginWindow.PageFrame.Content=new SetUpPage(_loginWindow);
+            _loginWindow.PageFrame.Content = new SetUpPage(_loginWindow);
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (MessageBox.Show("注销会清空本地所有数据，是否注销", "注销", MessageBoxButton.OKCancel) != MessageBoxResult.OK) return;
-                using (var db=new restaurantEntities())
+                using (var db = new restaurantEntities())
                 {
                     db.Database.ExecuteSqlCommand("DELETE FROM [Queue]");
                     db.Database.ExecuteSqlCommand("DELETE FROM [Bill]");
@@ -36,7 +37,7 @@ namespace WpfRestaurant
                     db.Database.ExecuteSqlCommand("DELETE FROM [Food]");
                     db.Database.ExecuteSqlCommand("DELETE FROM [Table]");
                     db.Database.ExecuteSqlCommand("DELETE FROM [Infomation]");
-                    _loginWindow.PageFrame.Content=new LoginPage(_loginWindow);
+                    _loginWindow.PageFrame.Content = new LoginPage(_loginWindow);
                 }
             }
             catch (Exception exception)
@@ -47,7 +48,7 @@ namespace WpfRestaurant
 
         private void Enter(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow=new MainWindow();
+            var mainWindow = new MainWindow();
             mainWindow.Show();
             _loginWindow.Close();
         }

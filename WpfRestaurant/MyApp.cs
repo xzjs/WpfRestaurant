@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
 
 namespace WpfRestaurant
 {
@@ -13,7 +12,7 @@ namespace WpfRestaurant
         public static Infomation Infomation;
 
         /// <summary>
-        /// 下载图片
+        ///     下载图片
         /// </summary>
         /// <param name="downloadPath">下载路径</param>
         /// <param name="name">文件名</param>

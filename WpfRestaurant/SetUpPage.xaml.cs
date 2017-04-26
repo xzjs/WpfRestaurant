@@ -12,6 +12,7 @@ namespace WpfRestaurant
     {
         private readonly Config _config;
         private readonly LoginWindow _loginWindow;
+
         public SetUpPage(LoginWindow loginWindow)
         {
             _loginWindow = loginWindow;
@@ -27,19 +28,14 @@ namespace WpfRestaurant
         {
             using (var db = new restaurantEntities())
             {
-            
                 db.Entry(_config).State = EntityState.Modified;
                 db.SaveChanges();
                 MyApp.Http = _config.Http;
-                Infomation infomation = db.Infomation.FirstOrDefault();
+                var infomation = db.Infomation.FirstOrDefault();
                 if (infomation == null)
-                {
                     _loginWindow.PageFrame.Content = new LoginPage(_loginWindow);
-                }
                 else
-                {
-                    _loginWindow.PageFrame.Content=new LogoutPage(_loginWindow);
-                }
+                    _loginWindow.PageFrame.Content = new LogoutPage(_loginWindow);
             }
         }
     }
