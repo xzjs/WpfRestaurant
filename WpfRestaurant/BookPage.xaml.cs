@@ -10,7 +10,7 @@ namespace WpfRestaurant
     /// </summary>
     public partial class BookPage : Page
     {
-        private readonly MainWindow _mainWindow;
+        private MainWindow _mainWindow;
         private readonly Order _order;
 
         public BookPage(MainWindow mainWindow, Order order)
@@ -24,6 +24,7 @@ namespace WpfRestaurant
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var op = new OrderPage(_mainWindow);
+            _mainWindow.Op = op;
             _mainWindow.SidebarFrame.Content = op;
             TableItem.SetTableStatus(2, MyApp.TableId);
             _mainWindow.Lop.GetList();
