@@ -1,15 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6"
-              ProviderManifestToken="data source=F:\code\WpfRestaurant\WpfRestaurant\restaurant.db" Alias="Self"
-              xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator"
-              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
-              xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="restaurantModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=C:\Code\WpfRestaurant\WpfRestaurant\restaurant.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Id" />
@@ -67,6 +62,7 @@
           <Property Name="Type" Type="int" />
           <Property Name="Cost" Type="decimal" Precision="53" Scale="0" />
           <Property Name="Finish" Type="int" />
+          <Property Name="Server_id" Type="integer" Nullable="false" />
         </EntityType>
         <EntityType Name="Queue">
           <Key>
@@ -150,10 +146,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false"
-              xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
-              xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation"
-              xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="restaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Id" />
@@ -181,10 +174,8 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="No" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true"
-                    Nullable="false" />
-          <Property Name="Detail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true"
-                    Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Detail" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Type" Type="Int32" Nullable="false" />
           <Property Name="Img" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="53" Scale="0" Nullable="false" />
@@ -216,8 +207,19 @@
           <Property Name="Type" Type="Int32" />
           <Property Name="Cost" Type="Decimal" Precision="53" Scale="0" />
           <Property Name="Finish" Type="Int32" />
+          <Property Name="Server_id" Type="Int64" Nullable="false" />
           <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_0_0" FromRole="Order" ToRole="Bill" />
           <NavigationProperty Name="Table" Relationship="Self.FK_Order_0_0" FromRole="Order" ToRole="Table" />
+        </EntityType>
+        <EntityType Name="Queue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Url" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Parameter" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="DateTime" />
         </EntityType>
         <EntityType Name="Table">
           <Key>
@@ -273,6 +275,7 @@
           <EntitySet Name="Food" EntityType="Self.Food" />
           <EntitySet Name="Infomation" EntityType="Self.Infomation" />
           <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Queue" EntityType="Self.Queue" />
           <EntitySet Name="Table" EntityType="Self.Table" />
           <AssociationSet Name="FK_Bill_0_0" Association="Self.FK_Bill_0_0">
             <End Role="Order" EntitySet="Order" />
@@ -286,25 +289,13 @@
             <End Role="Table" EntitySet="Table" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <EntitySet Name="Queue" EntityType="restaurantModel.Queue" />
         </EntityContainer>
-        <EntityType Name="Queue">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Url" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Parameter" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Time" Type="DateTime" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer"
-                                CdmEntityContainer="restaurantEntities">
+        <EntityContainerMapping StorageEntityContainer="restaurantModelStoreContainer" CdmEntityContainer="restaurantEntities">
           <EntitySetMapping Name="Bill">
             <EntityTypeMapping TypeName="restaurantModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
@@ -344,10 +335,10 @@
           <EntitySetMapping Name="Infomation">
             <EntityTypeMapping TypeName="restaurantModel.Infomation">
               <MappingFragment StoreEntitySet="Infomation">
-                <ScalarProperty Name="path" ColumnName="path" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="RestaurantID" ColumnName="RestaurantID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="path" ColumnName="path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -365,6 +356,18 @@
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
                 <ScalarProperty Name="Finish" ColumnName="Finish" />
+                <ScalarProperty Name="Server_id" ColumnName="Server_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Queue">
+            <EntityTypeMapping TypeName="restaurantModel.Queue">
+              <MappingFragment StoreEntitySet="Queue">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -377,17 +380,6 @@
                 <ScalarProperty Name="Counts" ColumnName="Counts" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="DeskID" ColumnName="DeskID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Queue">
-            <EntityTypeMapping TypeName="restaurantModel.Queue">
-              <MappingFragment StoreEntitySet="Queue">
-                <ScalarProperty Name="Time" ColumnName="Time" />
-                <ScalarProperty Name="Parameter" ColumnName="Parameter" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Url" ColumnName="Url" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

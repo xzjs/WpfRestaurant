@@ -10,7 +10,8 @@
 namespace WpfRestaurant
 {
     using System;
-
+    using System.Collections.Generic;
+    
     public partial class Queue
     {
         public long Id { get; set; }

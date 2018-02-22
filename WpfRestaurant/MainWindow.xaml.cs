@@ -361,6 +361,7 @@ namespace WpfRestaurant
                         long deskid = 0;
                         var time = DateTime.Now;
                         var type = 0;
+                        long server_id = 0;
                         if (!string.IsNullOrEmpty((string) item["contactTel"]))
                             phone = (long) item["contactTel"];
                         var name = (string) item["name"];
@@ -374,6 +375,8 @@ namespace WpfRestaurant
                             time = Convert.ToDateTime(item["repastTimeStr"]);
                         if (!string.IsNullOrEmpty((string) item["type"]))
                             type = (int) item["type"];
+                        if (!string.IsNullOrEmpty((string)item["id"]))
+                            server_id = (long)item["id"];
 
                         //先查找有没有已经创建订单
                         var order = db.Order.FirstOrDefault(x => x.No == no);
@@ -393,7 +396,8 @@ namespace WpfRestaurant
                                 Time = time,
                                 Type = type,
                                 Cost = 0,
-                                Finish = 0
+                                Finish = 0,
+                                Server_id = server_id
                             };
                             db.Order.Add(order);
                         }
@@ -407,6 +411,7 @@ namespace WpfRestaurant
                             order.Time = time;
                             order.Type = type;
                             order.Finish = 0;
+                            order.Server_id = server_id;
                         }
                         db.SaveChanges();
                         if (type == 0)

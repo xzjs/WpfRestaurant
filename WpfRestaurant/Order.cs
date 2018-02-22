@@ -31,6 +31,7 @@ namespace WpfRestaurant
         public Nullable<int> Type { get; set; }
         public Nullable<decimal> Cost { get; set; }
         public Nullable<int> Finish { get; set; }
+        public long Server_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bill { get; set; }

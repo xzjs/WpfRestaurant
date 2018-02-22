@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -41,6 +45,21 @@ namespace WpfRestaurant
             {
                 using (var db = new restaurantEntities())
                 {
+                    using (var client = new WebClient())
+                    {
+                        var values = new NameValueCollection();
+                        values.Add("id", _order.Server_id.ToString());
+                        values.Add("status", "4");
+
+                        var response =
+                            client.UploadValues(
+                                "http://" + _mainWindow.Config.Http + "/restClient/setMenuOrderStatus.nd", values);
+
+                        var responseString = Encoding.Default.GetString(response);
+                        var jo = JObject.Parse(responseString);
+                        if ((string)jo["errorFlag"] != "false")
+                            throw new Exception("修改订单状态失败");
+                    }
                     var tableId = _order.Table_id;
                     TableItem.SetTableStatus(0, tableId);
                     var bills = db.Bill.Where(b => b.Order_id == _order.Id).ToList();

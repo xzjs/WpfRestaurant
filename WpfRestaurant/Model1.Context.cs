@@ -9,9 +9,10 @@
 
 namespace WpfRestaurant
 {
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-
+    
     public partial class restaurantEntities : DbContext
     {
         public restaurantEntities()
@@ -29,7 +30,7 @@ namespace WpfRestaurant
         public virtual DbSet<Food> Food { get; set; }
         public virtual DbSet<Infomation> Infomation { get; set; }
         public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<Table> Table { get; set; }
         public virtual DbSet<Queue> Queue { get; set; }
+        public virtual DbSet<Table> Table { get; set; }
     }
 }

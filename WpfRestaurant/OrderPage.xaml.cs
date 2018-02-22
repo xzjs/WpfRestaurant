@@ -112,6 +112,19 @@ namespace WpfRestaurant
                                 var jo = JObject.Parse(responseString);
                                 if ((string) jo["errorFlag"] != "false")
                                     throw new Exception("上传订单失败");
+
+                                values = new NameValueCollection();
+                                values.Add("id", o.Server_id.ToString());
+                                values.Add("status", "3");
+
+                                response =
+                                    client.UploadValues(
+                                        "http://" + _mainWindow.Config.Http + "/restClient/setMenuOrderStatus.nd", values);
+
+                                responseString = Encoding.Default.GetString(response);
+                                jo = JObject.Parse(responseString);
+                                if ((string)jo["errorFlag"] != "false")
+                                    throw new Exception("修改订单状态失败");
                             }
                         }
                         catch (WebException webException)
